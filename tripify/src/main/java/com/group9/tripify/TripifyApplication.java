@@ -8,6 +8,7 @@ public class TripifyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TripifyApplication.class, args);
+		System.out.println("hi");
 	}
 
 }
