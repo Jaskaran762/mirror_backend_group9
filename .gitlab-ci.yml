@@ -44,4 +44,4 @@ deploy_to_local_docker:
     - docker load < $IMAGE_NAME.tar
     - CONTAINER_ID=$(docker ps -q -a -f "expose=8080")
     - if [ -n "$CONTAINER_ID" ]; then docker stop $CONTAINER_ID && docker rm $CONTAINER_ID; fi
-    - docker run -d -p 8080:8080 $IMAGE_NAME
+    - docker run -d -p 8080:8095 $IMAGE_NAME
