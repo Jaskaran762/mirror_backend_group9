@@ -8,6 +8,6 @@ public class TripifyTestController {
 
     @GetMapping("/home")
     public String testTripify(){
-        return "hello world";
+        return "hello world, is it working";
     }
 }
