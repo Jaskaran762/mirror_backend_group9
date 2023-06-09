@@ -1,0 +1,47 @@
+variables:
+  IMAGE_NAME: group09
+
+services:
+  - name: docker:dind
+
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - maven_build
+  - docker_build
+  - deploy
+
+maven_build:
+  image: maven:3.8.3-openjdk-17
+  stage: maven_build
+  script:
+    - mvn clean install
+  artifacts:
+    paths:
+      - target/*.war
+
+local_docker_build:
+  image: docker:dind
+  stage: docker_build
+  tags:
+    - group_nine_runner
+  script:
+    - docker info
+    - docker build -t $IMAGE_NAME .
+    - docker save $IMAGE_NAME > $IMAGE_NAME.tar
+  artifacts:
+    paths:
+      - $IMAGE_NAME.tar
+
+deploy_to_local_docker:
+  image: docker:dind
+  stage: deploy
+  tags:
+    - group_nine_runner
+  script:
+    - docker load < $IMAGE_NAME.tar
+    - CONTAINER_ID=$(docker ps -q -a -f "expose=8080")
+    - if [ -n "$CONTAINER_ID" ]; then docker stop $CONTAINER_ID && docker rm $CONTAINER_ID; fi
+    - docker run -d -p 8080:8080 $IMAGE_NAME
