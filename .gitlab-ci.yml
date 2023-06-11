@@ -12,12 +12,7 @@ build:
 deploy:
   stage: deploy
   script:
-    - apt-get update -qy
-    - apt-get install -y wget
-    - wget -qO- https://deb.nodesource.com/setup_18.x | bash -
-    - apt-get install -y nodejs
-    - npm install -g firebase-tools
-    - firebase use --token $FIREBASE_TOKEN
-    - firebase deploy --token $FIREBASE_TOKEN --only hosting  
+    - echo "Deploy to production server"
+    - curl -s "https://api.render.com/deploy/srv-ci2ptt67avj2t359mss0?key=_AyLa8MCgPg"
   only:
     - main
