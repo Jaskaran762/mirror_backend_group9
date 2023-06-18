@@ -1,6 +1,6 @@
 variables:
   # custom runner for group 9 team project
-  GITLAB_RUNNER = "group_nine_runner"
+  GITLAB_RUNNER: "group_nine_runner"
 
 image: maven:latest
 
@@ -13,15 +13,15 @@ stages:
 test:
   stage: test
   tags:
-    - $GITLAB_RUNNER
+    - group_nine_runner
   script:
-  # this will clean the target folder and then test the maven project
+    # this will clean the target folder and then test the maven project
     - mvn clean test
 
 build:
   stage: build
   tags:
-    - $GITLAB_RUNNER
+    - group_nine_runner
   script:
     - mvn package
   artifacts:
@@ -31,7 +31,7 @@ build:
 deploy:
   stage: deploy
   tags:
-    - $GITLAB_RUNNER
+    - group_nine_runner
   script:
     - echo "Deploy to test server on render"
     - curl -s "$RENDER_TRIGGER_URL_TEST_ENV"
