@@ -1,14 +1,16 @@
-# Use the official Tomcat image from the Docker Hub
-FROM tomcat:9.0.8-jre8-alpine
+#
+#  Build stage
+#
+FROM maven:3.8.1-openjdk-17-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
 
-# Remove the default webapps that comes with the Tomcat image
-RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy the WAR file from [gitlab target directory] to Tomcat
-webapps directory in local container
-COPY target/*.war $CATALINA_HOME/webapps/group09.war
-
+#
+# Package stage
+#
+FROM openjdk:17-alpine
+COPY --from=build /home/app/target/group09-0.0.1-SNAPSHOT.jar /usr/local/lib/group09.jar
 EXPOSE 8080
-
-# The command to run when the container starts
-CMD ["catalina.sh", "run"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/group09.jar"]
