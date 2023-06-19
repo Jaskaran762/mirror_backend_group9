@@ -28,12 +28,13 @@ build:
     paths:
       - target/*.jar
 
+# deployed on render with base url https://group09-prod.onrender.com
 deploy:
   stage: deploy
   tags:
     - group_nine_runner
   script:
     - echo "Deploy to test server on render"
-    - curl -s "$RENDER_TRIGGER_URL_TEST_ENV"
+    - curl -s "$RENDER_TRIGGER_URL_PROD_ENV"
   only:
-    - main
+    - prod
