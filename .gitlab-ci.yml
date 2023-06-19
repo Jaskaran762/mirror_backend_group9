@@ -34,7 +34,7 @@ deploy:
   tags:
     - group_nine_runner
   script:
-    - echo "Deploy to test server on render"
+    - echo "Deploy to prod server on render"
     - curl -s "$RENDER_TRIGGER_URL_PROD_ENV"
   only:
     - prod
