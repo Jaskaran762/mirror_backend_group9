@@ -2,31 +2,13 @@ package com.group9.group09.DTO;
 
 public class ResponseDTO {
 
-    String respCde;
-    String respMsg;
-    boolean respStatus = false;
+    private String token;
 
-    public String getRespCde() {
-        return respCde;
+    public String getToken() {
+        return token;
     }
 
-    public void setRespCde(String respCde) {
-        this.respCde = respCde;
-    }
-
-    public String getRespMsg() {
-        return respMsg;
-    }
-
-    public void setRespMsg(String respMsg) {
-        this.respMsg = respMsg;
-    }
-
-    public boolean isRespStatus() {
-        return respStatus;
-    }
-
-    public void setRespStatus(boolean respStatus) {
-        this.respStatus = respStatus;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

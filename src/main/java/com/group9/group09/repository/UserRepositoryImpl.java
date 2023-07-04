@@ -2,64 +2,73 @@ package com.group9.group09.repository;
 
 import com.group9.group09.model.User;
 import com.group9.group09.repository.interfaces.UserRepository;
+import com.group9.group09.repository.rowmapper.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-	private final JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
+    @Autowired
+    public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-	@Override
-	public int saveUserInfo(User user) {
-		String sql = "INSERT INTO USER (name, username, email, password) VALUES (?, ?, ?, ?)";
-		return jdbcTemplate.update(sql, user.getName(), user.getUserId(), user.getEmail(), user.getPassword());
-	}
+    @Override
+    public int saveUserInfo(User user) {
 
-	@Override
-	public int updateUserPassword(User user) {
-		String sql = "UPDATE USER SET password = ? WHERE id = ?";
-		return jdbcTemplate.update(sql, user.getPassword(), user.getUserId());
-	}
+        try {
+            Integer userId = jdbcTemplate.queryForObject("SELECT MAX(USERID) FROM User", Integer.class);
 
-	@Override
-	public int updateUserEmail(User user) {
-		String sql = "UPDATE USER SET email = ? WHERE id = ?";
-		return jdbcTemplate.update(sql, user.getEmail(), user.getUserId());
-	}
+            String sql = "INSERT INTO User (name, UserID, email, password) VALUES (?, ?, ?, ?)";
+            return jdbcTemplate.update(sql, user.getName(), userId+1, user.getEmail(), user.getPassword());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
 
-	@Override
-	public User findByUserId(String userId) {
-		try {
-			String sql = "SELECT * FROM USER WHERE id = ?";
-			return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(User.class), userId);
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
-		}
-	}
+    @Override
+    public int updateUserPassword(User user) {
+        String sql = "UPDATE User SET password = ? WHERE UserID = ?";
+        return jdbcTemplate.update(sql, user.getPassword(), user.getUserId());
+    }
 
-	@Override
-	public User findByUsermail(String email) {
-		try {
-			String sql = "SELECT * FROM USER WHERE email = ?";
-			return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(User.class), email);
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
-		}
-	}
+    @Override
+    public int updateUserEmail(User user) {
+        String sql = "UPDATE User SET email = ? WHERE UserID = ?";
+        return jdbcTemplate.update(sql, user.getEmail(), user.getUserId());
+    }
 
-	@Override
-	public int deleteByUserId(String id) {
-		String sql = "DELETE FROM USER WHERE id = ?";
-		return jdbcTemplate.update(sql, id);
-	}
+    @Override
+    public Optional<User> findByUserId(String userId) {
+        try {
+            String sql = "SELECT * FROM User where UserID = ?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new UserRowMapper(), userId));
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    @Override
+    public Optional<User> findByUsermail(String email) {
+        try {
+            String sql = "SELECT * FROM User WHERE email = ?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new UserRowMapper(), email));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public int deleteByUserId(String id) {
+        String sql = "DELETE FROM User WHERE UserID = ?";
+        return jdbcTemplate.update(sql, id);
+    }
 }

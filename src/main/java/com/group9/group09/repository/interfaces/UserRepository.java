@@ -2,6 +2,8 @@ package com.group9.group09.repository.interfaces;
 
 import com.group9.group09.model.User;
 
+import java.util.Optional;
+
 public interface UserRepository {
 
 	int saveUserInfo(User user);
@@ -9,10 +11,10 @@ public interface UserRepository {
 	int updateUserPassword(User user);
 	
 	int updateUserEmail(User user);
-	
-	User findByUserId(String userId);
+
+	Optional<User> findByUserId(String userId);
 	
 	int deleteByUserId(String userId);
 
-	User findByUsermail(String email);
+	Optional<User> findByUsermail(String email);
 }

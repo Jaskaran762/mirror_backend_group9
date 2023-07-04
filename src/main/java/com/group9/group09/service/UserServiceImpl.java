@@ -1,55 +1,58 @@
 package com.group9.group09.service;
 
 import com.group9.group09.DTO.ResponseDTO;
+import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.repository.interfaces.UserRepository;
 import com.group9.group09.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public ResponseDTO loginUserService(User user) {
 
+        if (isNullOrEmpty(user.getEmail()) || isNullOrEmpty(user.getPassword())) {
+            throw new UserNotFoundException("Empty fields");
+        }
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getEmail(),
+                        user.getPassword()
+                )
+        );
+
         ResponseDTO loginStatus = new ResponseDTO();
 
-        try {
-            if (isNullOrEmpty(user.getEmail()) || isNullOrEmpty(user.getPassword())) {
-                throw new UserNotFoundException("RESP003");
-            }
+        Optional<User> userInfo = userRepository.findByUsermail(user.getEmail());
 
-            User userInfo = userRepository.findByUsermail(user.getEmail());
-            if (userInfo != null) {
-                int passwordCmp = user.getPassword().compareTo(userInfo.getPassword());
-                if (passwordCmp == 0) {
-                    loginStatus.setRespStatus(true);
-                    loginStatus.setRespMsg("Login successful");
-                    loginStatus.setRespCde("RESP001");
-                } else {
-                    loginStatus.setRespStatus(false);
-                    loginStatus.setRespMsg("Password incorrect");
-                    loginStatus.setRespCde("RESP002");
-                }
-            } else {
-                throw new UserNotFoundException("RESP003");
-            }
-        } catch (UserNotFoundException exception) {
-            loginStatus.setRespStatus(false);
-            loginStatus.setRespMsg("User not found. Enter a valid email address");
-            loginStatus.setRespCde(exception.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (userInfo != null) {
+            var jwtToken = jwtService.generateToken(userInfo.get());
+            loginStatus.setToken(jwtToken);
         }
+
         return loginStatus;
     }
 
@@ -58,33 +61,23 @@ public class UserServiceImpl implements UserService {
 
         ResponseDTO registerStatus = new ResponseDTO();
 
-        try {
-            if (isNullOrEmpty(user.getEmail()) || isNullOrEmpty(user.getPassword()) || isNullOrEmpty(user.getName())) {
-                throw new RuntimeException("RESP004");
-            }
-
-            User userInfo = userRepository.findByUsermail(user.getEmail());
-            if (userInfo != null && !userInfo.getUserId().isEmpty()) {
-                throw new RuntimeException("RESP004");
-            }
-
-            if (userRepository.saveUserInfo(user) == 1) {
-                registerStatus.setRespCde("RESP005");
-                registerStatus.setRespStatus(true);
-                registerStatus.setRespMsg("Registration successful");
-            } else {
-                throw new RuntimeException("RESP006");
-            }
-        } catch (Exception e) {
-            if (e.getMessage().equals("RESP004")) {
-                registerStatus.setRespCde(e.getMessage());
-                registerStatus.setRespMsg("User already exists");
-            } else if (e.getMessage().equals("RESP006")) {
-                registerStatus.setRespCde(e.getMessage());
-                registerStatus.setRespMsg("Database error");
-            }
-            registerStatus.setRespStatus(false);
+        if (isNullOrEmpty(user.getEmail()) || isNullOrEmpty(user.getPassword()) || isNullOrEmpty(user.getName())) {
+            throw new RuntimeException();
         }
+
+        Optional<User> userInfo = userRepository.findByUsermail(user.getEmail());
+        if (userInfo != null && !userInfo.get().getUserId().isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (userRepository.saveUserInfo(user) == 1) {
+            var jwtToken = jwtService.generateToken(user);
+            registerStatus.setToken(jwtToken);
+        } else {
+            throw new RuntimeException();
+        }
+
         return registerStatus;
     }
 
