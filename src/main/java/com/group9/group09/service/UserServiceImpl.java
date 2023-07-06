@@ -51,6 +51,8 @@ public class UserServiceImpl implements UserService {
         if (userInfo != null) {
             var jwtToken = jwtService.generateToken(userInfo.get());
             loginStatus.setToken(jwtToken);
+            loginStatus.setEmail(user.getEmail());
+            loginStatus.setSuccess("ok");
         }
 
         return loginStatus;
