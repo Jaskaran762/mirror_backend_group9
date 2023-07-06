@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * sddf
+ *
+ */
 @RestController
 @RequestMapping(path = "/auth")
 @CrossOrigin
