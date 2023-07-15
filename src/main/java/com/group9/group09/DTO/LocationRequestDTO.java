@@ -2,7 +2,7 @@ package com.group9.group09.DTO;
 
 import java.time.LocalDateTime;
 
-public class LocationRequestDTO {
+public class LocationRequestDTO extends RequestDTO{
 
     private String location;
     private LocalDateTime startDate;

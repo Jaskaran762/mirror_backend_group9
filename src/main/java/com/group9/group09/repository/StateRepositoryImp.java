@@ -31,7 +31,7 @@ public class StateRepositoryImp implements StateRepository {
     public Optional<State> findByStateName(String stateName) {
 
         try {
-            String findStatebyNameQuery = "SELECT * FROM States where state_id = ?";
+            String findStatebyNameQuery = "SELECT * FROM States where state = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(findStatebyNameQuery, new StateRowMapper(), stateName));
         } catch (Exception e) {
             System.out.println(e.getMessage());

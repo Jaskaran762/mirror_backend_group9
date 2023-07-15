@@ -1,9 +1,6 @@
 package com.group9.group09.controller;
 
-import com.group9.group09.DTO.ChoiceRequestDTO;
-import com.group9.group09.DTO.ChoiceResponseDTO;
-import com.group9.group09.DTO.ErrorResponse;
-import com.group9.group09.DTO.LocationRequestDTO;
+import com.group9.group09.DTO.*;
 import com.group9.group09.service.interfaces.HomePageService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +34,18 @@ public class HomePageController {
     }
 
     @PostMapping(path = "/location")
-    public ResponseEntity<?> locationSelector(@RequestBody LocationRequestDTO location) {
-
-        return null;
+    public ResponseEntity<?> locationSelector(@RequestBody LocationRequestDTO location, HttpServletRequest request) {
+        try {
+            location.setToken(request.getHeader("Authorization").replace("Bearer ",""));
+            LocationResponseDTO locationResponseDTO =  homeService.locationSelectorService(location);
+            return new ResponseEntity<>(locationResponseDTO, HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("location selector api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
     }
 
     public HomePageService getHomeService() {
