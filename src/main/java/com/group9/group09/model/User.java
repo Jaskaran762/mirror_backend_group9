@@ -14,13 +14,13 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 	private String phone;
-	private String homeCountry;
+	private Integer homeCountry;
 
-	public String getHomeCountry() {
+	public Integer getHomeCountry() {
 		return homeCountry;
 	}
 
-	public void setHomeCountry(String homeCountry) {
+	public void setHomeCountry(Integer homeCountry) {
 		this.homeCountry = homeCountry;
 	}
 

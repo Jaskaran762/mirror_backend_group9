@@ -42,7 +42,7 @@ public class HomePageServiceImpl implements HomePageService {
 
        String username = jwtService.extractUsername(choice.getToken());
        Optional<User> user = userRepository.findByUsermail(username);
-       Optional<Country> country = countryRepository.findByCountryName(user.get().getHomeCountry());
+       Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
        List<State> stateList =  stateRepository.getStatesbyCountryID(country.get().getCountryID());
 
        List<String> states = new ArrayList<>();

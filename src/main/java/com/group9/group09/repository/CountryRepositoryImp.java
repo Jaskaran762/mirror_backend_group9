@@ -22,7 +22,7 @@ public class CountryRepositoryImp implements CountryRepository {
     @Override
     public Optional<Country> findByCountryId(Integer countryID) {
         try {
-            String findCountrybyIDQuery = "SELECT * FROM Country where country_id = ?";
+            String findCountrybyIDQuery = "SELECT * FROM Countries where country_id = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(findCountrybyIDQuery, new CountryRowMapper(), countryID));
         } catch (Exception e) {
             throw new UserNotFoundException("dafs");
@@ -34,7 +34,7 @@ public class CountryRepositoryImp implements CountryRepository {
     public Optional<Country> findByCountryName(String countryName) {
 
         try {
-            String findCountrybyNameQuery = "SELECT * FROM Country where country_name = ?";
+            String findCountrybyNameQuery = "SELECT * FROM Countries where country_name = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(findCountrybyNameQuery, new CountryRowMapper(), countryName));
         } catch (Exception e) {
             System.out.println(e.getMessage());
