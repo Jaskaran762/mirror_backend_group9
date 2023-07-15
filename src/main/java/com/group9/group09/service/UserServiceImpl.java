@@ -68,7 +68,8 @@ public class UserServiceImpl implements UserService {
         }
 
         Optional<User> userInfo = userRepository.findByUsermail(user.getEmail());
-        if (userInfo != null && !userInfo.get().getUserId().isEmpty()) {
+
+        if (!userInfo.isPresent() && !userInfo.get().getUserId().isEmpty()) {
             throw new RuntimeException();
         }
 

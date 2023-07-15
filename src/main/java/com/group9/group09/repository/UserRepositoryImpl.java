@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.repository.interfaces.UserRepository;
 import com.group9.group09.repository.rowmapper.UserRowMapper;
@@ -51,8 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
             String sql = "SELECT * FROM User where UserID = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new UserRowMapper(), userId));
         } catch (Exception e) {
-            System.out.println(e);
-            return null;
+            throw new UserNotFoundException("dafs");
         }
     }
 
