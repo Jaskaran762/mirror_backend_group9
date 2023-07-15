@@ -1,6 +1,6 @@
 package com.group9.group09.DTO;
 
-public class ChoiceRequestDTO {
+public class ChoiceRequestDTO extends RequestDTO {
 
     private String region;
 

@@ -14,6 +14,15 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 	private String phone;
+	private String homeCountry;
+
+	public String getHomeCountry() {
+		return homeCountry;
+	}
+
+	public void setHomeCountry(String homeCountry) {
+		this.homeCountry = homeCountry;
+	}
 
 	public String getName() {
 		return name;
