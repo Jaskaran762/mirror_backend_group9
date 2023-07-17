@@ -1,7 +1,6 @@
 package com.group9.group09.controller;
 
 import com.group9.group09.DTO.*;
-import com.group9.group09.model.ItemstoCarry;
 import com.group9.group09.service.interfaces.HomePageService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +92,6 @@ public class HomePageController {
         }
     }
 
-    //@PostMapping(path = "/activity/{activityId}")
     @PostMapping(path = "/activities")
     public ResponseEntity<?> getActivities(@RequestBody ActivityRequestDTO activityRequestDTO, HttpServletRequest request) {
         try {
@@ -109,6 +107,22 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/wishlist")
+    public ResponseEntity<?> getWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
+        try {
+            wishListRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ",""));
+            WishListResponseDTO wishListResponseDTO =  homeService.getWishListService(wishListRequestDTO);
+            return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("wishlist api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
+    //@PostMapping(path = "/activity/{activityId}")
    /* @GetMapping(path = "/itemstocarry")
     public ResponseEntity<?> getItemstoCarry() {
         try {

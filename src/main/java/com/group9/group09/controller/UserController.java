@@ -20,7 +20,6 @@ public class UserController {
 
     @PostMapping(path="/login")
     public ResponseEntity<?> userLogin(@RequestBody User user){
-
         try{
             ResponseDTO serviceResponse = userService.loginUserService(user);
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);

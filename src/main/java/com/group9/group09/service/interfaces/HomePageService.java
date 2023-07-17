@@ -17,6 +17,8 @@ public interface HomePageService {
 
     ItemsToCarryResponseDTO getItemstoCarry();
 
+    WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO);
+
 //    CityResponseDTO citySelectorplaceService(CityRequestDTO city);
 
 

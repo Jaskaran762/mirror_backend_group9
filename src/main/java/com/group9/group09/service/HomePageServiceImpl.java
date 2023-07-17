@@ -38,6 +38,8 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private ItemsRepository itemsRepository;
 
+    @Autowired
+    private WishlistRepository wishlistRepository;
     @Override
     public ChoiceResponseDTO choiceSelectorService(ChoiceRequestDTO choice) {
 
@@ -173,4 +175,19 @@ public class HomePageServiceImpl implements HomePageService {
 
         return itemsToCarryResponseDTO;
     }
+
+    @Override
+    public WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO) {
+
+        WishListResponseDTO wishListResponseDTO = new WishListResponseDTO();
+        List<wishList> wishlistList = wishlistRepository.getWishListbyUserID(wishListRequestDTO.getUserid());
+
+        wishListResponseDTO.setUserId(wishListRequestDTO.getUserid());
+        wishListResponseDTO.setActivityid(wishListResponseDTO.getActivityid());
+        wishListResponseDTO.setWishLists(wishlistList);
+
+        return wishListResponseDTO;
+    }
+
+
 }
