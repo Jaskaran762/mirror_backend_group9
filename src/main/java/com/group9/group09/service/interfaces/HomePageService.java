@@ -1,13 +1,23 @@
 package com.group9.group09.service.interfaces;
 
-import com.group9.group09.DTO.ChoiceRequestDTO;
-import com.group9.group09.DTO.ChoiceResponseDTO;
-import com.group9.group09.DTO.LocationRequestDTO;
-import com.group9.group09.DTO.LocationResponseDTO;
+import com.group9.group09.DTO.*;
+import com.group9.group09.model.ItemstoCarry;
 
 public interface HomePageService {
 
     ChoiceResponseDTO choiceSelectorService(ChoiceRequestDTO choice);
 
     LocationResponseDTO locationSelectorService(LocationRequestDTO location);
+
+    CityResponseDTO citySelectorService(CityRequestDTO city);
+
+    PlaceResponseDTO placeSelectorService(PlaceRequestDTO placeRequestDTO);
+
+    ActivityResponseDTO getActivitiesService(ActivityRequestDTO activityRequestDTO);
+
+    ItemsToCarryResponseDTO getItemstoCarry();
+
+//    CityResponseDTO citySelectorplaceService(CityRequestDTO city);
+
+
 }

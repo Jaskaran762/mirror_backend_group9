@@ -1,7 +1,6 @@
 package com.group9.group09.repository.interfaces;
 
 import com.group9.group09.model.City;
-import com.group9.group09.model.State;
 
 import java.util.List;
 import java.util.Optional;

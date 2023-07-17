@@ -14,6 +14,7 @@ public class CityRowMapper implements RowMapper<City> {
         city.setCityId(Integer.valueOf(rs.getString("City_ID")));
         city.setCityName(rs.getString("city"));
         city.setStateId(Integer.valueOf(rs.getString("state_id")));
+        city.setDescription(rs.getString("description"));
 
         return city;
     }

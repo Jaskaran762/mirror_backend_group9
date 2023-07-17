@@ -11,9 +11,11 @@ public class ActivityRowMapper implements RowMapper<Activity> {
     public Activity mapRow(ResultSet rs, int rowNum) throws SQLException {
         Activity activity = new Activity();
         activity.setActivityId(rs.getInt("Activity_ID"));
-        activity.setActivityName(rs.getString("activity"));
-        activity.setDescription(rs.getString("activity_description"));
+        activity.setActivityName(rs.getString("activity_name"));
+        activity.setDescription(rs.getString("description"));
         activity.setPlaceId(rs.getInt("place_id"));
+        activity.setCityId(rs.getInt("city_id"));
+        activity.setReviews(rs.getString("reviews"));
 
         return activity;
     }

@@ -1,11 +1,23 @@
 package com.group9.group09.model;
 
+import java.awt.*;
+
 public class Activity {
 
-    private String activityName;
     private Integer activityId;
+    private String activityName;
     private String description;
     private Integer placeId;
+    private Integer cityId;
+    private String reviews;
+
+    public String getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews = reviews;
+    }
 
     public String getActivityName() {
         return activityName;
@@ -37,5 +49,14 @@ public class Activity {
 
     public void setPlaceId(Integer placeId) {
         this.placeId = placeId;
+    }
+
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 }

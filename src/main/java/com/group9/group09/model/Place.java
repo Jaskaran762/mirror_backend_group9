@@ -9,6 +9,16 @@ public class Place {
     private String description;
     private Integer cityId;
 
+    private List<String> activitiesStringList;
+
+    public List<String> getActivitiesStringList() {
+        return activitiesStringList;
+    }
+
+    public void setActivitiesStringList(List<String> activitiesStringList) {
+        this.activitiesStringList = activitiesStringList;
+    }
+
     private List<Activity> activities;
 
     public String getPlaceName() {

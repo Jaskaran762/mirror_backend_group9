@@ -1,18 +1,9 @@
 package com.group9.group09.service;
 
-import com.group9.group09.DTO.ChoiceRequestDTO;
-import com.group9.group09.DTO.ChoiceResponseDTO;
-import com.group9.group09.DTO.LocationRequestDTO;
-import com.group9.group09.DTO.LocationResponseDTO;
+import com.group9.group09.DTO.*;
 import com.group9.group09.config.JwtService;
-import com.group9.group09.model.City;
-import com.group9.group09.model.Country;
-import com.group9.group09.model.State;
-import com.group9.group09.model.User;
-import com.group9.group09.repository.interfaces.CityRepository;
-import com.group9.group09.repository.interfaces.CountryRepository;
-import com.group9.group09.repository.interfaces.StateRepository;
-import com.group9.group09.repository.interfaces.UserRepository;
+import com.group9.group09.model.*;
+import com.group9.group09.repository.interfaces.*;
 import com.group9.group09.service.interfaces.HomePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class HomePageServiceImpl implements HomePageService {
@@ -39,6 +29,15 @@ public class HomePageServiceImpl implements HomePageService {
 
     @Autowired
     private CityRepository cityRepository;
+
+    @Autowired
+    private PlaceRepository placeRepository;
+
+    @Autowired
+    private ActivityRepository activityRepository;
+    @Autowired
+    private ItemsRepository itemsRepository;
+
     @Override
     public ChoiceResponseDTO choiceSelectorService(ChoiceRequestDTO choice) {
 
@@ -82,4 +81,96 @@ public class HomePageServiceImpl implements HomePageService {
     }
 
 
+   /* @Override
+    public CityResponseDTO citySelectorService(CityRequestDTO cityRequestDTO) {
+
+        CityResponseDTO cityResponseDTO = new CityResponseDTO();
+
+        String username = jwtService.extractUsername(cityRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+        Optional<City> city = cityRepository.findByCityId(cityRequestDTO.getCityID());
+        List<Activity> activityList = activityRepository.getActivitiesbyCityID(city.get().getCityId());
+
+        List<String> activityStringList = new ArrayList<>();
+        for (Activity activity: activityList) {
+            activityStringList.add(activity.getActivityName());
+        }
+        cityResponseDTO.setCityID(city.get().getCityId());
+        cityResponseDTO.setCityName(city.get().getCityName());
+        cityResponseDTO.setDescription(city.get().getDescription());
+        cityResponseDTO.setPlaceResponseList(activityStringList);
+
+
+        return cityResponseDTO;
+    }*/
+
+    public CityResponseDTO citySelectorService(CityRequestDTO cityRequestDTO) {
+
+        CityResponseDTO cityResponseDTO = new CityResponseDTO();
+
+        String username = jwtService.extractUsername(cityRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+        Optional<City> city = cityRepository.findByCityId(cityRequestDTO.getCityID());
+        List<Place> placeList = placeRepository.getPlacesbyCityID(city.get().getCityId());
+
+        List<String> placeStringList = new ArrayList<>();
+
+        for (Place place: placeList) {
+            placeStringList.add(place.getPlaceName());
+        }
+
+        cityResponseDTO.setCityID(city.get().getCityId());
+        cityResponseDTO.setCityName(city.get().getCityName());
+        cityResponseDTO.setDescription(city.get().getDescription());
+        cityResponseDTO.setPlaceResponseList(placeStringList);
+
+        return cityResponseDTO;
+    }
+
+    @Override
+    public PlaceResponseDTO placeSelectorService(PlaceRequestDTO placeRequestDTO) {
+        PlaceResponseDTO placeResponseDTO = new PlaceResponseDTO();
+
+        String username = jwtService.extractUsername(placeRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+        Optional<Place> place = placeRepository.findByPlaceId(placeRequestDTO.getPlaceID());
+        List<Activity> activityList = activityRepository.getActivitiesbyCityID(place.get().getCityId());
+
+        List<String> activityStringList = new ArrayList<>();
+        for ( Activity activity : activityList) {
+            activityStringList.add(activity.getActivityName());
+        }
+
+        placeResponseDTO.setPlaceName(place.get().getPlaceName());
+        placeResponseDTO.setPlaceID(place.get().getPlaceId());
+        placeResponseDTO.setDescription(place.get().getDescription());
+        placeResponseDTO.setActivityStringResponseList(activityStringList);
+        placeResponseDTO.setActivityObjectsResponseList(activityList);
+        return placeResponseDTO;
+    }
+
+    @Override
+    public ActivityResponseDTO getActivitiesService(ActivityRequestDTO activityRequestDTO) {
+        ActivityResponseDTO activityResponseDTO = new ActivityResponseDTO();
+
+        String username = jwtService.extractUsername(activityRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+        List<Activity> activityList = activityRepository.getAllActivities();
+
+        activityResponseDTO.setActivityObjectsResponseList(activityList);
+
+
+        return activityResponseDTO;
+    }
+
+    @Override
+    public ItemsToCarryResponseDTO getItemstoCarry() {
+
+        ItemsToCarryResponseDTO itemsToCarryResponseDTO = new ItemsToCarryResponseDTO();
+
+        List<ItemstoCarry> itemstoCarryList = itemsRepository.getAllItems();
+        itemsToCarryResponseDTO.setItemstoCarryResponseList(itemstoCarryList);
+
+        return itemsToCarryResponseDTO;
+    }
 }
