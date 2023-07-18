@@ -19,6 +19,8 @@ public interface HomePageService {
 
     WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO);
 
+    ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO);
+
 //    CityResponseDTO citySelectorplaceService(CityRequestDTO city);
 
 

@@ -40,6 +40,9 @@ public class HomePageServiceImpl implements HomePageService {
 
     @Autowired
     private WishlistRepository wishlistRepository;
+
+    @Autowired
+    private ItineraryRepository itineraryRepository;
     @Override
     public ChoiceResponseDTO choiceSelectorService(ChoiceRequestDTO choice) {
 
@@ -187,6 +190,18 @@ public class HomePageServiceImpl implements HomePageService {
         wishListResponseDTO.setWishLists(wishlistList);
 
         return wishListResponseDTO;
+    }
+
+    @Override
+    public ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO) {
+
+        ItineraryResponseDTO itineraryResponseDTO = new ItineraryResponseDTO();
+
+        List<Itinerary> itineraryList = itineraryRepository.getItineraryList(itineraryRequestDTO.getUserid());
+        itineraryResponseDTO.setUserid(itineraryRequestDTO.getUserid());
+        itineraryResponseDTO.setItineraryObjectList(itineraryList);
+
+        return itineraryResponseDTO;
     }
 
 
