@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
@@ -30,6 +31,12 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Handles the user login service.
+     *
+     * @param user the User object containing login credentials
+     * @return the ResponseDTO object
+     */
     @Override
     public ResponseDTO loginUserService(User user) {
 
@@ -58,6 +65,12 @@ public class UserServiceImpl implements UserService {
         return loginStatus;
     }
 
+    /**
+     * Handles the user registration service.
+     *
+     * @param user the User object containing registration details
+     * @return the ResponseDTO object
+     */
     @Override
     public ResponseDTO registerUserService(User user) {
 
@@ -84,11 +97,23 @@ public class UserServiceImpl implements UserService {
         return registerStatus;
     }
 
+    /**
+     * Handles the update user password service.
+     *
+     * @param user the User object containing updated password
+     * @return the ResponseDTO object
+     */
     @Override
     public ResponseDTO updateUserpasswordService(User user) {
         return null;
     }
 
+    /**
+     * Handles the update user phone number service.
+     *
+     * @param user the User object containing updated phone number
+     * @return the ResponseDTO object
+     */
     @Override
     public ResponseDTO updateUserphoneNumberService(User user) {
         return null;

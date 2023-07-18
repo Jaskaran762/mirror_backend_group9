@@ -16,13 +16,20 @@ public class HomePageController {
     @Autowired
     private HomePageService homeService;
 
+    /**
+     * Handles the choice selection request.
+     *
+     * @param choice  the ChoiceRequestDTO object
+     * @param request the HttpServletRequest object
+     * @return the ResponseEntity containing the ChoiceResponseDTO object
+     */
     @PostMapping(path = "/choice")
     public ResponseEntity<?> choiceSelector(@RequestBody ChoiceRequestDTO choice, HttpServletRequest request) {
-         try {
-                choice.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-                ChoiceResponseDTO choiceResponseDTO =  homeService.choiceSelectorService(choice);
-                return new ResponseEntity<>(choiceResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
+        try {
+            choice.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            ChoiceResponseDTO choiceResponseDTO = homeService.choiceSelectorService(choice);
+            return new ResponseEntity<>(choiceResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("Choice selector api failed");
@@ -31,13 +38,20 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Handles the location selection request.
+     *
+     * @param location the LocationRequestDTO object
+     * @param request  the HttpServletRequest object
+     * @return the ResponseEntity containing the LocationResponseDTO object
+     */
     @PostMapping(path = "/location")
     public ResponseEntity<?> locationSelector(@RequestBody LocationRequestDTO location, HttpServletRequest request) {
         try {
-            location.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-            LocationResponseDTO locationResponseDTO =  homeService.locationSelectorService(location);
+            location.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            LocationResponseDTO locationResponseDTO = homeService.locationSelectorService(location);
             return new ResponseEntity<>(locationResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("location selector api failed");
@@ -62,13 +76,20 @@ public class HomePageController {
     }*/
 
 
+    /**
+     * Handles the city selection request.
+     *
+     * @param city    the CityRequestDTO object
+     * @param request the HttpServletRequest object
+     * @return the ResponseEntity containing the CityResponseDTO object
+     */
     @PostMapping(path = "/city")
     public ResponseEntity<?> citySelector(@RequestBody CityRequestDTO city, HttpServletRequest request) {
         try {
-            city.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-            CityResponseDTO cityResponseDTO =  homeService.citySelectorService(city);
+            city.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            CityResponseDTO cityResponseDTO = homeService.citySelectorService(city);
             return new ResponseEntity<>(cityResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("city selector api failed");
@@ -77,13 +98,20 @@ public class HomePageController {
         }
     }
 
-     @PostMapping(path = "/place")
+    /**
+     * Handles the place selection request.
+     *
+     * @param placeRequestDTO the PlaceRequestDTO object
+     * @param request         the HttpServletRequest object
+     * @return the ResponseEntity containing the PlaceResponseDTO object
+     */
+    @PostMapping(path = "/place")
     public ResponseEntity<?> placeSelector(@RequestBody PlaceRequestDTO placeRequestDTO, HttpServletRequest request) {
         try {
-            placeRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-            PlaceResponseDTO placeResponseDTO =  homeService.placeSelectorService(placeRequestDTO);
+            placeRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            PlaceResponseDTO placeResponseDTO = homeService.placeSelectorService(placeRequestDTO);
             return new ResponseEntity<>(placeResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("place selector api failed");
@@ -92,13 +120,20 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Handles the activities request.
+     *
+     * @param activityRequestDTO the ActivityRequestDTO object
+     * @param request            the HttpServletRequest object
+     * @return the ResponseEntity containing the ActivityResponseDTO object
+     */
     @PostMapping(path = "/activities")
     public ResponseEntity<?> getActivities(@RequestBody ActivityRequestDTO activityRequestDTO, HttpServletRequest request) {
         try {
-            activityRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-            ActivityResponseDTO activityResponseDTO =  homeService.getActivitiesService(activityRequestDTO);
+            activityRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            ActivityResponseDTO activityResponseDTO = homeService.getActivitiesService(activityRequestDTO);
             return new ResponseEntity<>(activityResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("activity response selector api failed");
@@ -107,13 +142,20 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Handles the wishlist request.
+     *
+     * @param wishListRequestDTO the WishListRequestDTO object
+     * @param request            the HttpServletRequest object
+     * @return the ResponseEntity containing the WishListResponseDTO object
+     */
     @PostMapping(path = "/wishlist")
     public ResponseEntity<?> getWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
         try {
-            wishListRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-            WishListResponseDTO wishListResponseDTO =  homeService.getWishListService(wishListRequestDTO);
+            wishListRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            WishListResponseDTO wishListResponseDTO = homeService.getWishListService(wishListRequestDTO);
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("wishlist api failed");
@@ -122,13 +164,20 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Handles the itinerary request.
+     *
+     * @param itineraryRequestDTO the ItineraryRequestDTO object
+     * @param request             the HttpServletRequest object
+     * @return the ResponseEntity containing the ItineraryResponseDTO object
+     */
     @PostMapping(path = "/itinerary")
     public ResponseEntity<?> getItinerary(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
         try {
-            itineraryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-            ItineraryResponseDTO itineraryResponseDTO =  homeService.getItinerary(itineraryRequestDTO);
+            itineraryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            ItineraryResponseDTO itineraryResponseDTO = homeService.getItinerary(itineraryRequestDTO);
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("itinerary api failed");

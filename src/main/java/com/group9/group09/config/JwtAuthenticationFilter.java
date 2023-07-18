@@ -25,6 +25,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    /**
+     * Filters incoming requests to authenticate using JWT.
+     *
+     * @param request     the incoming HttpServletRequest object
+     * @param response    the outgoing HttpServletResponse object
+     * @param filterChain the FilterChain object
+     * @throws ServletException if an error occurs during the filter process
+     * @throws IOException      if an I/O error occurs during the filter process
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -35,13 +44,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String email;
-        if (authHeader == null ||  !authHeader.startsWith("Bearer ")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
         jwt = authHeader.substring((7));
         email = jwtService.extractUsername(jwt);
-        if (email !=null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

@@ -43,18 +43,25 @@ public class HomePageServiceImpl implements HomePageService {
 
     @Autowired
     private ItineraryRepository itineraryRepository;
+
+    /**
+     * Handles the choice selection service.
+     *
+     * @param choice the ChoiceRequestDTO object
+     * @return the ChoiceResponseDTO object
+     */
     @Override
     public ChoiceResponseDTO choiceSelectorService(ChoiceRequestDTO choice) {
 
-       ChoiceResponseDTO choiceResponseDTO = new ChoiceResponseDTO();
+        ChoiceResponseDTO choiceResponseDTO = new ChoiceResponseDTO();
 
-       String username = jwtService.extractUsername(choice.getToken());
-       Optional<User> user = userRepository.findByUsermail(username);
-       Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
-       List<State> stateList =  stateRepository.getStatesbyCountryID(country.get().getCountryID());
+        String username = jwtService.extractUsername(choice.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+        Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
+        List<State> stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
 
-       List<String> states = new ArrayList<>();
-        for (State state :stateList) {
+        List<String> states = new ArrayList<>();
+        for (State state : stateList) {
             states.add(state.getStateName());
         }
 
@@ -64,6 +71,12 @@ public class HomePageServiceImpl implements HomePageService {
         return choiceResponseDTO;
     }
 
+    /**
+     * Handles the location selection service.
+     *
+     * @param location the LocationRequestDTO object
+     * @return the LocationResponseDTO object
+     */
     @Override
     public LocationResponseDTO locationSelectorService(LocationRequestDTO location) {
 
@@ -75,7 +88,7 @@ public class HomePageServiceImpl implements HomePageService {
         List<City> cityList = cityRepository.getCitiesbyStateID(state.get().getStateID());
 
         List<String> citiesStringList = new ArrayList<>();
-        for (City city: cityList) {
+        for (City city : cityList) {
             citiesStringList.add(city.getCityName());
         }
 
@@ -109,6 +122,12 @@ public class HomePageServiceImpl implements HomePageService {
         return cityResponseDTO;
     }*/
 
+    /**
+     * Handles the city selection service.
+     *
+     * @param cityRequestDTO the CityRequestDTO object
+     * @return the CityResponseDTO object
+     */
     public CityResponseDTO citySelectorService(CityRequestDTO cityRequestDTO) {
 
         CityResponseDTO cityResponseDTO = new CityResponseDTO();
@@ -120,7 +139,7 @@ public class HomePageServiceImpl implements HomePageService {
 
         List<String> placeStringList = new ArrayList<>();
 
-        for (Place place: placeList) {
+        for (Place place : placeList) {
             placeStringList.add(place.getPlaceName());
         }
 
@@ -132,6 +151,12 @@ public class HomePageServiceImpl implements HomePageService {
         return cityResponseDTO;
     }
 
+    /**
+     * Handles the place selection service.
+     *
+     * @param placeRequestDTO the PlaceRequestDTO object
+     * @return the PlaceResponseDTO object
+     */
     @Override
     public PlaceResponseDTO placeSelectorService(PlaceRequestDTO placeRequestDTO) {
         PlaceResponseDTO placeResponseDTO = new PlaceResponseDTO();
@@ -142,7 +167,7 @@ public class HomePageServiceImpl implements HomePageService {
         List<Activity> activityList = activityRepository.getActivitiesbyCityID(place.get().getCityId());
 
         List<String> activityStringList = new ArrayList<>();
-        for ( Activity activity : activityList) {
+        for (Activity activity : activityList) {
             activityStringList.add(activity.getActivityName());
         }
 
@@ -154,6 +179,12 @@ public class HomePageServiceImpl implements HomePageService {
         return placeResponseDTO;
     }
 
+    /**
+     * Handles the activities service.
+     *
+     * @param activityRequestDTO the ActivityRequestDTO object
+     * @return the ActivityResponseDTO object
+     */
     @Override
     public ActivityResponseDTO getActivitiesService(ActivityRequestDTO activityRequestDTO) {
         ActivityResponseDTO activityResponseDTO = new ActivityResponseDTO();
@@ -168,6 +199,11 @@ public class HomePageServiceImpl implements HomePageService {
         return activityResponseDTO;
     }
 
+    /**
+     * Handles the items to carry service.
+     *
+     * @return the ItemsToCarryResponseDTO object
+     */
     @Override
     public ItemsToCarryResponseDTO getItemstoCarry() {
 
@@ -179,6 +215,12 @@ public class HomePageServiceImpl implements HomePageService {
         return itemsToCarryResponseDTO;
     }
 
+    /**
+     * Handles the wishlist service.
+     *
+     * @param wishListRequestDTO the WishListRequestDTO object
+     * @return the WishListResponseDTO object
+     */
     @Override
     public WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO) {
 
@@ -192,6 +234,12 @@ public class HomePageServiceImpl implements HomePageService {
         return wishListResponseDTO;
     }
 
+    /**
+     * Handles the itinerary service.
+     *
+     * @param itineraryRequestDTO the ItineraryRequestDTO object
+     * @return the ItineraryResponseDTO object
+     */
     @Override
     public ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO) {
 
