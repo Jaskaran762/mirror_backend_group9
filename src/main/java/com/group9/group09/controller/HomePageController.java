@@ -122,6 +122,22 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/itinerary")
+    public ResponseEntity<?> getItinerary(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
+        try {
+            itineraryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ",""));
+            ItineraryResponseDTO itineraryResponseDTO =  homeService.getItinerary(itineraryRequestDTO);
+            return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("itinerary api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
+
     //@PostMapping(path = "/activity/{activityId}")
    /* @GetMapping(path = "/itemstocarry")
     public ResponseEntity<?> getItemstoCarry() {
