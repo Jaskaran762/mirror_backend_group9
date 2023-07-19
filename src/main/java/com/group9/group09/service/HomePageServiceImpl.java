@@ -44,6 +44,8 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private ItineraryRepository itineraryRepository;
 
+    @Autowired
+    private ReviewsPlaceRepository reviewsPlaceRepository;
     /**
      * Handles the choice selection service.
      *
@@ -252,5 +254,14 @@ public class HomePageServiceImpl implements HomePageService {
         return itineraryResponseDTO;
     }
 
+    @Override
+    public ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
+
+        ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
+        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyUserId(reviewsPlaceRequestDTO.getPlaceid());
+        reviewsPlaceResponseDTO.setReviewsPlaces(reviewsPlaces);
+
+        return reviewsPlaceResponseDTO;
+    }
 
 }

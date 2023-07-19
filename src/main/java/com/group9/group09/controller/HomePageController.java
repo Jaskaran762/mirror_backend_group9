@@ -186,6 +186,21 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/reviewplace")
+    public ResponseEntity<?> getReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {
+        try {
+            reviewsPlaceRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            ReviewsPlaceResponseDTO reviewsPlaceResponseDTO  = homeService.getReviewDetails(reviewsPlaceRequestDTO);
+            return new ResponseEntity<>(reviewsPlaceResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("review place api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
 
     //@PostMapping(path = "/activity/{activityId}")
    /* @GetMapping(path = "/itemstocarry")
