@@ -3,7 +3,7 @@ package com.group9.group09.DTO;
 /**
  * Data Transfer Object for Error Response.
  */
-public class ErrorResponseDTO {
+public class ErrorResponse {
 
     private String message;
 

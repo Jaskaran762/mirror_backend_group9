@@ -1,6 +1,6 @@
 package com.group9.group09.controller;
 
-import com.group9.group09.DTO.ErrorResponseDTO;
+import com.group9.group09.DTO.ErrorResponse;
 import com.group9.group09.DTO.ResponseDTO;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
@@ -30,7 +30,7 @@ public class UserController {
             ResponseDTO serviceResponse = userService.loginUserService(user);
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
         } catch (Exception e) {
-            ErrorResponseDTO response = new ErrorResponseDTO();
+            ErrorResponse response = new ErrorResponse();
             response.setMessage("Login Issue");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
@@ -50,12 +50,12 @@ public class UserController {
             ResponseDTO serviceResponse = userService.registerUserService(user);
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
         } catch (UserNotFoundException e) {
-            ErrorResponseDTO response = new ErrorResponseDTO();
+            ErrorResponse response = new ErrorResponse();
             response.setMessage(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         } catch (Exception e) {
-            ErrorResponseDTO response = new ErrorResponseDTO();
+            ErrorResponse response = new ErrorResponse();
             response.setMessage("Registration Issue");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
