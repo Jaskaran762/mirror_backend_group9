@@ -80,21 +80,25 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException();
         }
 
-        Optional<User> userInfo = userRepository.findByUsermail(user.getEmail());
+        Optional<User> userInfo ;
 
-        if (!userInfo.isPresent() && !userInfo.get().getUserId().isEmpty()) {
-            throw new RuntimeException();
+        try{
+            userRepository.findByUsermail(user.getEmail());
+            registerStatus.setSuccess("User already present");
+            return registerStatus;
+        }catch (RuntimeException e){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            if (userRepository.saveUserInfo(user) == 1) {
+                var jwtToken = jwtService.generateToken(user);
+                registerStatus.setToken(jwtToken);
+                registerStatus.setEmail(user.getEmail());
+                registerStatus.setSuccess("ok");
+
+            } else {
+                throw new RuntimeException();
+            }
+            return registerStatus;
         }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (userRepository.saveUserInfo(user) == 1) {
-            var jwtToken = jwtService.generateToken(user);
-            registerStatus.setToken(jwtToken);
-        } else {
-            throw new RuntimeException();
-        }
-
-        return registerStatus;
     }
 
     /**
