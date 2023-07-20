@@ -30,14 +30,21 @@ public class UserRepositoryImpl implements UserRepository {
             return jdbcTemplate.update(sql, user.getName(), userId+1, user.getEmail(), user.getPassword(),user.getHomeCountry());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return 0;
+            return -1 ;
         }
     }
 
     @Override
-    public int updateUserPassword(User user) {
-        String sql = "UPDATE User SET password = ? WHERE UserID = ?";
-        return jdbcTemplate.update(sql, user.getPassword(), user.getUserId());
+    public int updateUserPassword(User user,String newpassword) {
+        try{
+
+            String updateUserPasswordQuery = "UPDATE User SET password = ? WHERE UserID = ?";
+
+            return jdbcTemplate.update(updateUserPasswordQuery ,newpassword,user.getUserId());
+
+        }catch (Exception e){
+            throw new UserNotFoundException("User update failed");
+        }
     }
 
     @Override
@@ -70,5 +77,15 @@ public class UserRepositoryImpl implements UserRepository {
     public int deleteByUserId(String id) {
         String sql = "DELETE FROM User WHERE UserID = ?";
         return jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public User getUserbyemail(String email) {
+      try{
+          String getUserbyIDQuery = "Select * FROM User WHERE email = ?";
+            return jdbcTemplate.queryForObject(getUserbyIDQuery,new UserRowMapper() ,email);
+      }catch (Exception e){
+          throw new UserNotFoundException(e.getMessage());
+      }
     }
 }

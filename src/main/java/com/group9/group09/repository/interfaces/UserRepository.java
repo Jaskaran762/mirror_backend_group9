@@ -8,7 +8,7 @@ public interface UserRepository {
 
 	int saveUserInfo(User user);
 	
-	int updateUserPassword(User user);
+	int updateUserPassword(User user,String newpassword);
 	
 	int updateUserEmail(User user);
 
@@ -17,4 +17,6 @@ public interface UserRepository {
 	int deleteByUserId(String userId);
 
 	Optional<User> findByUsermail(String email);
+
+	User getUserbyemail(String email);
 }
