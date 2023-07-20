@@ -117,10 +117,12 @@ public class HomePageController {
     @PostMapping(path = "/place")
     public ResponseEntity<?> placeSelector(@RequestBody PlaceRequestDTO placeRequestDTO, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             placeRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             PlaceResponseDTO placeResponseDTO = homeService.placeSelectorService(placeRequestDTO);
             return new ResponseEntity<>(placeResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("place selector api failed");
@@ -139,10 +141,12 @@ public class HomePageController {
     @PostMapping(path = "/activities")
     public ResponseEntity<?> getActivities(@RequestBody ActivityRequestDTO activityRequestDTO, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             activityRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             ActivityResponseDTO activityResponseDTO = homeService.getActivitiesService(activityRequestDTO);
             return new ResponseEntity<>(activityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("activity response selector api failed");
@@ -161,10 +165,12 @@ public class HomePageController {
     @PostMapping(path = "/wishlist")
     public ResponseEntity<?> getWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             wishListRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             WishListResponseDTO wishListResponseDTO = homeService.getWishListService(wishListRequestDTO);
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("wishlist api failed");
@@ -183,10 +189,12 @@ public class HomePageController {
     @PostMapping(path = "/itinerary")
     public ResponseEntity<?> getItinerary(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             itineraryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             ItineraryResponseDTO itineraryResponseDTO = homeService.getItinerary(itineraryRequestDTO);
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("itinerary api failed");
@@ -198,10 +206,12 @@ public class HomePageController {
     @PostMapping(path = "/reviewplace")
     public ResponseEntity<?> getReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             reviewsPlaceRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             ReviewsPlaceResponseDTO reviewsPlaceResponseDTO  = homeService.getReviewDetails(reviewsPlaceRequestDTO);
             return new ResponseEntity<>(reviewsPlaceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("review place api failed");
