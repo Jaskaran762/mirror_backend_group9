@@ -2,6 +2,7 @@ package com.group9.group09.controller;
 
 import com.group9.group09.DTO.ErrorResponse;
 import com.group9.group09.DTO.ResponseDTO;
+import com.group9.group09.DTO.UserEditRequestDTO;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.service.interfaces.UserService;
@@ -57,6 +58,23 @@ public class UserController {
         } catch (Exception e) {
             ErrorResponse response = new ErrorResponse();
             response.setMessage("Registration Issue");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
+    @PostMapping(path="/edit")
+    public ResponseEntity<?> userInfoEdit(@RequestBody UserEditRequestDTO userEditRequestDTO ){
+
+        try{
+            User user = userService.getUserbyEmail(userEditRequestDTO);
+            userEditRequestDTO.setUser(user);
+            ResponseDTO updatedUserResponse  = userService.updateUserpasswordService(userEditRequestDTO);
+            return new ResponseEntity<>(updatedUserResponse, HttpStatus.OK);
+        }
+        catch(Exception e){
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("User edit api failed");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
