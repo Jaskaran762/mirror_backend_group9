@@ -13,10 +13,10 @@
     </appender>
 
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/flavourFit.log</file>
+        <file>logs/Tripify_Grp_09.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>logs/flavourFit.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/Tripify_Grp_09.%d{yyyy-MM-dd}.log</fileNamePattern>
 
             <!-- keep 30 days' worth of history -->
             <maxHistory>30</maxHistory>
