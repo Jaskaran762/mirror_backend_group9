@@ -3,6 +3,8 @@ package com.group9.group09.controller;
 import com.group9.group09.DTO.*;
 import com.group9.group09.service.interfaces.HomePageService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ public class HomePageController {
     @Autowired
     private HomePageService homeService;
 
+    private static Logger logger = LoggerFactory.getLogger(HomePageController.class);
     /**
      * Handles the choice selection request.
      *
@@ -26,10 +29,12 @@ public class HomePageController {
     @PostMapping(path = "/choice")
     public ResponseEntity<?> choiceSelector(@RequestBody ChoiceRequestDTO choice, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             choice.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             ChoiceResponseDTO choiceResponseDTO = homeService.choiceSelectorService(choice);
             return new ResponseEntity<>(choiceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("Choice selector api failed");
@@ -48,10 +53,12 @@ public class HomePageController {
     @PostMapping(path = "/location")
     public ResponseEntity<?> locationSelector(@RequestBody LocationRequestDTO location, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             location.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             LocationResponseDTO locationResponseDTO = homeService.locationSelectorService(location);
             return new ResponseEntity<>(locationResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("location selector api failed");
@@ -86,10 +93,12 @@ public class HomePageController {
     @PostMapping(path = "/city")
     public ResponseEntity<?> citySelector(@RequestBody CityRequestDTO city, HttpServletRequest request) {
         try {
+            logger.info("Info Message: ");
             city.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             CityResponseDTO cityResponseDTO = homeService.citySelectorService(city);
             return new ResponseEntity<>(cityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Error Message: ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("city selector api failed");
