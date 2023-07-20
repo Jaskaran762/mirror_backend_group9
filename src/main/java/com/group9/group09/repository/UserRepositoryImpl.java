@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.repository.interfaces.UserRepository;
 import com.group9.group09.repository.rowmapper.UserRowMapper;
@@ -25,8 +26,8 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             Integer userId = jdbcTemplate.queryForObject("SELECT MAX(USERID) FROM User", Integer.class);
 
-            String sql = "INSERT INTO User (name, UserID, email, password) VALUES (?, ?, ?, ?)";
-            return jdbcTemplate.update(sql, user.getName(), userId+1, user.getEmail(), user.getPassword());
+            String sql = "INSERT INTO User (name, UserID, email, password,homecountry) VALUES (?, ?, ?, ?,?)";
+            return jdbcTemplate.update(sql, user.getName(), userId+1, user.getEmail(), user.getPassword(),user.getHomeCountry());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return 0;
@@ -51,8 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
             String sql = "SELECT * FROM User where UserID = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new UserRowMapper(), userId));
         } catch (Exception e) {
-            System.out.println(e);
-            return null;
+            throw new UserNotFoundException("Line 65 ,userimp class");
         }
     }
 
@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
             String sql = "SELECT * FROM User WHERE email = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new UserRowMapper(), email));
         } catch (Exception e) {
-            return null;
+            throw new UserNotFoundException("Line 65 ,userimp class ");
         }
     }
 

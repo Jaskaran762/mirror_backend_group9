@@ -22,14 +22,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(path="/login")
-    public ResponseEntity<?> userLogin(@RequestBody User user){
-
-        try{
+    /**
+     * Handles the user login request.
+     *
+     * @param user the User object containing login credentials
+     * @return the ResponseEntity containing the ResponseDTO object
+     */
+    @PostMapping(path = "/login")
+    public ResponseEntity<?> userLogin(@RequestBody User user) {
+        try {
             ResponseDTO serviceResponse = userService.loginUserService(user);
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             ErrorResponse response = new ErrorResponse();
             response.setMessage("Login Issue");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -37,24 +41,30 @@ public class UserController {
         }
     }
 
-    @PostMapping(path="/register")
-    public ResponseEntity<?> userRegister(@RequestBody User user){
+    /**
+     * Handles the user registration request.
+     *
+     * @param user the User object containing registration details
+     * @return the ResponseEntity containing the ResponseDTO object
+     */
+    @PostMapping(path = "/register")
+    public ResponseEntity<?> userRegister(@RequestBody User user) {
 
-        try{
+        try {
             ResponseDTO serviceResponse = userService.registerUserService(user);
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
-        }
-        catch(UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             ErrorResponse response = new ErrorResponse();
             response.setMessage(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             ErrorResponse response = new ErrorResponse();
             response.setMessage("Registration Issue");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
+
+
 }

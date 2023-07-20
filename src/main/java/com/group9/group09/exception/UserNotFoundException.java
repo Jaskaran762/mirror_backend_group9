@@ -1,12 +1,18 @@
 package com.group9.group09.exception;
 
-import com.group9.group09.DTO.ResponseDTO;
+// Custom exception class for user not found.
+public class UserNotFoundException extends RuntimeException {
 
-public class UserNotFoundException extends RuntimeException{
-
-    public UserNotFoundException(){
+    // Constructs a new UserNotFoundException with no detail message.
+    public UserNotFoundException() {
         super();
     }
-    public UserNotFoundException(String rspCde){
+
+    /**
+     * Constructs a new UserNotFoundException with the specified detail message.
+     *
+     * @param rspCde the error response code
+     */
+    public UserNotFoundException(String rspCde) {
     }
 }
