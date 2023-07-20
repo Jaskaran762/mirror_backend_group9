@@ -18,6 +18,11 @@ public class ApplicationConfig {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Returns a UserDetailsService implementation based on the UserRepository.
+     *
+     * @return UserDetailsService instance.
+     */
     @Bean
     public UserDetailsService userDetailsService() {
 
@@ -25,6 +30,11 @@ public class ApplicationConfig {
                 .orElseThrow();
     }
 
+    /**
+     * Creates and configures an instance of DaoAuthenticationProvider with the UserDetailsService and PasswordEncoder.
+     *
+     * @return AuthenticationProvider instance.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -33,11 +43,23 @@ public class ApplicationConfig {
         return authProvider;
     }
 
+    /**
+     * Retrieves the AuthenticationManager instance from the AuthenticationConfiguration.
+     *
+     * @param config AuthenticationConfiguration instance.
+     * @return AuthenticationManager instance.
+     * @throws Exception if an error occurs while retrieving the AuthenticationManager.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * Creates a BCryptPasswordEncoder instance.
+     *
+     * @return PasswordEncoder instance.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

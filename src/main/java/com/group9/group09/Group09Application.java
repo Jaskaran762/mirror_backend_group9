@@ -6,11 +6,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages="com.group9.group09")
 public class Group09Application extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Group09Application.class, args);
-		System.out.println("Test Script 33");
-	}
+    // Main method to run application
+    public static void main(String[] args) {
+        SpringApplication.run(Group09Application.class, args);
+        System.out.println("Test Script 33");
+    }
 }
