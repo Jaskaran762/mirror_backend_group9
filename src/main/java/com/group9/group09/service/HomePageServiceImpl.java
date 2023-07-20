@@ -15,6 +15,7 @@ import java.util.Optional;
 @Service
 public class HomePageServiceImpl implements HomePageService {
 
+
     @Autowired
     private JwtService jwtService;
 
@@ -46,6 +47,9 @@ public class HomePageServiceImpl implements HomePageService {
 
     @Autowired
     private ReviewsPlaceRepository reviewsPlaceRepository;
+
+    private static Logger logger = LoggerFactory.getLogger(HomePageServiceImpl.class);
+    
     /**
      * Handles the choice selection service.
      *
