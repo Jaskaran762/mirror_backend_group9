@@ -12,19 +12,17 @@ stages:
 
 test:
   stage: test
-  #  tags:
-  #    - group_nine_runner
+#  tags:
+#    - group_nine_runner
   script:
-    - cd Backend
     # this will clean the target folder and then test the maven project
     - mvn clean test
 
 build:
   stage: build
-  #  tags:
-  #   - group_nine_runner
+#  tags:
+#   - group_nine_runner
   script:
-    - cd Backend
     - mvn package
   artifacts:
     paths:
@@ -33,8 +31,8 @@ build:
 # deployed on render with base url https://group09.onrender.com
 deploy:
   stage: deploy
-  #  tags:
-  #    - group_nine_runner
+#  tags:
+#    - group_nine_runner
   script:
     - echo "Deploy to test server on render"
     - curl -s "$RENDER_TRIGGER_URL_TEST_ENV"
