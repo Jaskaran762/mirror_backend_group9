@@ -7,26 +7,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
+
 @Repository
 public class ReviewsActivityRepositoryImpl implements ReviewsActivityRepository {
-    private final JdbcTemplate jdbcTemplate;
+        private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(ReviewsPlaceRepositoryImp.class);
-    public ReviewsActivityRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @Override
-    public List<ReviewsActivity> getReviewsActivitybyActivityId(Integer activityId) {
-        try{
-            logger.info("Info Message: ");
-            String getReviewsPlaceByReviewId = "Select * from ReviewsActivity where activity_id = ?";
-            return jdbcTemplate.query(getReviewsPlaceByReviewId,new ReviewsActivityRowMapper(),activityId);
-        }catch (Exception e){
-            logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+        private static Logger logger = LoggerFactory.getLogger(ReviewsPlaceRepositoryImp.class);
+        public ReviewsActivityRepositoryImpl(JdbcTemplate jdbcTemplate) {
+            this.jdbcTemplate = jdbcTemplate;
         }
-    }
+        @Override
+        public List<ReviewsActivity> getReviewsActivitybyActivityId(Integer activityId) {
+            try {
+                logger.info("Info Message: ");
+                String getReviewsPlaceByReviewId = "Select * from ReviewsActivity where activity_id = ?";
+                return jdbcTemplate.query(getReviewsPlaceByReviewId, new ReviewsActivityRowMapper(), activityId);
+            } catch (Exception e) {
+                logger.error("Error Message: ");
+                throw new RuntimeException(e.getMessage());
+            }
+        }
 }
