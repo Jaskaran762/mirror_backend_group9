@@ -49,6 +49,9 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private ReviewsPlaceRepository reviewsPlaceRepository;
 
+    @Autowired
+    private ReviewsActivityRepository reviewsActivityRepository;
+
     private static Logger logger = LoggerFactory.getLogger(HomePageServiceImpl.class);
     
     /**
@@ -267,6 +270,16 @@ public class HomePageServiceImpl implements HomePageService {
         reviewsPlaceResponseDTO.setReviewsPlaces(reviewsPlaces);
 
         return reviewsPlaceResponseDTO;
+    }
+
+    @Override
+    public ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO) {
+
+        ReviewsActivityResponseDTO reviewsActivityResponseDTO = new ReviewsActivityResponseDTO();
+        List<ReviewsActivity> reviewsActivity = reviewsActivityRepository.getReviewsActivitybyActivityId(reviewsActivityRequestDTO.getActivityid());
+        reviewsActivityResponseDTO.setReviewsActivities(reviewsActivity);
+
+        return reviewsActivityResponseDTO;
     }
 
 }

@@ -69,4 +69,6 @@ public interface HomePageService {
      */
     ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO);
     ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO);
+    ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO);
+
 }

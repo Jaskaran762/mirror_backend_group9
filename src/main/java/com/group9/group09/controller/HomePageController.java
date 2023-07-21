@@ -220,6 +220,23 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/reviewactivity")
+    public ResponseEntity<?> getReviewActiviyy(@RequestBody ReviewsActivityRequestDTO reviewsActivityRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message: ");
+            reviewsActivityRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            ReviewsActivityResponseDTO reviewsActivityResponseDTO = homeService.getReviewActivityDetails(reviewsActivityRequestDTO);
+            return new ResponseEntity<>(reviewsActivityResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("review activity api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
 
     //@PostMapping(path = "/activity/{activityId}")
    /* @GetMapping(path = "/itemstocarry")
