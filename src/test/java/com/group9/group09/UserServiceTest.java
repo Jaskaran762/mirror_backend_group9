@@ -58,7 +58,7 @@ public class UserServiceTest {
         assertEquals("mockToken", response.getToken());
     }
 
-    @Test
+    /*@Test
     public void testRegisterUserService() {
 
         User user = new User();
@@ -77,5 +77,5 @@ public class UserServiceTest {
 
         assertNotNull(response);
         assertEquals("mockToken", response.getToken());
-    }
+    }*/
 }

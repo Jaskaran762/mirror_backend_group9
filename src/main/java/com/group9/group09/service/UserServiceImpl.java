@@ -1,6 +1,7 @@
 package com.group9.group09.service;
 
 import com.group9.group09.DTO.ResponseDTO;
+import com.group9.group09.DTO.UserEditRequestDTO;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
@@ -11,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
@@ -22,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
@@ -104,12 +108,80 @@ public class UserServiceImpl implements UserService {
     /**
      * Handles the update user password service.
      *
-     * @param user the User object containing updated password
+     * @param
      * @return the ResponseDTO object
      */
+ /*   @Override
+    public ResponseDTO updateUserpasswordService(UserEditRequestDTO userEditRequestDTO) {
+        if (isNullOrEmpty(userEditRequestDTO.getUser().getEmail()) || isNullOrEmpty(userEditRequestDTO.getUser().getPassword())) {
+            throw new UserNotFoundException("Fill in user name and password for updating password");
+        }
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userEditRequestDTO.getUser().getEmail(),
+                        userEditRequestDTO.getUser().getPassword()
+                )
+        );
+
+        ResponseDTO updatedUserResponsedDTO = new ResponseDTO();
+
+        Optional<User> userInfo = userRepository.findByUsermail(userEditRequestDTO.getUser().getEmail());
+
+        if (userInfo != null) {
+          //  var jwtToken = jwtService.generateToken(userInfo.get());
+
+            int success = userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
+
+            if(success == 1){
+                updatedUserResponsedDTO.setSuccess("Successfully Updated");
+                updatedUserResponsedDTO.setEmail(userEditRequestDTO.getUser().getEmail());
+               // updatedUserResponsedDTO.setToken(jwtToken);
+            }else {
+                updatedUserResponsedDTO.setSuccess("Error while updating the User password");
+                updatedUserResponsedDTO.setEmail(userEditRequestDTO.getUser().getEmail());
+             //   updatedUserResponsedDTO.setToken(jwtToken);
+            }
+        }
+
+        return updatedUserResponsedDTO;
+    }*/
+
     @Override
-    public ResponseDTO updateUserpasswordService(User user) {
-        return null;
+    public ResponseDTO updateUserpasswordService(UserEditRequestDTO userEditRequestDTO) {
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        if (isNullOrEmpty(userEditRequestDTO.getUser().getUserId()) || isNullOrEmpty(userEditRequestDTO.getNewpassword())) {
+            throw new UserNotFoundException("Empty fields");
+        }
+
+        // Find the user by ID from the database
+        Optional<User> userPresent = userRepository.findByUsermail(userEditRequestDTO.getEmail());
+
+        if (userPresent.isPresent()) {
+            User user = userPresent.get();
+            // Set the new password after encoding it
+          //  user.setPassword(passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
+            // Save the updated user to the database
+         //   userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
+
+            userRepository.updateUserPassword(userEditRequestDTO.getUser(),   passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
+
+        responseDTO.setSuccess("Password updated successfully");
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
+
+        return responseDTO;
+
+}
+
+    @Override
+    public User getUserbyEmail(UserEditRequestDTO userEditRequestDTO) {
+
+        User user ;
+        user = userRepository.getUserbyemail(userEditRequestDTO.getEmail());
+        return user;
     }
 
     /**

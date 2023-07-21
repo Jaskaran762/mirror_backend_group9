@@ -7,13 +7,15 @@ import com.group9.group09.repository.interfaces.*;
 import com.group9.group09.service.interfaces.HomePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class HomePageServiceImpl implements HomePageService {
+
 
     @Autowired
     private JwtService jwtService;
@@ -44,6 +46,14 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private ItineraryRepository itineraryRepository;
 
+    @Autowired
+    private ReviewsPlaceRepository reviewsPlaceRepository;
+
+    @Autowired
+    private ReviewsActivityRepository reviewsActivityRepository;
+
+    private static Logger logger = LoggerFactory.getLogger(HomePageServiceImpl.class);
+    
     /**
      * Handles the choice selection service.
      *
@@ -252,5 +262,24 @@ public class HomePageServiceImpl implements HomePageService {
         return itineraryResponseDTO;
     }
 
+    @Override
+    public ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
+
+        ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
+        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyUserId(reviewsPlaceRequestDTO.getPlaceid());
+        reviewsPlaceResponseDTO.setReviewsPlaces(reviewsPlaces);
+
+        return reviewsPlaceResponseDTO;
+    }
+
+    @Override
+    public ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO) {
+
+        ReviewsActivityResponseDTO reviewsActivityResponseDTO = new ReviewsActivityResponseDTO();
+        List<ReviewsActivity> reviewsActivity = reviewsActivityRepository.getReviewsActivitybyActivityId(reviewsActivityRequestDTO.getActivityid());
+        reviewsActivityResponseDTO.setReviewsActivities(reviewsActivity);
+
+        return reviewsActivityResponseDTO;
+    }
 
 }
