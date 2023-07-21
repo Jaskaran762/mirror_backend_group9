@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
+/**
+ * Service implementation class for user-related operations.
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -48,12 +51,7 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("Empty fields");
         }
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
-                        user.getPassword()
-                )
-        );
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
 
         ResponseDTO loginStatus = new ResponseDTO();
 
@@ -84,13 +82,13 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException();
         }
 
-        Optional<User> userInfo ;
+        Optional<User> userInfo;
 
-        try{
+        try {
             userRepository.findByUsermail(user.getEmail());
             registerStatus.setSuccess("User already present");
             return registerStatus;
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             if (userRepository.saveUserInfo(user) == 1) {
                 var jwtToken = jwtService.generateToken(user);
@@ -146,7 +144,6 @@ public class UserServiceImpl implements UserService {
 
         return updatedUserResponsedDTO;
     }*/
-
     @Override
     public ResponseDTO updateUserpasswordService(UserEditRequestDTO userEditRequestDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
@@ -161,26 +158,33 @@ public class UserServiceImpl implements UserService {
         if (userPresent.isPresent()) {
             User user = userPresent.get();
             // Set the new password after encoding it
-          //  user.setPassword(passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
+            //  user.setPassword(passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
             // Save the updated user to the database
-         //   userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
+            //   userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
 
-            userRepository.updateUserPassword(userEditRequestDTO.getUser(),   passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
+            userRepository.updateUserPassword(userEditRequestDTO.getUser(), passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
 
-        responseDTO.setSuccess("Password updated successfully");
+            responseDTO.setSuccess("Password updated successfully");
         } else {
             throw new UserNotFoundException("User not found");
         }
 
         return responseDTO;
 
-}
+    }
 
+    /**
+     * Retrieves the user by email.
+     *
+     * @param userEditRequestDTO the UserEditRequestDTO object containing user email
+     * @return the User object
+     */
     @Override
     public User getUserbyEmail(UserEditRequestDTO userEditRequestDTO) {
 
-        User user ;
+        User user;
         user = userRepository.getUserbyemail(userEditRequestDTO.getEmail());
+        if (user == null) throw new UserNotFoundException("User not found");
         return user;
     }
 
