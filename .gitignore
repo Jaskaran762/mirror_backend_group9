@@ -1,3 +1,17 @@
+### Global
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.idea
+
 Backend/HELP.md
 Backend/target/
 !Backend/.mvn/wrapper/maven-wrapper.jar
@@ -9,6 +23,20 @@ Backend/.idea
 *.iws
 *.iml
 *.ipr
+
+### Eclipse ###
+Backend/.metadata
+Backend/bin/
+Backend/tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+Backend/local.properties
+Backend/.settings/
+Backend/.loadpath
+Backend/.recommenders
+
 
 
 ### VS Code ###
