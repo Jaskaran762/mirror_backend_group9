@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public class ReviewsActivityRepositoryImpl implements ReviewsActivityRepository {
         private final JdbcTemplate jdbcTemplate;
-
         private static Logger logger = LoggerFactory.getLogger(ReviewsPlaceRepositoryImp.class);
         public ReviewsActivityRepositoryImpl(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
