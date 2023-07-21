@@ -238,10 +238,10 @@ public class HomePageController {
     }
 
 
-    //@PostMapping(path = "/activity/{activityId}")
-   /* @GetMapping(path = "/itemstocarry")
-    public ResponseEntity<?> getItemstoCarry() {
+    @PostMapping(path = "/itemstocarry")
+    public ResponseEntity<?> getItemstoCarry(@RequestBody ItemstoCarryRequestDTO itemstoCarryRequestDTO, HttpServletRequest request) {
         try {
+            itemstoCarryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             ItemsToCarryResponseDTO itemsToCarryResponseDTO =  homeService.getItemstoCarry();
             return new ResponseEntity<>(itemsToCarryResponseDTO, HttpStatus.OK);
         }catch (Exception e){
@@ -251,7 +251,7 @@ public class HomePageController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
-    }*/
+    }
 
     public HomePageService getHomeService() {
         return homeService;
