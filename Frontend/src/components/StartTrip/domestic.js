@@ -147,6 +147,7 @@ const Domestic = () => {
       const uniqueIndex = index + data.length * type;
       const isInWishlist = isItemInWishlist(item.title);
       return (
+       
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
             <a href={item.link}>
@@ -205,6 +206,7 @@ const Domestic = () => {
   return (
     <>
       <br />
+      
       <Container>
         <Row>
           <br />
@@ -215,15 +217,31 @@ const Domestic = () => {
             </div>
           </Col>
         </Row>
+        
       </Container>
+      
       <div className="text-left" style={{ padding: '15px' }}>
         <Button variant="primary" size="lg" onClick={handleSearchButton}>
           Search
         </Button>
       </div>
+      
+      
+      <Container>
+        
+      </Container>
+
       {searchButton && (
         <>
-          <Container>
+        <Container>
+          <Row>
+          <Col>
+            <Button onClick={handleWishlist}>WhishList</Button>
+          </Col>
+          <Col>
+          <Button onClick={handleItinerary}>See Itinerary</Button>
+          </Col>
+        </Row>
             <Row>
               <br />
               <Col>
@@ -245,24 +263,11 @@ const Domestic = () => {
               </Col>
             </Row>
             <Row>{renderCards(activitiesToTry, 2)}</Row>
+            
           </Container>
         </>
       )}
-      {wishlist.length > 0 && (
-        <div>
-          <Button onClick={handleWishlist}>WhishList</Button>
-        </div>
-      )}
-      {itinerary.length > 0 && (
-        <div>
-              {itinerary.map((item, index) => (
-                <p key={index}>
-                  {item.title} - Date: {item.date}, Time: {item.time}, End Date: {item.endDate}, End Time: {item.endTime}
-                </p>
-              ))}
-              <Button onClick={handleItinerary}>See Itinerary</Button>
-            </div>
-      )}
+     
     </>
   );
 };

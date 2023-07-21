@@ -206,7 +206,6 @@ const International = () => {
 
   return (
     <>
-    
       <br />
       <Container>
         <Row>
@@ -227,6 +226,14 @@ const International = () => {
       {searchButton && (
         <>
           <Container>
+          <Row>
+          <Col>
+            <Button onClick={handleWishlist}>WhishList</Button>
+          </Col>
+          <Col>
+          <Button onClick={handleItinerary}>See Itinerary</Button>
+          </Col>
+        </Row>
             <Row>
               <br />
               <Col>
@@ -250,21 +257,6 @@ const International = () => {
             <Row>{renderCards(activitiesToTry, 2)}</Row>
           </Container>
         </>
-      )}
-      {wishlist.length > 0 && (
-        <div>
-          <Button onClick={handleWishlist}>WhishList</Button>
-        </div>
-      )}
-      {itinerary.length > 0 && (
-        <div>
-              {itinerary.map((item, index) => (
-                <p key={index}>
-                  {item.title} - Date: {item.date}, Time: {item.time}, End Date: {item.endDate}, End Time: {item.endTime}
-                </p>
-              ))}
-              <Button onClick={handleItinerary}>See Itinerary</Button>
-            </div>
       )}
     </>
   );

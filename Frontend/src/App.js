@@ -1,5 +1,3 @@
-
-
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/authentication/Login";
@@ -13,25 +11,14 @@ import AboutPage from "./components/HomeNavOptions/About";
 import MainPage from "./components/Landing-page/Main";
 
 import "bootstrap/dist/css/bootstrap.css";
-import Domestic from "./components/StartTrip/domestic";
-import International from "./components/StartTrip/international";
-import ItineraryPage from "./components/Itienary/Itienary";
+import Itinerary from "./components/itinerary/itinerary";
+import Wish from "./components/wishlist/Wish";
+import UserProfile from "./components/UserProfile/profile";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-      <Route path='/' element={<Home/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<Signup/>}/>
-      <Route path = '/forgot-password' element = {<ForgotPassword/>}/>
-      <Route path='/contact' element = {<ContactPage/>}/>
-
-      <Route path='/about' element = {<AboutPage/>}/>
-      <Route path='/services' element = {<ServicesPage/>}/>
-      <Route path='*' element={<Error/>}/>
-
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -39,11 +26,10 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
-        <Route path="*" element={<Error />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route path = "/domestic" element = {<Domestic/>} />
-        <Route path = "/international" element = {<International/>} />
-        <Route path = "/itienary" element = {<ItineraryPage/>}/>
+        <Route path = "/itinerary/:data" element ={<Itinerary/>}/>
+        <Route path = "/wish/:data" element ={<Wish />}/>
+        <Route path = "/profile" element = {<UserProfile/>}/>
       </Routes>
     </BrowserRouter>
   );
