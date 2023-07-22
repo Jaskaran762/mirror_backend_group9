@@ -29,8 +29,8 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             logger.info("Info Message: ");
             Integer userId = jdbcTemplate.queryForObject("SELECT MAX(USERID) FROM User", Integer.class);
-            String sql = "INSERT INTO User (name, UserID, email, password,homecountry) VALUES (?, ?, ?, ?,?)";
-            return jdbcTemplate.update(sql, user.getName(), userId+1, user.getEmail(), user.getPassword(),user.getHomeCountry());
+            String sql = "INSERT INTO User (name, UserID, email, password,homecountry, interest) VALUES (?, ?, ?, ?,?,?)";
+            return jdbcTemplate.update(sql, user.getName(), userId+1, user.getEmail(), user.getPassword(),user.getHomeCountry(), user.getInterest());
         } catch (Exception e) {
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
