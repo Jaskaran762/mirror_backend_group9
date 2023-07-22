@@ -72,7 +72,7 @@ const Signup = () => {
       setShowSuccessToast(true); 
       setTimeout(() => {
         setShowSuccessToast(false);
-        changePage('/mainpage');
+        changePage('/landing');
       }, 2000);
     } 
     catch (error) {
