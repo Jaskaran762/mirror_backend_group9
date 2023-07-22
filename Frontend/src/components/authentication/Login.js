@@ -27,7 +27,7 @@ const LoginPage = () => {
       setShowToast(true); 
       setTimeout(() => {
         setShowToast(false); 
-        history('/mainpage');
+        history('/landing');
       }, 2000);
     } catch (error) {
       setIsLoading(false);
