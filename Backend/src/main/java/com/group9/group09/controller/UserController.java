@@ -64,6 +64,9 @@ public class UserController {
         try {
             logger.info("Info Message: ");
             ResponseDTO serviceResponse = userService.registerUserService(user);
+            if (serviceResponse.getSuccess().equalsIgnoreCase("User already present")){
+                throw new UserNotFoundException(serviceResponse.getSuccess());
+            }
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
         } catch (UserNotFoundException e) {
             logger.error("Error Message: ");
