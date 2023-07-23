@@ -10,6 +10,7 @@ public class Place {
     private Integer cityId;
 
     private List<String> activitiesStringList;
+    private String interest;
 
     /**
      * Get the list of activity names associated with the place.
@@ -119,5 +120,13 @@ public class Place {
      */
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
     }
 }

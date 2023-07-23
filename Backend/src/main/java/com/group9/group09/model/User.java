@@ -15,6 +15,7 @@ public class User implements UserDetails {
 	private String password;
 	private String phone;
 	private Integer homeCountry;
+	private String interest;
 
 	/**
 	 * Get the ID of the user's home country.
@@ -176,5 +177,13 @@ public class User implements UserDetails {
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getInterest() {
+		return interest;
+	}
+
+	public void setInterest(String interest) {
+		this.interest = interest;
 	}
 }
