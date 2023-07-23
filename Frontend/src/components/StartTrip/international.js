@@ -21,6 +21,7 @@ const International = () => {
   const [selectedEndTime, setSelectedEndTime] = useState('');
   const [itinerary, setItinerary] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [reviewsToShow, setReviewsToShow] = useState([]);
 
   const placesToVisit = [
     {
@@ -29,6 +30,20 @@ const International = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ]
     },
     {
       title: 'Place 2',
@@ -36,6 +51,20 @@ const International = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ]
     },
     {
       title: 'Place 3',
@@ -43,6 +72,20 @@ const International = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ]
     },
   
   ];
@@ -54,6 +97,20 @@ const International = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ]
     },
     {
       title: 'Activity 2',
@@ -61,6 +118,20 @@ const International = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ]
     },
     {
       title: 'Activity 3',
@@ -68,6 +139,20 @@ const International = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ]
     },
   ];
 
@@ -144,6 +229,11 @@ const International = () => {
     changePage('/wish/' + pass);
   };
 
+  const handleReviews = (item) => {
+    const pass = encodeURIComponent(JSON.stringify(item));
+    changePage('/reviews/'+pass);
+  };
+
   const renderCards = (data, type) => {
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
@@ -155,7 +245,11 @@ const International = () => {
               <Card.Img src={item.imgSrc} variant="top" />
             </a>
             <Card.Body>
-              <Card.Title>{item.title}</Card.Title>
+            <Card.Title>
+              <Button variant="link" onClick={() => handleReviews(item)}>
+                {item.title}
+                </Button>
+              </Card.Title>
               <Card.Text>{item.content}</Card.Text>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
@@ -171,11 +265,11 @@ const International = () => {
             </Modal.Header>
             <Modal.Body>
               <Form.Group>
-                <Form.Label>Date</Form.Label>
+                <Form.Label>Start Date</Form.Label>
                 <Form.Control type="date" value={selectedDate} onChange={handleDateChange} />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Time</Form.Label>
+                <Form.Label>Start Time</Form.Label>
                 <Form.Control type="time" value={selectedTime} onChange={handleTimeChange} />
               </Form.Group>
     
@@ -206,6 +300,7 @@ const International = () => {
 
   return (
     <>
+    
       <br />
       <Container>
         <Row>
@@ -226,14 +321,6 @@ const International = () => {
       {searchButton && (
         <>
           <Container>
-          <Row>
-          <Col>
-            <Button onClick={handleWishlist}>WhishList</Button>
-          </Col>
-          <Col>
-          <Button onClick={handleItinerary}>See Itinerary</Button>
-          </Col>
-        </Row>
             <Row>
               <br />
               <Col>
@@ -257,6 +344,21 @@ const International = () => {
             <Row>{renderCards(activitiesToTry, 2)}</Row>
           </Container>
         </>
+      )}
+      {wishlist.length > 0 && (
+        <div>
+          <Button onClick={handleWishlist}>WhishList</Button>
+        </div>
+      )}
+      {itinerary.length > 0 && (
+        <div>
+              {itinerary.map((item, index) => (
+                <p key={index}>
+                  {item.title} - Date: {item.date}, Time: {item.time}, End Date: {item.endDate}, End Time: {item.endTime}
+                </p>
+              ))}
+              <Button onClick={handleItinerary}>See Itinerary</Button>
+            </div>
       )}
     </>
   );

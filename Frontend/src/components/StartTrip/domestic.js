@@ -3,6 +3,8 @@ import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap'
 import { RiHeartAddLine,RiHeartFill } from 'react-icons/ri';
 import DateRangePicker from '../DateRangePicker';
 import { useNavigate } from 'react-router-dom';
+import ReviewsPage from '../reviews/review.js';
+
 
 const Domestic = () => {
   const [searchButton, setSearchButton] = useState(false);
@@ -19,6 +21,7 @@ const Domestic = () => {
   const [selectedEndTime, setSelectedEndTime] = useState('');
   const [itinerary, setItinerary] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [reviewsToShow, setReviewsToShow] = useState([]);
 
   const placesToVisit = [
     {
@@ -27,6 +30,20 @@ const Domestic = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ] 
     },
     {
       title: 'Destination 2',
@@ -34,6 +51,20 @@ const Domestic = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ] 
     },
     {
       title: 'Destination 3',
@@ -41,6 +72,20 @@ const Domestic = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [
+        {
+          review: 'Abcdefghi',
+          rating: 4,
+          dateofreview: '2019-05-02',
+          username: 'Bhavisha'
+        },
+        {
+          review: 'Review 2',
+          rating: 5,
+          dateofreview: '2023-09-21',
+          username: 'Krishna'
+        }
+       ]  
     },
   ];
 
@@ -51,6 +96,20 @@ const Domestic = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [ 
+        {
+          review: 'This excursion was affordable and very convenient. I really wanted to see Peggy Cove, I did not have to worry about renting a car for the day. I was picked up and dropped off in front of my hotel. The driver was very chatty, friendly ,engaging and knowledgeable',
+          rating: 4,
+          dateofreview: '2023-07-21',
+          username: 'Abhisha'
+      },
+      {
+        review: 'Review 2',
+        rating: 5,
+        dateofreview: '2023-09-21',
+        username: 'Krishna'
+      }
+    ]
     },
     {
       title: 'Activity 2',
@@ -58,6 +117,19 @@ const Domestic = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [ 
+        {
+          review: 'Review 3',
+          rating: 4,
+          dateofreview: '2023-07-21',
+          username: 'Abhisha'
+      },
+      {
+        review: 'Review 4',
+        rating: 5,
+        dateofreview: '2023-09-21',
+        username: 'Krishna'
+      }]
     },
     {
       title: 'Activity 3',
@@ -65,6 +137,19 @@ const Domestic = () => {
       imgSrc:
         'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
       link: 'http://www.example.com',
+      reviews: [ 
+        {
+          review: 'Review 5',
+          rating: 4,
+          dateofreview: '2023-07-21',
+          username: 'Abhisha'
+      },
+      {
+        review: 'Review 6',
+        rating: 5,
+        dateofreview: '2023-09-21',
+        username: 'Krishna'
+      }]
     },
   ];
 
@@ -92,6 +177,10 @@ const Domestic = () => {
     setSelectedEndTime(event.target.value);
   };
 
+  const handleseeReviews = (reviews) => {
+    setReviewsToShow(reviews);
+  };
+  
   const handleSaveItinerary = (title) => {
     const item = {
       date: selectedDate,
@@ -124,12 +213,12 @@ const Domestic = () => {
       setWishlist([...wishlist, item]);
     }
   };
-
   const isItemInWishlist = (title) => {
     return wishlist.some((item) => item.title === title);
   };
 
   const changePage = useNavigate();
+
   const handleItinerary = () => {
     console.log(itinerary);
     const pass = encodeURIComponent(JSON.stringify(itinerary));
@@ -141,6 +230,26 @@ const Domestic = () => {
     changePage('/wish/' + pass);
   };
 
+  const ReviewsDisplay = ({ reviews }) => {
+    return (
+      <div>
+        {reviews.map((review, index) => (
+          <div key={index}>
+            <p>Review {index + 1}: {review.review}</p>
+            <p>Rating {index + 1}: {review.rating}</p>
+            <p>Date of Review {index + 1}: {review.dateofreview}</p>
+            <p>Username {index + 1}: {review.username}</p>
+            <hr />
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const handleReviews = (item) => {
+    const pass = encodeURIComponent(JSON.stringify(item));
+    changePage('/reviews/'+pass);
+  };
 
   const renderCards = (data, type) => {
     const cards = data.map((item, index) => {
@@ -154,7 +263,11 @@ const Domestic = () => {
               <Card.Img src={item.imgSrc} variant="top" />
             </a>
             <Card.Body>
-              <Card.Title>{item.title}</Card.Title>
+              <Card.Title>
+              <Button variant="link" onClick={() => handleReviews(item)}>
+                {item.title}
+                </Button>
+              </Card.Title>
               <Card.Text>{item.content}</Card.Text>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
@@ -170,11 +283,11 @@ const Domestic = () => {
             </Modal.Header>
             <Modal.Body>
               <Form.Group>
-                <Form.Label>Date</Form.Label>
+                <Form.Label>Start Date</Form.Label>
                 <Form.Control type="date" value={selectedDate} onChange={handleDateChange} />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Time</Form.Label>
+                <Form.Label>Start Time</Form.Label>
                 <Form.Control type="time" value={selectedTime} onChange={handleTimeChange} />
               </Form.Group>
     
@@ -236,7 +349,7 @@ const Domestic = () => {
         <Container>
           <Row>
           <Col>
-            <Button onClick={handleWishlist}>WhishList</Button>
+            <Button onClick={handleWishlist}>WishList</Button>
           </Col>
           <Col>
           <Button onClick={handleItinerary}>See Itinerary</Button>
@@ -265,6 +378,20 @@ const Domestic = () => {
             <Row>{renderCards(activitiesToTry, 2)}</Row>
             
           </Container>
+
+          {reviewsToShow.length > 0 && (
+        <Container>
+          <Row>
+            <br />
+            <Col>
+              <div>
+                <h2 className="mb-3">Reviews</h2>
+                <ReviewsDisplay reviews={reviewsToShow} />
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      )}
         </>
       )}
      
