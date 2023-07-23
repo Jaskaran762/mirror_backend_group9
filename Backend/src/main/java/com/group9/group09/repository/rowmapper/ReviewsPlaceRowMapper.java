@@ -17,6 +17,7 @@ public class ReviewsPlaceRowMapper implements RowMapper<ReviewsPlace> {
         reviewsPlace.setPlaceID(rs.getInt("place_id"));
         reviewsPlace.setRating(rs.getDouble("rating"));
         reviewsPlace.setReviewplaceComment(rs.getString("review_place_comment"));
+        reviewsPlace.setDateofreview(rs.getDate("dateofreview"));
 
         return reviewsPlace;
     }

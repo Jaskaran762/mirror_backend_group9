@@ -14,4 +14,5 @@ public interface ActivityRepository {
 
 
     List<Activity> getAllActivities();
+    List<Activity> getActivitiesByInterest(String interest);
 }
