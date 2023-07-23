@@ -67,20 +67,23 @@ public class HomePageServiceImpl implements HomePageService {
 
         String username = jwtService.extractUsername(choice.getToken());
         Optional<User> user = userRepository.findByUsermail(username);
-        Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
-        List<State> stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
+        List<Country> countryList;
+        Optional<Country> country;
+        List<State> stateList;
 
-        List<String> states = new ArrayList<>();
-        for (State state : stateList) {
-            states.add(state.getStateName());
+        if(choice.getRegion().equalsIgnoreCase("International")){
+            countryList = countryRepository.getCountries();
+            choiceResponseDTO.setRegion(choice.getRegion());
+            choiceResponseDTO.setRegionList(countryList);
+        } else if (choice.getRegion().equalsIgnoreCase("domestic")) {
+            country = countryRepository.findByCountryId(user.get().getHomeCountry());
+            stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
+            choiceResponseDTO.setRegion(choice.getRegion());
+            choiceResponseDTO.setRegionList(stateList);
         }
-
-        choiceResponseDTO.setRegion(choice.getRegion());
-        choiceResponseDTO.setRegionList(states);
 
         return choiceResponseDTO;
     }
-
     /**
      * Handles the location selection service.
      *
