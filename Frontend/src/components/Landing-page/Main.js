@@ -13,11 +13,9 @@ const MainPage = () => {
     const selectedDestination = event.target.value;
     setDestinationType(selectedDestination);
   
-    // If Domestic is selected, fetch the domestic regions
     if (selectedDestination === 'National') {
       fetchDomesticRegions();
     } else {
-      // Reset regionList when International is selected
       setRegionList([]);
     }
   };
@@ -33,7 +31,6 @@ const MainPage = () => {
       })
       .catch((error) => {
         console.error('Error fetching domestic regions:', error);
-        // Handle errors, display an error message, or take appropriate actions.
       });
   };
   
