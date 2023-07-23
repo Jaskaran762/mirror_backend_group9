@@ -8,11 +8,11 @@ public class UserNotFoundException extends RuntimeException {
         super();
     }
 
-    public UserNotFoundException(String message){ super(message);}
-
     /**
      * Constructs a new UserNotFoundException with the specified detail message.
      *
      * @param rspCde the error response code
      */
+    public UserNotFoundException(String rspCde) {
+    }
 }

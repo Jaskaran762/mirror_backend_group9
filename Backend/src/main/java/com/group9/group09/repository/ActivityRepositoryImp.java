@@ -1,10 +1,8 @@
 package com.group9.group09.repository;
 
 import com.group9.group09.model.Activity;
-import com.group9.group09.model.Place;
 import com.group9.group09.repository.interfaces.ActivityRepository;
 import com.group9.group09.repository.rowmapper.ActivityRowMapper;
-import com.group9.group09.repository.rowmapper.PlaceRowMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -72,19 +70,6 @@ public class ActivityRepositoryImp implements ActivityRepository {
             String getAllActivitiesQuery = "SELECT * FROM Activity";
             return jdbcTemplate.query(getAllActivitiesQuery, new ActivityRowMapper(), null);
         } catch (Exception e) {
-            logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    @Override
-    public List<Activity> getActivitiesByInterest(String interest){
-        try{
-            logger.info("Info Message: ");
-            String getActivityByInterest = "SELECT * FROM Activity where interest like CONCAT('%', ?, '%')";
-            return jdbcTemplate.query(getActivityByInterest, new ActivityRowMapper(), interest);
-        }
-        catch (Exception e){
             logger.error("Error Message: ");
             throw new RuntimeException(e.getMessage());
         }
