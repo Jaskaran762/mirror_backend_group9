@@ -1,40 +1,114 @@
 variables:
   # custom runner for group 9 team project
   GITLAB_RUNNER: "group_nine_runner"
+  #for frontend
+  CI: "false"
 
 image: maven:latest
 
 # stages defined to test, then build and deploy the application on render.com
+#stages:
+#  - test
+#  - build
+#  - deploy
+
 stages:
-  - test
-  - build
-  - deploy
+  - test-backend
+  - build-backend
+  - deploy-backend
+  - build-frontend
+  - deploy-frontend
 
-test:
-  stage: test
-  tags:
-    - group_nine_runner
+
+#test:
+#  stage: test
+#  tags:
+#    - group_nine_runner
+#  script:
+    # this will clean the target folder and then test the maven #project
+#    - mvn clean test
+
+test-backend:
+  stage: test-backend
+#  tags:
+#    - group_nine_runner
   script:
-    # this will clean the target folder and then test the maven project
+    - cd Backend
     - mvn clean test
+    # this will clean the target folder and then test the maven 
+  only:
+    - main
 
-build:
-  stage: build
-  tags:
-    - group_nine_runner
+#build:
+#  stage: build
+#  tags:
+#    - group_nine_runner
+#  script:
+#    - mvn package
+#  artifacts:
+#    paths:
+#      - target/*.jar
+
+build-backend:
+  stage: build-backend
+#  tags:
+#    - group_nine_runner
   script:
+    - cd Backend
     - mvn package
   artifacts:
     paths:
-      - target/*.jar
+      - Backend/target/*.jar
+  only:
+    - main
+
 
 # deployed on render with base url https://group09-prod.onrender.com
-deploy:
-  stage: deploy
-  tags:
-    - group_nine_runner
+#deploy:
+#  stage: deploy
+#  tags:
+#    - group_nine_runner
+#  script:
+#    - echo "Deploy to prod server on render"
+#    - curl -s "$RENDER_TRIGGER_URL_PROD_ENV"
+#  only:
+#    - prod
+
+# deployed on render with base url https://group09-prod.onrender.
+deploy-backend:
+  stage: deploy-backend
+#  tags:
+#    - group_nine_runner
   script:
     - echo "Deploy to prod server on render"
     - curl -s "$RENDER_TRIGGER_URL_PROD_ENV"
   only:
     - prod
+
+
+#frontend - db
+build-frontend:
+  stage: build-frontend
+  image: node:latest
+  script:
+    - cd Frontend
+    - echo "Building frontend"
+  artifacts:
+    paths:
+      - Frontend/build
+  only:
+    - main
+
+deploy-frontend:
+  stage: deploy-frontend
+  image: node:latest
+  script:
+    - cd Frontend
+    - echo "REACT_APP_BASE_URL=https://culturenet-apis.netlify.app/.netlify/functions/api" >> ".env"
+    - npm install --legacy-peer-deps
+    - npm install netlify-cli -g
+    - npm run build
+    - netlify deploy --dir "build" --auth $AUTH_TOKEN --site $SITE_ID_PROD --prod
+  only:
+    - main
+  
