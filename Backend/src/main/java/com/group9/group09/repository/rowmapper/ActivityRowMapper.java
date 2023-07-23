@@ -16,7 +16,6 @@ public class ActivityRowMapper implements RowMapper<Activity> {
         activity.setPlaceId(rs.getInt("place_id"));
         activity.setCityId(rs.getInt("city_id"));
         activity.setReviews(rs.getString("reviews"));
-        activity.setInterest(rs.getString("interest"));
 
         return activity;
     }

@@ -11,6 +11,5 @@ public interface PlaceRepository {
     Optional<Place> findByPlaceName(String placeName);
 
     List<Place> getPlacesbyCityID(Integer cityID);
-    List<Place> getPlacesByInterest(String interest);
 
 }

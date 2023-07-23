@@ -1,20 +1,13 @@
 package com.group9.group09.model;
 
-import java.util.Date;
-
 public class ReviewsPlace {
     private Integer reviewPlaceID;
     private Integer userID;
     private Integer placeID;
     private Double rating;
+
     private String reviewplaceComment;
-    private Date dateofreview;
-    public Date getDateofreview() {
-        return dateofreview;
-    }
-    public void setDateofreview(Date dateofreview) {
-        this.dateofreview = dateofreview;
-    }
+
     public String getReviewplaceComment() {
         return reviewplaceComment;
     }

@@ -59,17 +59,4 @@ public class PlaceRepositoryImp implements PlaceRepository {
             throw new RuntimeException(e.getMessage());
         }
     }
-
-    @Override
-    public List<Place> getPlacesByInterest(String interest){
-        try{
-            logger.info("Info Message: ");
-            String getPlacesByInterest = "SELECT * FROM Places where interest like CONCAT('%', ?, '%')";
-            return jdbcTemplate.query(getPlacesByInterest, new PlaceRowMapper(), interest);
-        }
-        catch (Exception e){
-            logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 }

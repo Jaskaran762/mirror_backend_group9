@@ -17,8 +17,6 @@ test:
   script:
     # this will clean the target folder and then test the maven project
     - mvn clean test
-  only:
-    - main
 
 build:
   stage: build
@@ -29,8 +27,6 @@ build:
   artifacts:
     paths:
       - target/*.jar
-  only:
-    - main
 
 # deployed on render with base url https://group09.onrender.com
 deploy:

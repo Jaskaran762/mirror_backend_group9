@@ -266,7 +266,7 @@ public class HomePageServiceImpl implements HomePageService {
     public ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
 
         ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
-        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyPlaceId(reviewsPlaceRequestDTO.getPlaceid());
+        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyUserId(reviewsPlaceRequestDTO.getPlaceid());
         reviewsPlaceResponseDTO.setReviewsPlaces(reviewsPlaces);
 
         return reviewsPlaceResponseDTO;

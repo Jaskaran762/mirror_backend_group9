@@ -11,8 +11,6 @@ public class Activity {
     private Integer cityId;
     private String reviews;
 
-    private String interest;
-
     /**
      * Get the reviews of the activity.
      *
@@ -119,13 +117,5 @@ public class Activity {
      */
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
-    }
-
-    public String getInterest() {
-        return interest;
-    }
-
-    public void setInterest(String interest) {
-        this.interest = interest;
     }
 }

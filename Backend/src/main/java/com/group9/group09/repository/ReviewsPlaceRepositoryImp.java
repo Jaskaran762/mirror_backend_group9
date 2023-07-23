@@ -20,7 +20,7 @@ public class ReviewsPlaceRepositoryImp implements ReviewsPlaceRepository{
     }
 
     @Override
-    public List<ReviewsPlace> getReviewsPlacebyPlaceId(Integer placeId) {
+    public List<ReviewsPlace> getReviewsPlacebyUserId(Integer placeId) {
 
         try{
             logger.info("Info Message: ");
