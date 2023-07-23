@@ -58,7 +58,7 @@ build-backend:
     - mvn package
   artifacts:
     paths:
-      - backend/target/*.jar
+      - Backend/target/*.jar
   only:
     - main
 
