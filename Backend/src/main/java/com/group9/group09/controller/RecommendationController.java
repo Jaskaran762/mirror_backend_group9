@@ -24,7 +24,7 @@ public class RecommendationController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @PostMapping(path = "recommendation")
+    @PostMapping(path = "/recommendation")
     public ResponseEntity<?> getRecommendations(@RequestBody RequestDTO requestDTO, HttpServletRequest request){
 
         try {
