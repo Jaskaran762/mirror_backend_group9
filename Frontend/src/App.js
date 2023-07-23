@@ -14,6 +14,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Itinerary from "./components/itinerary/itinerary";
 import Wish from "./components/wishlist/Wish";
 import UserProfile from "./components/UserProfile/profile";
+import ReviewsPage from "./components/reviews/review";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/mainpage" element={<MainPage />} />
         <Route path = "/itinerary/:data" element ={<Itinerary/>}/>
         <Route path = "/wish/:data" element ={<Wish />}/>
+        <Route path = "/reviews/:data" element ={<ReviewsPage />}/>
         <Route path = "/profile" element = {<UserProfile/>}/>
       </Routes>
     </BrowserRouter>
