@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -47,6 +48,20 @@ public class CountryRepositoryImp implements CountryRepository {
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
             throw new UserNotFoundException();
+        }
+    }
+
+    @Override
+    public List<Country> getCountries() {
+
+        try {
+            logger.info("Info Message: ");
+            String getCountries = "SELECT * FROM Countries";
+            return jdbcTemplate.query(getCountries, new CountryRowMapper());
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
     }
 }
