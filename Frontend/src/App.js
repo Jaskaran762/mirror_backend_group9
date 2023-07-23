@@ -14,11 +14,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import Itinerary from "./components/itinerary/itinerary";
 import Wish from "./components/wishlist/Wish";
 import UserProfile from "./components/UserProfile/profile";
-<<<<<<< HEAD
 import ReviewsPage from "./components/reviews/review";
-=======
 import Landing from "./components/Landing-page/landing";
->>>>>>> 7bfe193f7bde6edc59c6c8fb3e8b4f1ae6348a14
 
 export function isLoggedIn() {
   const token = localStorage.getItem("token");
@@ -41,15 +38,9 @@ function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path = "/itinerary/:data" element ={<Itinerary/>}/>
-<<<<<<< HEAD
-        <Route path = "/wish/:data" element ={<Wish />}/>
-        <Route path = "/reviews/:data" element ={<ReviewsPage />}/>
-        <Route path = "/profile" element = {<UserProfile/>}/>
-=======
         <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
->>>>>>> 7bfe193f7bde6edc59c6c8fb3e8b4f1ae6348a14
       </Routes>
     </BrowserRouter>
   );
