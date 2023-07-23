@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useParams } from 'react-router-dom';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
+import { Button } from 'react-bootstrap';
 
 const localizer = momentLocalizer(moment);
 
@@ -38,8 +39,8 @@ const Itinerary = () => {
           events={formattedEvents}
           startAccessor="start"
           endAccessor="end"
-          defaultView="week"
-          views={['day', 'week', 'month']}
+          defaultView="month"
+          views={[ 'month']}
           step={60}
           showMultiDayTimes
           defaultDate={new Date()}
@@ -48,6 +49,9 @@ const Itinerary = () => {
           max={new Date(null, null, null, 22)}
         />
       </div>
+      <Button style={{marginLeft:'85rem', marginTop:'2rem', height:'1cm', width:'3cm'}}>
+        Save
+      </Button>
       <div style={{ marginTop: '5rem' }}>
         <Footer />
       </div>

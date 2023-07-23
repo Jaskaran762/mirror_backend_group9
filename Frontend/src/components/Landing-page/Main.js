@@ -4,13 +4,39 @@ import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
 import International from '../StartTrip/international';
 import Domestic from '../StartTrip/domestic';
-
+import Axios from 'axios';
 const MainPage = () => {
   const [destinationType, setDestinationType] = useState('International');
+  const [regionList, setRegionList] = useState([]);
 
   const handleDestinationTypeChange = (event) => {
-    setDestinationType(event.target.value);
+    const selectedDestination = event.target.value;
+    setDestinationType(selectedDestination);
+  
+    // If Domestic is selected, fetch the domestic regions
+    if (selectedDestination === 'National') {
+      fetchDomesticRegions();
+    } else {
+      // Reset regionList when International is selected
+      setRegionList([]);
+    }
   };
+  const fetchDomesticRegions = () => {
+    const token = window.localStorage.getItem('token');
+    console.log(token);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+    Axios.post('http://localhost:8091/home/choice', { region: 'domestic' }, { headers })
+      .then((response) => {
+        setRegionList(response.data.regionList);
+      })
+      .catch((error) => {
+        console.error('Error fetching domestic regions:', error);
+        // Handle errors, display an error message, or take appropriate actions.
+      });
+  };
+  
 
   const[selectState,setselectState] = useState('Kerala');
   const handleChangeState = (event) => {
@@ -70,21 +96,21 @@ const MainPage = () => {
                   </div>
                 </Form.Group>
           
-            {destinationType === 'National' && (
-              <div>
-                <Form.Group controlId="formStateChange">
-                   <Form.Label> Which state you want to go </Form.Label>
-                  <Form.Control as="select" value={selectState} onChange={handleChangeState} >         
-                    <option value="West Bengal">West Bengal</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Orissa">Orissa</option>
-                    <option value="Kashmir">Kashmir</option>
-                  </Form.Control>
-               </Form.Group>
-               </div>
-            )}
+                {destinationType === 'National' && (
+                <div>
+                  <Form.Group controlId="formStateChange">
+                    <Form.Label> Which state you want to go </Form.Label>
+                    <Form.Control as="select" value={selectState} onChange={handleChangeState}>
+                      {regionList.map((region) => (
+                        <option key={region} value={region}>
+                          {region}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+              )}
+
 
         {destinationType === 'International' && (
               <div>

@@ -106,8 +106,8 @@ const HomeNavbar = () => {
           Services
         </Nav.Link>
         {isLoggedIn() && (
-          <NavDropdown title={<FiUser size={24} />} id="profile-dropdown" onSelect={handleProfileOption}>
-            <NavDropdown.Item onClick={handleProfile}>Profile</NavDropdown.Item>
+          <NavDropdown title={<FiUser size={24} />} id="profile-dropdown" onSelect={handleProfileOption} >
+            <NavDropdown.Item onClick={handleProfile} >Profile</NavDropdown.Item>
             <NavDropdown.Item  onClick={handleItenary}>Itinerary</NavDropdown.Item>
             <NavDropdown.Item  onClick={handleItenary}>Wishlist</NavDropdown.Item>
             <NavDropdown.Divider />
