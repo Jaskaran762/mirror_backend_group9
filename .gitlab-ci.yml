@@ -33,7 +33,7 @@ test-backend:
 #  tags:
 #    - group_nine_runner
   script:
-    - cd backend
+    - cd Backend
     - mvn clean test
     # this will clean the target folder and then test the maven 
   only:
@@ -54,7 +54,7 @@ build-backend:
 #  tags:
 #    - group_nine_runner
   script:
-    - cd backend
+    - cd Backend
     - mvn package
   artifacts:
     paths:
