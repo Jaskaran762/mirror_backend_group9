@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller class to handle user-recommendations operations.
  */
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class RecommendationController {
 
     @Autowired
