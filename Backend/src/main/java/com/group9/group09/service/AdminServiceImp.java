@@ -134,4 +134,33 @@ public class AdminServiceImp implements AdminService {
             return placeResponseDTO;
         }
     }
+
+    @Override
+    public ResponseDTO addActivityService(ActivityRequestDTO activityRequestDTO) {
+        ResponseDTO placeResponseDTO = new ResponseDTO();
+        if (activityRequestDTO.getActivityName() == null || activityRequestDTO.getCity_name() ==null) {
+            throw new RuntimeException("Activity name or City id not provided, it is mandatory");
+        }
+        Optional<City> city;
+        Optional<Activity> activity;
+        try {
+            city = cityRepository.findByCityName(activityRequestDTO.getCity_name());
+            if(city.isPresent()){
+                try{
+                    activity = activityRepository.isActivityPresent(activityRequestDTO.getActivityName(),city.get().getCityId());
+                }catch (Exception e){
+                    activityRepository.addPlace(activityRequestDTO.getActivityName(),activityRequestDTO.getDescription(), city.get().getCityId(),activityRequestDTO.getInterest());
+                }
+            }
+            else {
+                throw new RuntimeException();
+            }
+            placeResponseDTO.setMessage("Activity added Successfully ");
+            return placeResponseDTO;
+            
+        } catch (RuntimeException e) {
+            placeResponseDTO.setMessage("Error adding activity");
+            return placeResponseDTO;
+        }
+    }
 }
