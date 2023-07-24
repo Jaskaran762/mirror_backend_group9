@@ -1,6 +1,7 @@
 package com.group9.group09.service;
 
-import com.group9.group09.DTO.*;
+import com.group9.group09.DTO.RequestDTO.*;
+import com.group9.group09.DTO.ResponseDTO.*;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.model.*;
 import com.group9.group09.repository.interfaces.*;

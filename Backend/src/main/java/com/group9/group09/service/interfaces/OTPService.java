@@ -1,6 +1,6 @@
 package com.group9.group09.service.interfaces;
 
-import com.group9.group09.DTO.OTPRequestDTO;
+import com.group9.group09.DTO.RequestDTO.OTPRequestDTO;
 
 /**
  * Service interface for OTP (One-Time Password) operations.
