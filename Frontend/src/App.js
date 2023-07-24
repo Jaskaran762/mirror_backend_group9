@@ -16,6 +16,7 @@ import Wish from "./components/wishlist/Wish";
 import UserProfile from "./components/UserProfile/profile";
 import ReviewsPage from "./components/reviews/review";
 import Landing from "./components/Landing-page/landing";
+import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
 
 export function isLoggedIn() {
   const token = localStorage.getItem("token");
@@ -41,6 +42,7 @@ function App() {
         <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
+        <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
       </Routes>
     </BrowserRouter>
   );
