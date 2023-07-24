@@ -9,6 +9,7 @@ public interface CountryRepository {
 
     Optional<Country> findByCountryId(Integer countryID);
     Optional<Country> findByCountryName(String countryName);
+    int addCountry(String countryName, String description);
 
     List<Country> getCountries();
 }
