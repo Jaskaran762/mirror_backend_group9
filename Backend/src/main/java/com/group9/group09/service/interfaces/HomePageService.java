@@ -1,7 +1,7 @@
 package com.group9.group09.service.interfaces;
 
-import com.group9.group09.DTO.*;
-import com.group9.group09.model.ItemstoCarry;
+import com.group9.group09.DTO.RequestDTO.*;
+import com.group9.group09.DTO.ResponseDTO.*;
 
 public interface HomePageService {
 
@@ -68,7 +68,19 @@ public interface HomePageService {
      * @return the ItineraryResponseDTO object
      */
     ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO);
+
+    /**
+     *
+     * @param reviewsPlaceRequestDTO
+     * @return
+     */
     ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO);
+
+    /**
+     *
+     * @param reviewsActivityRequestDTO
+     * @return
+     */
     ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO);
 
 }

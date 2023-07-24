@@ -1,7 +1,7 @@
 package com.group9.group09.service;
 
-import com.group9.group09.DTO.ResponseDTO;
-import com.group9.group09.DTO.UserEditRequestDTO;
+import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
+import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;

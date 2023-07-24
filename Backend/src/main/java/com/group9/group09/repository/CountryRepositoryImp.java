@@ -52,6 +52,20 @@ public class CountryRepositoryImp implements CountryRepository {
     }
 
     @Override
+    public int addCountry(String countryName,String description){
+        try{
+            logger.info("Info Message: ");
+            String addCountryQuery = "INSERT INTO Countries (`country_name`,`description`) VALUES (?,?);";
+            //return jdbcTemplate.update(addCountryQuery,new CountryRowMapper(),countryName,description);
+            return  jdbcTemplate.update(addCountryQuery,countryName,description);
+        }catch (Exception e){
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new UserNotFoundException();
+        }
+    }
+
+    @Override
     public List<Country> getCountries() {
 
         try {
@@ -64,4 +78,5 @@ public class CountryRepositoryImp implements CountryRepository {
             throw new RuntimeException();
         }
     }
+
 }
