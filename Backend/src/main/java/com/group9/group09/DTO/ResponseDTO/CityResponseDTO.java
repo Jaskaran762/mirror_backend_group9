@@ -1,4 +1,4 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.ResponseDTO;
 
 import com.group9.group09.model.Place;
 

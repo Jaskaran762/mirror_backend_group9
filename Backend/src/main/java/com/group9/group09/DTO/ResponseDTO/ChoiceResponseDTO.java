@@ -1,14 +1,20 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.ResponseDTO;
+
+import com.group9.group09.model.Country;
+import com.group9.group09.model.State;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Data Transfer Object for Choice Response.
  */
-public class ChoiceResponseDTO {
+public class ChoiceResponseDTO<T> {
 
     private String region;
-    private List<String> regionList;
+    private List<T> regionList;
+
+
 
     /**
      * Get the region value from the response.
@@ -33,7 +39,7 @@ public class ChoiceResponseDTO {
      *
      * @return the list of regions
      */
-    public List<String> getRegionList() {
+    public List<T> getRegionList() {
         return regionList;
     }
 
@@ -42,7 +48,8 @@ public class ChoiceResponseDTO {
      *
      * @param regionList the list of regions to set
      */
-    public void setRegionList(List<String> regionList) {
+
+    public void setRegionList(List<T> regionList) {
         this.regionList = regionList;
     }
 }
