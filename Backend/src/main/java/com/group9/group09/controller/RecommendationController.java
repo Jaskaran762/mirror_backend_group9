@@ -1,8 +1,7 @@
 package com.group9.group09.controller;
 
-import com.group9.group09.DTO.ErrorResponse;
-import com.group9.group09.DTO.RecommendationResponseDTO;
-import com.group9.group09.DTO.RequestDTO;
+import com.group9.group09.DTO.ResponseDTO.*;
+import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.service.interfaces.RecommendationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller class to handle user-recommendations operations.
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class RecommendationController {
 
     @Autowired
