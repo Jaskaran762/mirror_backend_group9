@@ -89,4 +89,20 @@ public class AdminController {
         }
 
     }
+
+    @PostMapping(path = "/addActivity")
+    public ResponseEntity<?> addActivity(@RequestBody ActivityRequestDTO activityRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message:'addactivity method running in controller'");
+            ResponseDTO responseDTO = adminService.addActivityService(activityRequestDTO);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("Add activity admin api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
 }

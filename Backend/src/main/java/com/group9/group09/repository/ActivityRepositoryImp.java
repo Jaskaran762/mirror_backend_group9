@@ -89,4 +89,38 @@ public class ActivityRepositoryImp implements ActivityRepository {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @Override
+    public Optional<Activity> isActivityPresent(String activityName, Integer cityId) {
+    Optional<Activity> activityobj;
+
+    try {
+
+        logger.info("Info Message: checking if activity already present");
+        String findActivity = "SELECT * FROM Activity where activity_name = ? and city_id=?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(findActivity, new ActivityRowMapper(), activityName,cityId));
+
+    } catch (Exception e) {
+
+        logger.error("Error Message: ");
+        System.out.println(e.getMessage());
+        throw new RuntimeException();
+    }
+
+    }   
+
+    @Override
+    public int addPlace(String activityName, String description, Integer cityId, String interest) {
+
+    try{
+        logger.info("Info Message: in addactivity method of repo ");
+        String addActivityQuery = "INSERT INTO Activity (`activity_name`,`description`,city_id,`interest`) VALUES (?,?,?,?);";
+        return  jdbcTemplate.update(addActivityQuery,activityName,description,cityId,interest);
+    }catch (Exception e){
+        logger.error("Error Message: ");
+        System.out.println(e.getMessage());
+        throw new RuntimeException();
+    }
+
+    }
 }
