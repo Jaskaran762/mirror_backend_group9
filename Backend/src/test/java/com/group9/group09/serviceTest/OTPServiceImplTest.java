@@ -50,7 +50,7 @@ public class OTPServiceImplTest {
 
         // Set a startTime in the past (within allowed time difference) for testing
         //long startTime = System.currentTimeMillis() - OTPServiceImpl.ALLOWED_TIME_DIFFERENCE;
-       // OTPServiceImpl.setStartTime(startTime);
+        // OTPServiceImpl.setStartTime(startTime);
 
         // Call the method and verify the result
         boolean result = otpService.verifyUserUsingOTP(requestDTO);
@@ -101,7 +101,4 @@ public class OTPServiceImplTest {
         // Call the method and expect a RuntimeException
         assertThrows(RuntimeException.class, () -> otpService.verifyUserUsingOTP(requestDTO));
     }
-
-
-
 }
