@@ -72,4 +72,37 @@ public class PlaceRepositoryImp implements PlaceRepository {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @Override
+    public Optional<Place> isPlacePresent(String placeName, Integer cityId) {
+        Optional<Place> placeobj;
+
+        try {
+
+            logger.info("Info Message: checking if place already present");
+            String findPlace = "SELECT * FROM Places where place_name = ? and city_id=?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(findPlace, new PlaceRowMapper(), placeName,cityId));
+
+        } catch (Exception e) {
+
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public int addPlace(String placeName, String description, Integer cityId, String interest) {
+
+        try{
+            logger.info("Info Message: in addPlace method of repo ");
+            String addPlaceQuery = "INSERT INTO Places (`place_name`,`description`,city_id,`interest`) VALUES (?,?,?,?);";
+            return  jdbcTemplate.update(addPlaceQuery,placeName,description,cityId,interest);
+        }catch (Exception e){
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+
+    }
 }

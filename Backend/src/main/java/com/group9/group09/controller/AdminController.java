@@ -71,4 +71,22 @@ public class AdminController {
                     .body(response);
         }
     }
+
+
+    @PostMapping(path = "/addPlace")
+    public ResponseEntity<?> addPlace(@RequestBody PlaceRequestDTO placeRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message:'addPlace method running in controller'");
+            ResponseDTO responseDTO = adminService.addPlaceService(placeRequestDTO);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("Add palce admin api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+
+    }
 }
