@@ -24,7 +24,7 @@ public class CityRepositoryImp implements CityRepository {
 
     private static Logger logger = LoggerFactory.getLogger(CityRepositoryImp.class);
 
-    public Optional<City> findByCityId(Integer cityId){
+    public Optional<City> findByCityId(Integer cityId) {
         try {
             logger.info("Info Message: ");
             String findCitybyIDQuery = "SELECT * FROM Cities where City_ID = ?";
@@ -62,4 +62,34 @@ public class CityRepositoryImp implements CityRepository {
 
     }
 
+    @Override
+    public Optional<City> isCityPresent(String city, Integer stateID) {
+
+        Optional<City> cityobj;
+        try {
+
+            logger.info("Info Message: checking if city already present");
+            String findCity = "SELECT * FROM Cities where city = ? and state_id=?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(findCity, new CityRowMapper(), city, stateID));
+
+        } catch (Exception e) {
+
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public int addCity(String city, String description, Integer stateID, String weather) {
+        try {
+            logger.info("Info Message: in addCity method of repo ");
+            String addCityQuery = "INSERT INTO Cities (`city`,`description`,state_id,`weather`) VALUES (?,?,?,?);";
+            return jdbcTemplate.update(addCityQuery, city, description, stateID, weather);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+    }
 }
