@@ -55,4 +55,20 @@ public class AdminController {
                     .body(response);
         }
     }
+
+    @PostMapping(path = "/addCity")
+    public ResponseEntity<?> addState(@RequestBody CityRequestDTO cityRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message:'addCity method running'");
+            ResponseDTO responseDTO = adminService.addCityService(cityRequestDTO);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("Add city admin api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
 }

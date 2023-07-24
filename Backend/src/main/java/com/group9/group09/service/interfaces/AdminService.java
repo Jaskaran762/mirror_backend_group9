@@ -6,6 +6,9 @@ import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 
 public interface AdminService {
     ResponseDTO addCountryService(CountryRequestDTO countryRequestDTO);
+
     ResponseDTO addStateService(StateRequestDTO stateRequestDTO);
+
+    ResponseDTO addCityService(CityRequestDTO cityRequestDTO);
 
 }
