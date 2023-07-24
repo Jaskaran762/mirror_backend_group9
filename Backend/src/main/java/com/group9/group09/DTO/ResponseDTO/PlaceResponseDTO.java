@@ -9,6 +9,7 @@ public class PlaceResponseDTO {
     private String placeName;
 
     private String description;
+    private String interest;
 
     private List<Activity> activityObjectsResponseList;
     private List<String> activityStringResponseList;
@@ -51,5 +52,13 @@ public class PlaceResponseDTO {
 
     public void setActivityObjectsResponseList(List<Activity> activityObjectsResponseList) {
         this.activityObjectsResponseList = activityObjectsResponseList;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
     }
 }

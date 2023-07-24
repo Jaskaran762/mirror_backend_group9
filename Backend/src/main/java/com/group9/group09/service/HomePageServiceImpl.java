@@ -73,19 +73,18 @@ public class HomePageServiceImpl implements HomePageService {
         List<State> stateList;
 
         if(choice.getRegion().equalsIgnoreCase("International")){
-                    countryList = countryRepository.getCountries();
-                    choiceResponseDTO.setRegion(choice.getRegion());
-                    choiceResponseDTO.setRegionList(countryList);
+            countryList = countryRepository.getCountries();
+            choiceResponseDTO.setRegion(choice.getRegion());
+            choiceResponseDTO.setRegionList(countryList);
         } else if (choice.getRegion().equalsIgnoreCase("domestic")) {
-                    country = countryRepository.findByCountryId(user.get().getHomeCountry());
-                    stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
-                    choiceResponseDTO.setRegion(choice.getRegion());
-                    choiceResponseDTO.setRegionList(stateList);
+            country = countryRepository.findByCountryId(user.get().getHomeCountry());
+            stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
+            choiceResponseDTO.setRegion(choice.getRegion());
+            choiceResponseDTO.setRegionList(stateList);
         }
 
         return choiceResponseDTO;
     }
-
     /**
      * Handles the location selection service.
      *
@@ -271,7 +270,7 @@ public class HomePageServiceImpl implements HomePageService {
     public ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
 
         ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
-        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyUserId(reviewsPlaceRequestDTO.getPlaceid());
+        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyPlaceId(reviewsPlaceRequestDTO.getPlaceid());
         reviewsPlaceResponseDTO.setReviewsPlaces(reviewsPlaces);
 
         return reviewsPlaceResponseDTO;

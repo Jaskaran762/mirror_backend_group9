@@ -6,12 +6,15 @@ tmp/
 *.bak
 *.swp
 *~.nib
+*.log
 local.properties
 .settings/
 .loadpath
 .recommenders
 .idea
+*.properties
 
+Backend/logs
 Backend/HELP.md
 Backend/target/
 !Backend/.mvn/wrapper/maven-wrapper.jar

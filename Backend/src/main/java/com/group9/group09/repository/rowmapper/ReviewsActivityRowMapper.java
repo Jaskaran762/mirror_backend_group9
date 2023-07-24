@@ -17,6 +17,7 @@ public class ReviewsActivityRowMapper implements RowMapper<ReviewsActivity> {
         reviewsActivity.setActivityId(rs.getInt("activity_id"));
         reviewsActivity.setRating(rs.getDouble("rating"));
         reviewsActivity.setReviewactivityComment(rs.getString("review_activity_comment"));
+        reviewsActivity.setDateofreview(rs.getDate("dateofreview"));
 
         return reviewsActivity;
     }

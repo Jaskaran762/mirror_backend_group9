@@ -21,7 +21,7 @@ const LoginPage = () => {
       const response = await axios.post('https://group09.onrender.com/auth/login', { email, password });
 
       console.log('API response:', response.data);
-      sessionStorage.setItem("token",response?.data?.token ?? "");
+      window.localStorage.setItem("token",response?.data?.token ?? "");
 
       setIsLoading(false);
       setShowToast(true); 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/home")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class HomePageController {
 
     @Autowired
@@ -240,6 +240,7 @@ public class HomePageController {
 
 
     @PostMapping(path = "/itemstocarry")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> getItemstoCarry(@RequestBody ItemstoCarryRequestDTO itemstoCarryRequestDTO, HttpServletRequest request) {
         try {
             itemstoCarryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));

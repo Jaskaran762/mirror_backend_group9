@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { FiUser } from 'react-icons/fi'; 
+import { isLoggedIn } from "../App";
 
 const logoStyle = {
   textDecoration: 'none',
@@ -85,6 +86,10 @@ const HomeNavbar = () => {
   const handleItenary = () =>{
     changePage('/')
   }
+  const handleLogout = () =>{
+    window.localStorage.removeItem('token');
+    changePage('/');
+  }
   return (
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand style={logoStyle} onClick={handleLogo} onMouseEnter={handleLogoHover} onMouseLeave={handleLogoHover}>
@@ -100,13 +105,15 @@ const HomeNavbar = () => {
         <Nav.Link to="/services" onClick={handleServices} style={optionStyle} onMouseEnter={handleOptionHover} onMouseLeave={handleOptionHover}>
           Services
         </Nav.Link>
-        <NavDropdown title={<FiUser size={24} />} id="profile-dropdown" onSelect={handleProfileOption}>
-          <NavDropdown.Item onClick={handleProfile}>Profile</NavDropdown.Item>
-          <NavDropdown.Item  onClick={handleItenary}>Itinerary</NavDropdown.Item>
-          <NavDropdown.Item  onClick={handleItenary}>Wishlist</NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item >Logout</NavDropdown.Item>
-        </NavDropdown>
+        {isLoggedIn() && (
+          <NavDropdown title={<FiUser size={24} />} id="profile-dropdown" onSelect={handleProfileOption} >
+            <NavDropdown.Item onClick={handleProfile} >Profile</NavDropdown.Item>
+            <NavDropdown.Item  onClick={handleItenary}>Itinerary</NavDropdown.Item>
+            <NavDropdown.Item  onClick={handleItenary}>Wishlist</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={handleLogout} >Logout</NavDropdown.Item>
+          </NavDropdown>
+        )}
       </Nav>
     </Navbar>
   );
