@@ -1,6 +1,6 @@
 package com.group9.group09.controller;
 
-import com.group9.group09.DTO.*;
+import com.group9.group09.DTO.ResponseDTO.*;
 import com.group9.group09.service.interfaces.HomePageService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;

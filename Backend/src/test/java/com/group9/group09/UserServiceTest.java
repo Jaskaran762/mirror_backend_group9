@@ -1,6 +1,6 @@
 package com.group9.group09;
 
-import com.group9.group09.DTO.ResponseDTO;
+import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.model.User;
 import com.group9.group09.repository.UserRepositoryImpl;

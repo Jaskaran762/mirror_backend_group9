@@ -1,9 +1,9 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.RequestDTO;
 
 /**
  * Data Transfer Object for City Request.
  */
-public class CityRequestDTO extends RequestDTO{
+public class CityRequestDTO extends RequestDTO {
 
     private Integer cityID;
     private String cityName;

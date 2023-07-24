@@ -1,9 +1,7 @@
 package com.group9.group09.controller;
 
-import com.group9.group09.DTO.ErrorResponse;
-import com.group9.group09.DTO.OTPRequestDTO;
-import com.group9.group09.DTO.ResponseDTO;
-import com.group9.group09.DTO.UserEditRequestDTO;
+import com.group9.group09.DTO.RequestDTO.*;
+import com.group9.group09.DTO.ResponseDTO.*;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.service.interfaces.OTPService;

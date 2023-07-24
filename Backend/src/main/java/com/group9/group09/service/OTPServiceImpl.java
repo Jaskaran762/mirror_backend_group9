@@ -1,6 +1,6 @@
 package com.group9.group09.service;
 
-import com.group9.group09.DTO.OTPRequestDTO;
+import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.config.interfaces.EmailConfig;
 import com.group9.group09.model.EmailDetails;
 import com.group9.group09.service.interfaces.OTPService;

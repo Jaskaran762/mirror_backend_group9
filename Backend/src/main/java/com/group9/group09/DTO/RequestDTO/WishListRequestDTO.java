@@ -1,6 +1,6 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.RequestDTO;
 
-public class WishListRequestDTO extends RequestDTO{
+public class WishListRequestDTO extends RequestDTO {
 
     private Integer userid;
 

@@ -1,6 +1,6 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.RequestDTO;
 
-public class PlaceRequestDTO extends RequestDTO{
+public class PlaceRequestDTO extends RequestDTO {
 
     private Integer placeID;
     private String placeName;

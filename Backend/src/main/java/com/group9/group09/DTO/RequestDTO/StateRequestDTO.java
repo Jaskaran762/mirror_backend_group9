@@ -1,6 +1,6 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.RequestDTO;
 
-public class StateRequestDTO extends RequestDTO{
+public class StateRequestDTO extends RequestDTO {
 
     private Integer stateID;
     private String stateName;

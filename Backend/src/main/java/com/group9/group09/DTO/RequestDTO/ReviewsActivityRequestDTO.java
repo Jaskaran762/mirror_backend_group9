@@ -1,6 +1,6 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.RequestDTO;
 
-public class ReviewsActivityRequestDTO extends RequestDTO{
+public class ReviewsActivityRequestDTO extends RequestDTO {
     private Integer activityid;
 
     public Integer getActivityid() {

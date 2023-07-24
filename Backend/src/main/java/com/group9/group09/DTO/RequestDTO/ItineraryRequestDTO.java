@@ -1,9 +1,9 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.RequestDTO;
 
 /**
  * Data Transfer Object for Itinerary Request.
  */
-public class ItineraryRequestDTO extends RequestDTO{
+public class ItineraryRequestDTO extends RequestDTO {
 
     private Integer userid;
 

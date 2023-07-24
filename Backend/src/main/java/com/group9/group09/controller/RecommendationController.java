@@ -1,8 +1,8 @@
 package com.group9.group09.controller;
 
-import com.group9.group09.DTO.ErrorResponse;
-import com.group9.group09.DTO.RecommendationResponseDTO;
-import com.group9.group09.DTO.RequestDTO;
+import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
+import com.group9.group09.DTO.ResponseDTO.RecommendationResponseDTO;
+import com.group9.group09.DTO.RequestDTO.RequestDTO;
 import com.group9.group09.service.interfaces.RecommendationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
