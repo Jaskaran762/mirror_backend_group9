@@ -4,7 +4,7 @@ import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
 import International from '../StartTrip/international';
 import Domestic from '../StartTrip/domestic';
-import Axios from 'axios';
+import axios from 'axios';
 const MainPage = () => {
   const [destinationType, setDestinationType] = useState('International');
   const [regionList, setRegionList] = useState([]);
@@ -25,8 +25,9 @@ const MainPage = () => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-    Axios.post('http://localhost:8091/home/choice', { region: 'domestic' }, { headers })
+    axios.post('https://group09.onrender.com/home/choice', { region: 'domestic' }, { headers })
       .then((response) => {
+        console.log(response.data.regionList);
         setRegionList(response.data.regionList);
       })
       .catch((error) => {
@@ -99,8 +100,8 @@ const MainPage = () => {
                     <Form.Label> Which state you want to go </Form.Label>
                     <Form.Control as="select" value={selectState} onChange={handleChangeState}>
                       {regionList.map((region) => (
-                        <option key={region} value={region}>
-                          {region}
+                        <option key={`${region.stateName}-${region.id}`} value={region.stateName}>
+                          {region.stateName}
                         </option>
                       ))}
                     </Form.Control>
