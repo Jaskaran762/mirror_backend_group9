@@ -8,6 +8,8 @@ public class Place {
     private Integer placeId;
     private String description;
     private Integer cityId;
+    private String cityName;
+    private String interest;
 
     private List<String> activitiesStringList;
 
@@ -119,5 +121,21 @@ public class Place {
      */
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }
