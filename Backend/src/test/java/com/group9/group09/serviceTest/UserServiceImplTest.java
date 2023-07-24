@@ -1,4 +1,4 @@
-package com.group9.group09;
+package com.group9.group09.serviceTest;
 
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.config.JwtService;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+public class UserServiceImplTest {
 
     @Mock
     private static UserRepositoryImpl userRepositoryMock;
