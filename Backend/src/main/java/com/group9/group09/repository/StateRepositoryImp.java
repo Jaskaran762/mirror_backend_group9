@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.State;
 import com.group9.group09.repository.interfaces.StateRepository;
 import com.group9.group09.repository.rowmapper.StateRowMapper;
@@ -16,6 +17,7 @@ public class StateRepositoryImp implements StateRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(StateRepositoryImp.class);
+
     public StateRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -54,6 +56,38 @@ public class StateRepositoryImp implements StateRepository {
             String getStatesbyCountryIDQuery = "SELECT * FROM States where country_id = ?";
             return jdbcTemplate.query(getStatesbyCountryIDQuery, new StateRowMapper(), countryID);
         } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+
+    public int addState(String stateName, String description, int country_id) {
+        try {
+            logger.info("Info Message: ");
+            String addStateQuery = "INSERT INTO States (`state`,`description`,country_id) VALUES (?,?,?);";
+            //return jdbcTemplate.update(addCountryQuery,new CountryRowMapper(),countryName,description);
+            return jdbcTemplate.update(addStateQuery, stateName, description, country_id);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new UserNotFoundException();
+        }
+    }
+
+    @Override
+    public Optional<State> isStatePresent(String stateName, Integer countryid) {
+        Optional<State> state;
+        try {
+
+            logger.info("Info Message: checking if state already present");
+            String findState = "SELECT * FROM States where state = ? and country_id=?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(findState, new StateRowMapper(), stateName, countryid));
+
+        } catch (Exception e) {
+
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
             throw new RuntimeException();
