@@ -39,14 +39,70 @@ public class AdminServiceImp implements AdminService {
 
         Optional<Country> country;
         try {
-            country =  countryRepository.findByCountryName(countryRequestDTO.getCountry_name());
+            country = countryRepository.findByCountryName(countryRequestDTO.getCountry_name());
             countryResponseDTO.setMessage("Country already present");
             return countryResponseDTO;
 
         } catch (RuntimeException e) {
-                countryRepository.addCountry(countryRequestDTO.getCountry_name(), countryRequestDTO.getDescription());
-                countryResponseDTO.setMessage("Country Added Succesfully");
-                return countryResponseDTO;
+            countryRepository.addCountry(countryRequestDTO.getCountry_name(), countryRequestDTO.getDescription());
+            countryResponseDTO.setMessage("Country Added Succesfully");
+            return countryResponseDTO;
+        }
+    }
+
+    @Override
+    public ResponseDTO addStateService(StateRequestDTO stateRequestDTO) {
+        ResponseDTO stateResponseDTO = new ResponseDTO();
+        if (stateRequestDTO.getStateName() == null || stateRequestDTO.getCountry_name() == null) {
+            throw new RuntimeException("state name or country name not provided it is mandatory");
+        }
+
+        Optional<State> state;
+        Optional<Country> country;
+        try {
+            country = countryRepository.findByCountryName(stateRequestDTO.getCountry_name());
+            if (country.isPresent()) {
+                try {
+                    state = stateRepository.isStatePresent(stateRequestDTO.getStateName(), country.get().getCountryID());
+                } catch (Exception e) {
+                    stateRepository.addState(stateRequestDTO.getStateName(), stateRequestDTO.getDescription(), country.get().getCountryID());
+                }
+            } else {
+                throw new RuntimeException();
+            }
+            stateResponseDTO.setMessage("State added Successfully ");
+            return stateResponseDTO;
+        } catch (RuntimeException e) {
+            stateResponseDTO.setMessage("Error adding state");
+            return stateResponseDTO;
+        }
+    }
+
+    @Override
+    public ResponseDTO addCityService(CityRequestDTO cityRequestDTO) {
+        ResponseDTO cityResponseDTO = new ResponseDTO();
+        if (cityRequestDTO.getCity() == null || cityRequestDTO.getStateName() ==null) {
+            throw new RuntimeException("City name or state name not provided it is mandatory");
+        }
+        Optional<City> city;
+        Optional<State> state;
+        try {
+            state = stateRepository.findByStateName(cityRequestDTO.getStateName());
+            if(state.isPresent()){
+                try{
+                    city = cityRepository.isCityPresent(cityRequestDTO.getCity(),state.get().getStateID());
+                }catch (Exception e){
+                    cityRepository.addCity(cityRequestDTO.getCity(), cityRequestDTO.getDescription(), state.get().getStateID(),cityRequestDTO.getWeather());
+                }
+            }
+            else {
+                throw new RuntimeException();
+            }
+            cityResponseDTO.setMessage("City added Successfully ");
+            return cityResponseDTO;
+        } catch (RuntimeException e) {
+            cityResponseDTO.setMessage("Error adding City");
+            return cityResponseDTO;
         }
     }
 }
