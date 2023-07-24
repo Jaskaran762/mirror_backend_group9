@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -49,4 +50,33 @@ public class CountryRepositoryImp implements CountryRepository {
             throw new UserNotFoundException();
         }
     }
+
+    @Override
+    public int addCountry(String countryName,String description){
+        try{
+            logger.info("Info Message: ");
+            String addCountryQuery = "INSERT INTO Countries (`country_name`,`description`) VALUES (?,?);";
+            //return jdbcTemplate.update(addCountryQuery,new CountryRowMapper(),countryName,description);
+            return  jdbcTemplate.update(addCountryQuery,countryName,description);
+        }catch (Exception e){
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new UserNotFoundException();
+        }
+    }
+
+    @Override
+    public List<Country> getCountries() {
+
+        try {
+            logger.info("Info Message: ");
+            String getCountries = "SELECT * FROM Countries";
+            return jdbcTemplate.query(getCountries, new CountryRowMapper());
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
 }
