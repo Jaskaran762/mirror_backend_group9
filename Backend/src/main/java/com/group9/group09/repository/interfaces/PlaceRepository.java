@@ -13,4 +13,7 @@ public interface PlaceRepository {
     List<Place> getPlacesbyCityID(Integer cityID);
     List<Place> getPlacesByInterest(String interest);
 
+    Optional<Place> isPlacePresent(String placeName, Integer cityId);
+
+    int addPlace(String placeName, String description, Integer cityId, String interest);
 }
