@@ -1,4 +1,4 @@
-package com.group9.group09.DTO;
+package com.group9.group09.DTO.ResponseDTO;
 
 import java.util.List;
 
