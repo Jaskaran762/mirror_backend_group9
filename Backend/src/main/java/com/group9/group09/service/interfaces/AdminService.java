@@ -10,5 +10,6 @@ public interface AdminService {
     ResponseDTO addStateService(StateRequestDTO stateRequestDTO);
 
     ResponseDTO addCityService(CityRequestDTO cityRequestDTO);
+    ResponseDTO addPlaceService(PlaceRequestDTO placeRequestDTO);
 
 }

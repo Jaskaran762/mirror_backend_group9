@@ -105,4 +105,33 @@ public class AdminServiceImp implements AdminService {
             return cityResponseDTO;
         }
     }
+
+    @Override
+    public ResponseDTO addPlaceService(PlaceRequestDTO placeRequestDTO) {
+        ResponseDTO placeResponseDTO = new ResponseDTO();
+        if (placeRequestDTO.getPlaceName() == null || placeRequestDTO.getCityName() ==null) {
+            throw new RuntimeException("Place name or City name not provided, it is mandatory");
+        }
+        Optional<City> city;
+        Optional<Place> place;
+        try {
+            city = cityRepository.findByCityName(placeRequestDTO.getCityName());
+            if(city.isPresent()){
+                try{
+                    place = placeRepository.isPlacePresent(placeRequestDTO.getPlaceName(),placeRequestDTO.getCityId());
+                }catch (Exception e){
+                    placeRepository.addPlace(placeRequestDTO.getPlaceName(),placeRequestDTO.getDescription(), city.get().getCityId(),placeRequestDTO.getInterest());
+                }
+            }
+            else {
+                throw new RuntimeException();
+            }
+            placeResponseDTO.setMessage("Place added Successfully ");
+            return placeResponseDTO;
+
+        } catch (RuntimeException e) {
+            placeResponseDTO.setMessage("Error adding Place");
+            return placeResponseDTO;
+        }
+    }
 }
