@@ -9,6 +9,10 @@ import axios from 'axios';
 const MainPage = () => {
   const [destinationType, setDestinationType] = useState('International');
   const [regionList, setRegionList] = useState([]);
+  
+  const[selectState,setselectState] = useState();
+  const[selectCountry, setselectCountry] = useState();
+
   const handleDestinationTypeChange = (event) => {
     const selectedDestination = event.target.value;
     setDestinationType(selectedDestination);
@@ -24,7 +28,7 @@ const MainPage = () => {
     }
   };
   const fetchDomesticRegions = () => {
-    const token = window.localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     console.log(token);
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -33,6 +37,7 @@ const MainPage = () => {
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
+        setselectState(response.data.regionList[0].stateName);
       })
       .catch((error) => {
         console.error('Error fetching domestic regions:', error);
@@ -40,7 +45,7 @@ const MainPage = () => {
   };
 
    const fetchInternationalRegions = () => {
-    const token = window.localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     console.log(token);
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -50,41 +55,27 @@ const MainPage = () => {
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
+        setselectCountry(response.data.regionList[0].countryName);
       })
       .catch((error) => {
-        console.error('Error fetching domestic regions:', error);
+        console.error('Error fetching international regions:', error);
       });
 
   };
 
 useEffect(() => {
-  const token = window.localStorage.getItem('token');
-    console.log(token);
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-
-    axios.post('https://group09.onrender.com/home/choice', { region: 'International' }, { headers })
-      .then((response) => {
-        console.log(response.data.regionList);
-        setRegionList(response.data.regionList);
-      })
-      .catch((error) => {
-         console.error('Error fetching international regions:', error);
-      });
+  fetchInternationalRegions();
   },[]);
 
-  const[selectState,setselectState] = useState('Kerala');
   const handleChangeState = (event) => {
     setselectState(event.target.value);
 
   }
-  const[selectCity,setselectCity] = useState('Ahmedabad');
+  const[selectCity,setselectCity] = useState();
   const handleChangeCity = (event) => {
     setselectState(event.target.value);
   }
 
-  const[selectCountry,setselectCountry] = useState('USA');
   const handleChangeCountry = (event) => {
     setselectCountry(event.target.value);
   }
@@ -151,28 +142,28 @@ useEffect(() => {
                   </Form.Group>
                 </div>
               )}
-        {destinationType === 'International' && (
-              <div>
-                 <Form.Group controlId="formCountryChange">
-                   <Form.Label> Country</Form.Label>
-                  <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >        
-                  {regionList.map((region) => (
-                        <option key={`${region.countryName}-${region.countryID}`} value={region.countryName}>
-                          {region.countryName}
-                        </option>
-                      ))}
-                  </Form.Control>
-             </Form.Group>
-               </div>
-            )}
+              {destinationType === 'International' && (
+                    <div>
+                      <Form.Group controlId="formCountryChange">
+                        <Form.Label> Country</Form.Label>
+                        <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >        
+                        {regionList.map((region) => (
+                              <option key={`${region.countryName}-${region.countryID}`} value={region.countryName}>
+                                {region.countryName}
+                              </option>
+                            ))}
+                        </Form.Control>
+                  </Form.Group>
+                    </div>
+                  )}
                <br></br>
                <div>    
                
             </div>
 
-               {destinationType === 'National' && <Domestic/> }
+               {destinationType === 'National' && <Domestic selectedState={selectState}/> }
 
-               {destinationType === 'International' && <International/> }
+               {destinationType === 'International' && <International selectedCountry={selectCountry} /> }
               </Form>
             </div>
           </Col>

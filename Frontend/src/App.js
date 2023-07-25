@@ -19,9 +19,12 @@ import Landing from "./components/Landing-page/landing";
 import Resetpwd from "./components/UserProfile/Resetpwd";
 
 import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
+import City from "./components/StartTrip/City";
+import OTP from "./components/authentication/otp";
+import ResetForgotPassword from "./components/authentication/resetForgotPassword";
 
 export function isLoggedIn() {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   return token !== null;
 }
 
@@ -36,6 +39,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/otp" element={<OTP />} />
+        <Route path="/resetForgotPassword" element={<ResetForgotPassword />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
@@ -46,6 +51,7 @@ function App() {
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
         <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
         <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
+        <Route path = "/city/:cityID" element = {<Auth><City/></Auth>}/>
       </Routes>
     </BrowserRouter>
   );
