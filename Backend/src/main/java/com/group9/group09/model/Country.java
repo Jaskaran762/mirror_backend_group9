@@ -4,6 +4,8 @@ public class Country {
     private Integer countryID;
     private String countryName;
     private String description;
+    private String countryImageLink;
+
 
     /**
      * Get the ID of the country.
@@ -57,5 +59,13 @@ public class Country {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCountryImageLink() {
+        return countryImageLink;
+    }
+
+    public void setCountryImageLink(String countryImageLink) {
+        this.countryImageLink = countryImageLink;
     }
 }

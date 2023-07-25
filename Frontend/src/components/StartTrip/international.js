@@ -27,8 +27,7 @@ const International = ({ selectedCountry }) => {
     console.log(countryDescription);
     setselectedCountryName(countryName);
     setselectedCountryDesc(countryDescription);
-    axios
-      .post('http://localhost:8091/home/location', { location: selectedCountry }, { headers })
+    axios.post('http://localhost:8090/home/location', { location: selectedCountry }, { headers })
       .then((response) => {
         console.log(response.data.cities);
         setPlaceToVisit(response.data.cities);
@@ -162,6 +161,7 @@ const International = ({ selectedCountry }) => {
                 <Button variant="link" onClick={() => handleReviews(item)}>
                   Review
                 </Button>
+
               </Card.Title>
               <Card.Text>{item.description}</Card.Text>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
@@ -235,6 +235,13 @@ const International = ({ selectedCountry }) => {
             <Row>
               <br />
               <Col>
+              <div>
+                  {selectedCountryName}
+                </div>
+                <div>
+                  {selectedCountryDesc}
+                </div>
+            
                 <div>
                   {selectedCountryName}
                 </div>

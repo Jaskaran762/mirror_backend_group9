@@ -11,7 +11,7 @@ const Domestic = ({ selectedState }) => {
   const [itemCounter, setItemCounter] = useState(0);
   const [selectedStateName, setselectedStateName] = useState();
   const [selectedStateDesc, setselectedStateDesc] = useState();
-
+  
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
@@ -26,9 +26,8 @@ const Domestic = ({ selectedState }) => {
     console.log(stateDescription);
     setselectedStateName(stateName);
     setselectedStateDesc(stateDescription);
-
-    axios
-      .post('http://localhost:8091/home/location', { location: selectedValue.stateName }, { headers })
+   
+    axios.post('http://localhost:8090/home/location', { location: selectedValue.stateName }, { headers })
       .then((response) => {
         console.log(response.data);
         console.log(response.data.cities);
@@ -224,6 +223,7 @@ const Domestic = ({ selectedState }) => {
         <Row>
           <br />
           <Col>
+           
             <div>
               <p className="mb-3">Select your travel date</p>
               <DateRangePicker style={{ height: '100px', width: '100px', fontSize: '1rem' }} />
@@ -243,6 +243,12 @@ const Domestic = ({ selectedState }) => {
             <Row>
               <br />
               <Col>
+              <div>
+                  {selectedStateName}
+                </div>
+                <div>
+                  {selectedStateDesc}
+                </div>
                 <div>
                   {selectedStateName}
                 </div>
