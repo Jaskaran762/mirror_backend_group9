@@ -14,6 +14,7 @@ public class StateRowMapper implements RowMapper<State> {
         state.setStateName(rs.getString("state"));
         state.setDescription(rs.getString("description"));
         state.setCountryID(rs.getInt("country_id"));
+        state.setStateImageLink(rs.getString("stateImageLink"));
 
         return state;
     }
