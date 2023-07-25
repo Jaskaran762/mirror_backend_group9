@@ -8,6 +8,8 @@ import Footer from '../footer';
 import axios  from 'axios';
 const International = ({ selectedCountry }) => {
   const [searchButton, setSearchButton] = useState(false);
+  const [selectedCountryName, setselectedCountryName] = useState();
+  const [selectedCountryDesc, setselectedCountryDesc] = useState();
   const [itemCounter, setItemCounter] = useState(0);
   const [placeToVisit,setPlaceToVisit] = useState([]);
 
@@ -18,7 +20,15 @@ const International = ({ selectedCountry }) => {
     Authorization: `Bearer ${token}`,
     };
     console.log(selectedCountry);
-    axios.post('http://localhost:8091/home/location', { location:selectedCountry }, { headers })
+    const selectedValue = JSON.parse(selectedCountry);
+    const countryName = selectedValue.countryName;
+    const countryDescription = selectedValue.description;
+    console.log(countryName);
+    console.log(countryDescription);
+    setselectedCountryName(countryName);
+    setselectedCountryDesc(countryDescription);
+  //  setselectedCountryDesc();
+    axios.post('http://localhost:8090/home/location', { location:selectedCountry }, { headers })
       .then((response) => {
         console.log(response.data.cities);
         setPlaceToVisit(response.data.cities);
@@ -339,6 +349,12 @@ const International = ({ selectedCountry }) => {
             <Row>
               <br />
               <Col>
+                <div>
+                  {selectedCountryName}
+                </div>
+                <div>
+                  {selectedCountryDesc}
+                </div>
                 <div>
                   <h2 className="mb-3">Places to Visit</h2>
                 </div>

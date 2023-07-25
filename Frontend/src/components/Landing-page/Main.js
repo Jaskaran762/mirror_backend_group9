@@ -9,9 +9,9 @@ import axios from 'axios';
 const MainPage = () => {
   const [destinationType, setDestinationType] = useState('International');
   const [regionList, setRegionList] = useState([]);
-  
-  const[selectState,setselectState] = useState();
-  const[selectCountry, setselectCountry] = useState();
+
+  const[selectState,setselectState] = useState('Default');
+  const[selectCountry, setselectCountry] = useState('Default');
 
   const handleDestinationTypeChange = (event) => {
     const selectedDestination = event.target.value;
@@ -30,14 +30,15 @@ const MainPage = () => {
   const fetchDomesticRegions = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-    axios.post('https://group09.onrender.com/home/choice', { region: 'domestic' }, { headers })
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios.post('http://localhost:8090/home/choice', { region: 'domestic' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
-        setselectState(response.data.regionList[0].stateName);
+       // setselectCountry(response.data.regionList.selectCountry);
+        setselectState(response.data.regionList);
       })
       .catch((error) => {
         console.error('Error fetching domestic regions:', error);
@@ -51,11 +52,11 @@ const MainPage = () => {
     Authorization: `Bearer ${token}`,
   };
 
-    axios.post('https://group09.onrender.com/home/choice', { region: 'International' }, { headers })
+    axios.post('http://localhost:8090/home/choice', { region: 'International' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
-        setselectCountry(response.data.regionList[0].countryName);
+        setselectCountry(response.data.regionList);
       })
       .catch((error) => {
         console.error('Error fetching international regions:', error);
@@ -133,7 +134,7 @@ useEffect(() => {
                     <Form.Label> Which state you want to go </Form.Label>
                     <Form.Control as="select" value={selectState} onChange={handleChangeState}>
                       {regionList.map((region) => (
-                        <option key={`${region.stateName}-${region.id}`} value={region.stateName}>
+                        <option key={`${region.stateName}-${region.id}`} value={JSON.stringify(region)}>
                           {region.stateName}
                         </option>
 
@@ -148,7 +149,7 @@ useEffect(() => {
                         <Form.Label> Country</Form.Label>
                         <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >        
                         {regionList.map((region) => (
-                              <option key={`${region.countryName}-${region.countryID}`} value={region.countryName}>
+                              <option key={`${region.countryName}-${region.countryID}`} value={JSON.stringify(region)}>
                                 {region.countryName}
                               </option>
                             ))}

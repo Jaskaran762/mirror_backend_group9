@@ -9,7 +9,9 @@ import axios  from 'axios';
 const Domestic = ({ selectedState }) => {
   const [searchButton, setSearchButton] = useState(false);
   const [itemCounter, setItemCounter] = useState(0);
-
+  const [selectedStateName, setselectedStateName] = useState();
+  const [selectedStateDesc, setselectedStateDesc] = useState();
+  
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
@@ -17,7 +19,15 @@ const Domestic = ({ selectedState }) => {
     Authorization: `Bearer ${token}`,
     };
     console.log(selectedState);
-    axios.post('http://localhost:8091/home/location', { location: selectedState }, { headers })
+    const selectedValue = JSON.parse(selectedState);
+    const stateName = selectedValue.stateName;
+    const stateDescription = selectedValue.description;
+    console.log(stateName);
+    console.log(stateDescription);
+    setselectedStateName(stateName);
+    setselectedStateDesc(stateDescription);
+   
+    axios.post('http://localhost:8090/home/location', { location: selectedValue.stateName }, { headers })
       .then((response) => {
         console.log(response.data.cities);
         setPlaceToVisit(response.data.cities);
@@ -242,6 +252,12 @@ const Domestic = ({ selectedState }) => {
             <Row>
               <br />
               <Col>
+              <div>
+                  {selectedStateName}
+                </div>
+                <div>
+                  {selectedStateDesc}
+                </div>
                 <div>
                   <h2 className="mb-3">Cities to Visit</h2>
                 </div>
