@@ -44,6 +44,23 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/country")
+    public ResponseEntity<?> getCountry(@RequestBody CountryRequestDTO countryRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message: ");
+            countryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            CountryResponseDTO countryResponseDTO = homeService.countrySelectorService(countryRequestDTO);
+            return new ResponseEntity<>(countryResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("Choice selector api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
     /**
      * Handles the location selection request.
      *

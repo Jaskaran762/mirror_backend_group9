@@ -76,6 +76,7 @@ public class HomePageServiceImpl implements HomePageService {
             countryList = countryRepository.getCountries();
             choiceResponseDTO.setRegion(choice.getRegion());
             choiceResponseDTO.setRegionList(countryList);
+
         } else if (choice.getRegion().equalsIgnoreCase("domestic")) {
             country = countryRepository.findByCountryId(user.get().getHomeCountry());
             stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
@@ -112,29 +113,6 @@ public class HomePageServiceImpl implements HomePageService {
         return locationResponseDTO;
     }
 
-
-   /* @Override
-    public CityResponseDTO citySelectorService(CityRequestDTO cityRequestDTO) {
-
-        CityResponseDTO cityResponseDTO = new CityResponseDTO();
-
-        String username = jwtService.extractUsername(cityRequestDTO.getToken());
-        Optional<User> user = userRepository.findByUsermail(username);
-        Optional<City> city = cityRepository.findByCityId(cityRequestDTO.getCityID());
-        List<Activity> activityList = activityRepository.getActivitiesbyCityID(city.get().getCityId());
-
-        List<String> activityStringList = new ArrayList<>();
-        for (Activity activity: activityList) {
-            activityStringList.add(activity.getActivityName());
-        }
-        cityResponseDTO.setCityID(city.get().getCityId());
-        cityResponseDTO.setCityName(city.get().getCityName());
-        cityResponseDTO.setDescription(city.get().getDescription());
-        cityResponseDTO.setPlaceResponseList(activityStringList);
-
-
-        return cityResponseDTO;
-    }*/
 
     /**
      * Handles the city selection service.
@@ -295,6 +273,34 @@ public class HomePageServiceImpl implements HomePageService {
         reviewsActivityResponseDTO.setReviewsActivities(reviewsActivity);
 
         return reviewsActivityResponseDTO;
+    }
+
+    @Override
+    public CountryResponseDTO countrySelectorService(CountryRequestDTO countryRequestDTO) {
+
+        CountryResponseDTO countryResponseDTO = new CountryResponseDTO();
+
+        String username = jwtService.extractUsername(countryRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+        Optional<Country> country = countryRepository.findByCountryName(countryRequestDTO.getCountry_name());
+
+        List<State> states = stateRepository.getStatesbyCountryID(country.get().getCountryID());
+
+
+        for (State state : states) {
+         state.setCityList(cityRepository.getCitiesbyStateID(state.getStateID()));
+        }
+
+        for (State state : states) {
+            List<City> cityList = state.getCityList();
+            for (City city : cityList) {
+                city.setPlaces(placeRepository.getPlacesbyCityID(city.getCityId()));
+            }
+        }
+        countryResponseDTO.setStateList(states);
+
+        return countryResponseDTO;
+
     }
 
 }
