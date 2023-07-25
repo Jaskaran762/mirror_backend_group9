@@ -308,7 +308,7 @@ const International = () => {
           <Col>
             <div>
               <p className="mb-3">Select your travel date</p>
-              <DateRangePicker style={{ height: '100px', width: '100px', fontSize: '1rem' }} />
+              <DateRangePicker style={{ height: '100px', width: '100px', fontSize: '2rem' }} />
             </div>
           </Col>
         </Row>
@@ -344,21 +344,6 @@ const International = () => {
             <Row>{renderCards(activitiesToTry, 2)}</Row>
           </Container>
         </>
-      )}
-      {wishlist.length > 0 && (
-        <div>
-          <Button onClick={handleWishlist}>WhishList</Button>
-        </div>
-      )}
-      {itinerary.length > 0 && (
-        <div>
-              {itinerary.map((item, index) => (
-                <p key={index}>
-                  {item.title} - Date: {item.date}, Time: {item.time}, End Date: {item.endDate}, End Time: {item.endTime}
-                </p>
-              ))}
-              <Button onClick={handleItinerary}>See Itinerary</Button>
-            </div>
       )}
     </>
   );
