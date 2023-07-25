@@ -150,6 +150,7 @@ const Domestic = ({ selectedState }) => {
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
             <Card.Body>
+            <Card.Img variant='top'onClick={() => handleCity(item.cityId)}></Card.Img>
               <Card.Title>
               <Button variant="link" onClick={() => handleCity(item.cityId)}>
                 {item.cityName}
