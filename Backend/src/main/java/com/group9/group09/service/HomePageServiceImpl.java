@@ -232,18 +232,24 @@ public class HomePageServiceImpl implements HomePageService {
     /**
      * Handles the wishlist service.
      *
-     * @param wishListRequestDTO the WishListRequestDTO object
+     * @param requestDTO the WishListRequestDTO object
      * @return the WishListResponseDTO object
      */
     @Override
-    public WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO) {
+    public WishListResponseDTO getWishListService(RequestDTO requestDTO) {
 
         WishListResponseDTO wishListResponseDTO = new WishListResponseDTO();
-        List<wishList> wishlistList = wishlistRepository.getWishListbyUserID(wishListRequestDTO.getUserid());
 
-        wishListResponseDTO.setUserId(wishListRequestDTO.getUserid());
-        wishListResponseDTO.setActivityid(wishListResponseDTO.getActivityid());
+        String token = requestDTO.getToken().replace("Bearer ","");
+        String username = jwtService.extractUsername(token);
+        Optional<User> user = userRepository.findByUsermail(username);
+
+        if(user.isPresent()){
+
+        List<wishList> wishlistList = wishlistRepository.getWishListbyUserID(Integer.parseInt(user.get().getUserId()));
         wishListResponseDTO.setWishLists(wishlistList);
+
+        }
 
         return wishListResponseDTO;
     }
@@ -251,17 +257,22 @@ public class HomePageServiceImpl implements HomePageService {
     /**
      * Handles the itinerary service.
      *
-     * @param itineraryRequestDTO the ItineraryRequestDTO object
+     * @param requestDTO the ItineraryRequestDTO object
      * @return the ItineraryResponseDTO object
      */
     @Override
-    public ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO) {
+    public ItineraryResponseDTO getItinerary(RequestDTO requestDTO) {
 
         ItineraryResponseDTO itineraryResponseDTO = new ItineraryResponseDTO();
+        String token = requestDTO.getToken().replace("Bearer ","");
+        String username = jwtService.extractUsername(token);
+        Optional<User> user = userRepository.findByUsermail(username);
 
-        List<Itinerary> itineraryList = itineraryRepository.getItineraryList(itineraryRequestDTO.getUserid());
-        itineraryResponseDTO.setUserid(itineraryRequestDTO.getUserid());
-        itineraryResponseDTO.setItineraryObjectList(itineraryList);
+        if(user.isPresent()){
+
+                List<Itinerary> itineraryList = itineraryRepository.getItineraryList(Integer.parseInt(user.get().getUserId()));
+                itineraryResponseDTO.setItineraryObjectList(itineraryList);
+        }
 
         return itineraryResponseDTO;
     }

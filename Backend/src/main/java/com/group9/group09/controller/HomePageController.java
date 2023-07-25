@@ -68,22 +68,6 @@ public class HomePageController {
         }
     }
 
-   /* @PostMapping(path = "/city")
-    public ResponseEntity<?> citySelector(@RequestBody CityRequestDTO city, HttpServletRequest request) {
-        try {
-            city.setToken(request.getHeader("Authorization").replace("Bearer ",""));
-            CityResponseDTO cityResponseDTO =  homeService.citySelectorService(city);
-            return new ResponseEntity<>(cityResponseDTO, HttpStatus.OK);
-        }catch (Exception e){
-            System.out.println(e);
-            ErrorResponse response = new ErrorResponse();
-            response.setMessage("city selector api failed");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(response);
-        }
-    }*/
-
-
     /**
      * Handles the city selection request.
      *
@@ -159,16 +143,16 @@ public class HomePageController {
     /**
      * Handles the wishlist request.
      *
-     * @param wishListRequestDTO the WishListRequestDTO object
+     * @param requestDTO the WishListRequestDTO object
      * @param request            the HttpServletRequest object
      * @return the ResponseEntity containing the WishListResponseDTO object
      */
     @PostMapping(path = "/wishlist")
-    public ResponseEntity<?> getWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
+    public ResponseEntity<?> getWishList(@RequestBody RequestDTO requestDTO, HttpServletRequest request) {
         try {
             logger.info("Info Message: ");
-            wishListRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
-            WishListResponseDTO wishListResponseDTO = homeService.getWishListService(wishListRequestDTO);
+            requestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            WishListResponseDTO wishListResponseDTO = homeService.getWishListService(requestDTO);
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
@@ -183,16 +167,16 @@ public class HomePageController {
     /**
      * Handles the itinerary request.
      *
-     * @param itineraryRequestDTO the ItineraryRequestDTO object
+     * @param  requestDTO ItineraryRequestDTO object
      * @param request             the HttpServletRequest object
      * @return the ResponseEntity containing the ItineraryResponseDTO object
      */
     @PostMapping(path = "/itinerary")
-    public ResponseEntity<?> getItinerary(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
+    public ResponseEntity<?> getItinerary(@RequestBody RequestDTO requestDTO, HttpServletRequest request) {
         try {
             logger.info("Info Message: ");
-            itineraryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
-            ItineraryResponseDTO itineraryResponseDTO = homeService.getItinerary(itineraryRequestDTO);
+            requestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            ItineraryResponseDTO itineraryResponseDTO = homeService.getItinerary(requestDTO);
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
