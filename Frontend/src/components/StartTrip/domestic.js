@@ -19,6 +19,7 @@ const Domestic = ({ selectedState }) => {
     console.log(selectedState);
     axios.post('http://localhost:8091/home/location', { location: selectedState }, { headers })
       .then((response) => {
+        console.log(response.data);
         console.log(response.data.cities);
         setPlaceToVisit(response.data.cities);
       })
@@ -148,8 +149,6 @@ const Domestic = ({ selectedState }) => {
        
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
-           
-     
             <Card.Body>
               <Card.Title>
               <Button variant="link" onClick={() => handleCity(item.cityId)}>
