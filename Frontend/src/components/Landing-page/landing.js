@@ -114,7 +114,7 @@ const Landing = () => {
       <div style={{ marginTop: '0px' }}>
         <HomeNavbar />
       </div>
-      <Button onClick={handletrip} style={{ margin: '2rem' }}>
+      <Button onClick={handletrip} style={{ marginTop: '2rem', marginLeft:'7rem', marginBottom:'2rem' }}>
         Start your trip
       </Button>
       {(

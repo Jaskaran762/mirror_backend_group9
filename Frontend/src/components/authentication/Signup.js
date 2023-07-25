@@ -67,7 +67,7 @@ const Signup = () => {
     try {
       const response = await axios.post('https://group09.onrender.com/auth/register', userObject);
       console.log('API response:', response.data);
-
+      sessionStorage.setItem("token",response?.data?.token ?? "");
       setIsLoading(false); 
       setShowSuccessToast(true); 
       setTimeout(() => {

@@ -161,7 +161,7 @@ public class HomePageServiceImpl implements HomePageService {
         cityResponseDTO.setCityName(city.get().getCityName());
         cityResponseDTO.setDescription(city.get().getDescription());
         cityResponseDTO.setPlaceResponseList(placeStringList);
-
+        cityResponseDTO.setPlaceObjectResponseList(placeList);
         return cityResponseDTO;
     }
 

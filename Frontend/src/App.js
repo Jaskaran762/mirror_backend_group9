@@ -19,9 +19,10 @@ import Landing from "./components/Landing-page/landing";
 import Resetpwd from "./components/UserProfile/Resetpwd";
 
 import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
+import City from "./components/StartTrip/City";
 
 export function isLoggedIn() {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   return token !== null;
 }
 
@@ -46,6 +47,7 @@ function App() {
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
         <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
         <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
+        <Route path = "/city/:cityID" element = {<Auth><City/></Auth>}/>
       </Routes>
     </BrowserRouter>
   );
