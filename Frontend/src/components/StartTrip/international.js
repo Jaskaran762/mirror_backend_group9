@@ -5,12 +5,27 @@ import DateRangePicker from '../DateRangePicker';
 import { useNavigate } from 'react-router-dom';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
-
-const International = () => {
+import axios  from 'axios';
+const International = ({ selectedCountry }) => {
   const [searchButton, setSearchButton] = useState(false);
   const [itemCounter, setItemCounter] = useState(0);
+  const [placeToVisit,setPlaceToVisit] = useState([]);
 
   const handleSearchButton = () => {
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+    const headers = {
+    Authorization: `Bearer ${token}`,
+    };
+    console.log(selectedCountry);
+    axios.post('http://localhost:8091/home/location', { location:selectedCountry }, { headers })
+      .then((response) => {
+        console.log(response.data.cities);
+        setPlaceToVisit(response.data.cities);
+      })
+      .catch((error) => {
+        console.error('Error fetching domestic regions:', error);
+      });
     setSearchButton(true);
   };
 

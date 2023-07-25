@@ -58,7 +58,12 @@ const HomeNavbar = () => {
   };
 
   const handleLogo = () => {
-    changePage('/');
+    if(isLoggedIn()){
+      changePage('/landing');
+    }
+    else{
+      changePage('/');
+    }
   };
 
   const handleProfileOption = (eventKey) => {
@@ -95,7 +100,7 @@ const HomeNavbar = () => {
     changePage('/thingsToCarry')
   }
   const handleLogout = () =>{
-    window.localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     changePage('/');
   }
   return (
