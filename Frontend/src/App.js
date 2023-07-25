@@ -18,6 +18,7 @@ import ReviewsPage from "./components/reviews/review";
 import Landing from "./components/Landing-page/landing";
 import Resetpwd from "./components/UserProfile/Resetpwd";
 
+import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
 
 export function isLoggedIn() {
   const token = localStorage.getItem("token");
@@ -44,6 +45,7 @@ function App() {
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
         <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
+        <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
       </Routes>
     </BrowserRouter>
   );
