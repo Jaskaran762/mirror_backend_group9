@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Form, Button, Row, Col, Toast } from 'react-bootstrap';
+import { Link, useNavigate  } from 'react-router-dom'; // Import useNavigate
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-
+  const [showToast, setShowToast] = useState(false); 
+  const [showErrorToast, setShowErrorToast] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleForgotPassword = async () => {
     const apiUrl = 'https://group09.onrender.com/auth/forgotpassword';
@@ -17,8 +20,10 @@ const ForgotPassword = () => {
     };
 
     try {
+      setIsLoading(true);
       const response = await axios.post(apiUrl, requestBody, { headers });
       console.log('Response:', response.data);
+      navigate('/otp');
       // Handle the API response as needed
     } catch (error) {
       console.error('API error:', error);
@@ -53,16 +58,50 @@ const ForgotPassword = () => {
                 <Button
                   variant="primary"
                   className="submitButton my-2"
-                  type="button"
+                  type="button" 
                   onClick={handleForgotPassword} // Call handleForgotPassword on button click
                 >
-                  Send OTP
+                  {isLoading ? 'Loading...' : 'Send OTP'}
                 </Button>
               </Form>
             </div>
           </Col>
         </Row>
       </Container>
+
+      <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          zIndex: 9999,
+          backgroundColor: '#28a745', 
+          color: '#ffffff', 
+        }}
+        delay={2000}
+        autohide
+      >
+        <Toast.Body>OTP Sent..Check Inbox</Toast.Body>
+      </Toast>
+
+      <Toast
+        show={showErrorToast}
+        onClose={() => setShowErrorToast(false)}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          zIndex: 9999,
+          backgroundColor: '#dc3545', 
+          color: '#ffffff', 
+        }}
+        delay={2000}
+        autohide
+      >
+        <Toast.Body>Something went wrong..</Toast.Body>
+      </Toast>
     </div>
   );
 };
