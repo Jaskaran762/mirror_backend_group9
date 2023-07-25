@@ -11,7 +11,6 @@ const International = ({ selectedCountry }) => {
   const [selectedCountryName, setselectedCountryName] = useState();
   const [selectedCountryDesc, setselectedCountryDesc] = useState();
   const [itemCounter, setItemCounter] = useState(0);
-  const [placeToVisit,setPlaceToVisit] = useState([]);
 
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
@@ -27,8 +26,7 @@ const International = ({ selectedCountry }) => {
     console.log(countryDescription);
     setselectedCountryName(countryName);
     setselectedCountryDesc(countryDescription);
-  //  setselectedCountryDesc();
-    axios.post('http://localhost:8090/home/location', { location:selectedCountry }, { headers })
+    axios.post('http://localhost:8090/home/location', { location: selectedCountry }, { headers })
       .then((response) => {
         console.log(response.data.cities);
         setPlaceToVisit(response.data.cities);
@@ -277,6 +275,10 @@ const International = ({ selectedCountry }) => {
     changePage('/reviews/'+pass);
   };
 
+  const handleState = (stateID ) => {
+    changePage('/state/'+stateID);
+}
+
   const renderCards = (data, type) => {
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
@@ -284,7 +286,6 @@ const International = ({ selectedCountry }) => {
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
-
             <Card.Body>
             <Card.Title>
             <Button variant="link" onClick={() => handleState(item.stateID)}>
@@ -369,12 +370,13 @@ const International = ({ selectedCountry }) => {
             <Row>
               <br />
               <Col>
-                <div>
+              <div>
                   {selectedCountryName}
                 </div>
                 <div>
                   {selectedCountryDesc}
                 </div>
+            
                 <div>
                   <h2 className="mb-3">Country to Visit</h2>
                 </div>

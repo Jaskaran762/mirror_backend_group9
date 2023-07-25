@@ -225,6 +225,7 @@ const Domestic = ({ selectedState }) => {
         <Row>
           <br />
           <Col>
+           
             <div>
               <p className="mb-3">Select your travel date</p>
               <DateRangePicker style={{ height: '100px', width: '100px', fontSize: '1rem' }} />

@@ -33,7 +33,7 @@ const MainPage = () => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-    axios.post('http://localhost:8091/home/choice', { region: 'domestic' }, { headers })
+    axios.post('http://localhost:8090/home/choice', { region: 'domestic' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
@@ -52,7 +52,7 @@ const MainPage = () => {
     Authorization: `Bearer ${token}`,
   };
 
-    axios.post('http://localhost:8091/home/choice', { region: 'International' }, { headers })
+    axios.post('http://localhost:8090/home/choice', { region: 'International' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
