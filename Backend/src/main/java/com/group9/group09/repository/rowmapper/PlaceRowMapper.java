@@ -16,6 +16,7 @@ public class PlaceRowMapper implements RowMapper<Place> {
         place.setCityId(rs.getInt("city_id"));
         place.setDescription(rs.getString("description"));
         place.setInterest(rs.getString("interest"));
+        place.setPlaceImageLink(rs.getString("placeImageLink"));
 
         return place;
     }

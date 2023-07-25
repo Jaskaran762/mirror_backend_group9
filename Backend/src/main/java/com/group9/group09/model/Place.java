@@ -10,6 +10,7 @@ public class Place {
     private Integer cityId;
     private String cityName;
     private String interest;
+    private String placeImageLink;
 
     private List<String> activitiesStringList;
 
@@ -137,5 +138,13 @@ public class Place {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getPlaceImageLink() {
+        return placeImageLink;
+    }
+
+    public void setPlaceImageLink(String placeImageLink) {
+        this.placeImageLink = placeImageLink;
     }
 }
