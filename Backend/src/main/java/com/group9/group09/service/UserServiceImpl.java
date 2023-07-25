@@ -4,7 +4,9 @@ import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.UserNotFoundException;
+import com.group9.group09.model.Notification;
 import com.group9.group09.model.User;
+import com.group9.group09.repository.interfaces.NotificationRepository;
 import com.group9.group09.repository.interfaces.UserRepository;
 import com.group9.group09.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
@@ -95,6 +100,13 @@ public class UserServiceImpl implements UserService {
                 registerStatus.setToken(jwtToken);
                 registerStatus.setEmail(user.getEmail());
                 registerStatus.setSuccess("ok");
+
+                Notification notification = new Notification();
+                user = userRepository.getUserbyemail(user.getEmail());
+                notification.setUserId(Integer.parseInt(user.getUserId()));
+                notification.setDescription("Welcome to the Tripify application.");
+                notification.setCategory("Registration");
+                notificationRepository.setNotificationsForUser(notification);
 
             } else {
                 throw new RuntimeException();
@@ -165,6 +177,13 @@ public class UserServiceImpl implements UserService {
             userRepository.updateUserPassword(userEditRequestDTO.getUser(), passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
 
             responseDTO.setSuccess("Password updated successfully");
+
+            Notification notification = new Notification();
+            user = userRepository.getUserbyemail(user.getEmail());
+            notification.setUserId(Integer.parseInt(user.getUserId()));
+            notification.setDescription("Your password has been reset.");
+            notification.setCategory("Reset Password");
+            notificationRepository.setNotificationsForUser(notification);
         } else {
             throw new UserNotFoundException("User not found");
         }
