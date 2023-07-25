@@ -83,4 +83,5 @@ public interface HomePageService {
      */
     ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO);
 
+    CountryResponseDTO countrySelectorService(CountryRequestDTO countryRequestDTO);
 }
