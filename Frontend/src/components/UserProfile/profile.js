@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useN } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { BsPersonFill } from 'react-icons/bs';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
+import { Link, useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
   const [userData, setUserData] = useState(null);
@@ -13,9 +14,10 @@ const useAuth = () => {
     const fetchedUserData = {
         fullName: 'Riya Patel',
         email: 'riya@example.com',
-        age: 23,
-        city: 'New York',
+        contact: '+123232422',
+        password: 'abc',
         country: 'USA',
+        interest:'History'
       };
       setUserData(fetchedUserData);
     }, []);
@@ -40,6 +42,11 @@ const UserProfile = () => {
     const { name, value } = event.target;
     setUserData({ ...userData, [name]: value });
   };
+
+  const changepage = useNavigate();
+  const handleResetPassword = () =>{
+    changepage('/resetpassword')
+  }
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -77,34 +84,53 @@ const UserProfile = () => {
                   name="email"
                   value={userData.email}
                   onChange={handleInputChange}
-                  readOnly={!isEditing}
+                  readOnly
                   className="rounded-pill"
                 />
               </Form.Group>
 
-              <Form.Group controlId="formAge" style={{ marginTop: '1rem' }}>
-                <Form.Label>Age</Form.Label>
+              <Form.Group controlId="formPassword"style={{ marginTop: '1rem' }}>
+                <Form.Label>Password</Form.Label>
                 <Form.Control
-                  type="number"
-                  name="age"
-                  value={userData.age}
+                  type="password"
+                  name="password"
+                  value={userData.password}
+                  onChange={handleInputChange}
+                  readOnly
+                  className="rounded-pill"
+                />
+              </Form.Group>
+
+              <Link to='/resetpassword'>
+                Reset Password
+              </Link>
+
+              <Form.Group controlId="formContact"style={{ marginTop: '1rem' }}>
+                <Form.Label>Contact No</Form.Label>
+                <Form.Control
+                  type="contact"
+                  name="contact"
+                  value={userData.contact}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
                   className="rounded-pill"
                 />
               </Form.Group>
 
-              <Form.Group controlId="formCity" style={{ marginTop: '1rem' }}>
-                <Form.Label>City</Form.Label>
+
+
+              <Form.Group controlId="formInterest"style={{ marginTop: '1rem' }}>
+                <Form.Label>Interest</Form.Label>
                 <Form.Control
-                  type="text"
-                  name="city"
-                  value={userData.city}
+                  type="interest"
+                  name="interest"
+                  value={userData.interest}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
                   className="rounded-pill"
                 />
               </Form.Group>
+
 
               <Form.Group controlId="formCountry" style={{ marginTop: '1rem' }}>
                 <Form.Label>Country</Form.Label>

@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form} from 'react-bootstrap';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
 import International from '../StartTrip/international';
 import Domestic from '../StartTrip/domestic';
 import axios from 'axios';
+
 const MainPage = () => {
   const [destinationType, setDestinationType] = useState('International');
   const [regionList, setRegionList] = useState([]);
-
   const handleDestinationTypeChange = (event) => {
     const selectedDestination = event.target.value;
     setDestinationType(selectedDestination);
-  
     if (selectedDestination === 'National') {
       fetchDomesticRegions();
+    } else {
+      setRegionList([]);
+    }
+    if (selectedDestination === 'International') {
+      fetchInternationalRegions();
     } else {
       setRegionList([]);
     }
@@ -34,13 +38,47 @@ const MainPage = () => {
         console.error('Error fetching domestic regions:', error);
       });
   };
-  
+
+   const fetchInternationalRegions = () => {
+    const token = window.localStorage.getItem('token');
+    console.log(token);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+    axios.post('https://group09.onrender.com/home/choice', { region: 'International' }, { headers })
+      .then((response) => {
+        console.log(response.data.regionList);
+        setRegionList(response.data.regionList);
+      })
+      .catch((error) => {
+        console.error('Error fetching domestic regions:', error);
+      });
+
+  };
+
+useEffect(() => {
+  const token = window.localStorage.getItem('token');
+    console.log(token);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+    axios.post('https://group09.onrender.com/home/choice', { region: 'International' }, { headers })
+      .then((response) => {
+        console.log(response.data.regionList);
+        setRegionList(response.data.regionList);
+      })
+      .catch((error) => {
+         console.error('Error fetching international regions:', error);
+      });
+  },[]);
 
   const[selectState,setselectState] = useState('Kerala');
   const handleChangeState = (event) => {
     setselectState(event.target.value);
-  }
 
+  }
   const[selectCity,setselectCity] = useState('Ahmedabad');
   const handleChangeCity = (event) => {
     setselectState(event.target.value);
@@ -52,7 +90,9 @@ const MainPage = () => {
   }
 
   return (
+
     <div
+
       style={{
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -62,8 +102,8 @@ const MainPage = () => {
         justifyContent: 'space-between',
       }}
     >
-      <HomeNavbar />
 
+      <HomeNavbar />
       <Container>
         <Row className="my-4">
           <Col>
@@ -74,6 +114,7 @@ const MainPage = () => {
               <Form>
                 <Form.Group>
                   <div className="d-flex justify-content-center">
+
                     <Form.Check
                       type="radio"
                       label="International"
@@ -83,6 +124,7 @@ const MainPage = () => {
                       onChange={handleDestinationTypeChange}
                       style={{ marginRight: '20px' }}
                     />
+
                     <Form.Check
                       type="radio"
                       label="Domestic"
@@ -93,7 +135,7 @@ const MainPage = () => {
                     />
                   </div>
                 </Form.Group>
-          
+
                 {destinationType === 'National' && (
                 <div>
                   <Form.Group controlId="formStateChange">
@@ -103,52 +145,41 @@ const MainPage = () => {
                         <option key={`${region.stateName}-${region.id}`} value={region.stateName}>
                           {region.stateName}
                         </option>
+
                       ))}
                     </Form.Control>
                   </Form.Group>
                 </div>
               )}
-
-
         {destinationType === 'International' && (
               <div>
                  <Form.Group controlId="formCountryChange">
                    <Form.Label> Country</Form.Label>
-                  <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >         
-                    <option value="Canada">Canada</option>
-                    <option value="USA">USA</option>
-                    <option value="India">India</option>
-                    <option value="London">London</option>
-                    <option value="France">France</option>
-                    <option value="Paris">Paris</option>
+                  <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >        
+                  {regionList.map((region) => (
+                        <option key={`${region.countryName}-${region.countryID}`} value={region.countryName}>
+                          {region.countryName}
+                        </option>
+                      ))}
                   </Form.Control>
              </Form.Group>
                </div>
             )}
                <br></br>
-               <div>
-                <Form.Group controlId="formCityChange">
-                   <Form.Label> Which city you want to go </Form.Label>
-                  <Form.Control as="select" value={selectCity} onChange={handleChangeCity} >         
-                    <option value="West Bengal">West Bengal</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Orissa">Orissa</option>
-                    <option value="Kashmir">Kashmir</option>
-                  </Form.Control>
-               </Form.Group>
-               </div>
-               {destinationType === 'National' && <Domestic/> }
-               {destinationType === 'International' && <International/> }
+               <div>    
                
+            </div>
+
+               {destinationType === 'National' && <Domestic/> }
+
+               {destinationType === 'International' && <International/> }
               </Form>
             </div>
           </Col>
         </Row>
       </Container>
-
       <Footer />
+
     </div>
   );
 };

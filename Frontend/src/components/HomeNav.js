@@ -84,8 +84,13 @@ const HomeNavbar = () => {
   }
 
   const handleItenary = () =>{
-    changePage('/')
+    changePage('/itinerary')
   }
+
+  const handleWishlist = () =>{
+    changePage('/wish')
+  }
+
   const handleLogout = () =>{
     window.localStorage.removeItem('token');
     changePage('/');
@@ -109,7 +114,7 @@ const HomeNavbar = () => {
           <NavDropdown title={<FiUser size={24} />} id="profile-dropdown" onSelect={handleProfileOption} >
             <NavDropdown.Item onClick={handleProfile} >Profile</NavDropdown.Item>
             <NavDropdown.Item  onClick={handleItenary}>Itinerary</NavDropdown.Item>
-            <NavDropdown.Item  onClick={handleItenary}>Wishlist</NavDropdown.Item>
+            <NavDropdown.Item  onClick={handleWishlist}>Wishlist</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={handleLogout} >Logout</NavDropdown.Item>
           </NavDropdown>
