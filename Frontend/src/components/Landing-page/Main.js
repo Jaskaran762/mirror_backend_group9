@@ -133,6 +133,7 @@ useEffect(() => {
                   <Form.Group controlId="formStateChange">
                     <Form.Label> Which state you want to go </Form.Label>
                     <Form.Control as="select" value={selectState} onChange={handleChangeState}>
+                    <option>Select State</option>      
                       {regionList.map((region) => (
                         <option key={`${region.stateName}-${region.id}`} value={JSON.stringify(region)}>
                           {region.stateName}
@@ -147,7 +148,8 @@ useEffect(() => {
                     <div>
                       <Form.Group controlId="formCountryChange">
                         <Form.Label> Country</Form.Label>
-                        <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >        
+                        <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >  
+                        <option>Select Country</option>      
                         {regionList.map((region) => (
                               <option key={`${region.countryName}-${region.countryID}`} value={JSON.stringify(region)}>
                                 {region.countryName}
