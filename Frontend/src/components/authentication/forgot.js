@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
 
-  
+
   const handleForgotPassword = async () => {
     const apiUrl = 'https://group09.onrender.com/auth/forgotpassword';
     const headers = {
@@ -66,5 +66,6 @@ const ForgotPassword = () => {
     </div>
   );
 };
+
 
 export default ForgotPassword;
