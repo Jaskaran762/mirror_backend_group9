@@ -1,10 +1,22 @@
 package com.group9.group09.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class State {
     private Integer stateID;
     private String stateName;
     private String description;
     private Integer countryID;
+    private List<City> cityList;
+
+    public List<City> getCityList() {
+        return cityList;
+    }
+
+    public void setCityList(List<City> cityList) {
+        this.cityList = cityList;
+    }
 
     /**
      * Get the ID of the state.
