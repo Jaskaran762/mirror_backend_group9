@@ -17,15 +17,15 @@ const ForgotPassword = () => {
         <Row className="justify-content-left align-items-center h-100">
           <Col xs={10} md={3} lg={5}>
             <div className="loginContainer p-4 rounded-lg shadow">
-              <h2 className="text-center mb-4">Enter username</h2>
+              <h2 className="text-center mb-4">Enter OTP</h2>
               <Form>
                 <Form.Group controlId="formUsername">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>OTP</Form.Label>
                   <Form.Control type="text" className="formInput" />
                 </Form.Group>
               
                 <Button variant="primary" className="submitButton my-2" type="submit">
-                  Send OTP
+                  Proceed
                 </Button>
               </Form>
             </div>
