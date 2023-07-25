@@ -34,7 +34,9 @@ public class OTPServiceImpl implements OTPService {
     public boolean generateOTP(String email) {
 
         Random random = new Random();
-        Integer otp = random.nextInt(1000, 9999);
+        int min = 1000;
+        int max = 9999;
+        Integer otp = random.nextInt(max - min)+ min;
         OTPServiceImpl.otp = otp.toString();
 
         startTime = System.currentTimeMillis();

@@ -91,6 +91,9 @@ const HomeNavbar = () => {
     changePage('/wish')
   }
 
+  const handleThingsToCarry = () =>{
+    changePage('/thingsToCarry')
+  }
   const handleLogout = () =>{
     window.localStorage.removeItem('token');
     changePage('/');
@@ -115,6 +118,7 @@ const HomeNavbar = () => {
             <NavDropdown.Item onClick={handleProfile} >Profile</NavDropdown.Item>
             <NavDropdown.Item  onClick={handleItenary}>Itinerary</NavDropdown.Item>
             <NavDropdown.Item  onClick={handleWishlist}>Wishlist</NavDropdown.Item>
+            <NavDropdown.Item  onClick={handleThingsToCarry}>Items to carry</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={handleLogout} >Logout</NavDropdown.Item>
           </NavDropdown>
