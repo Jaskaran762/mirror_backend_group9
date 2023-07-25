@@ -347,14 +347,6 @@ const Domestic = () => {
       {searchButton && (
         <>
         <Container>
-          <Row>
-          <Col>
-            <Button onClick={handleWishlist}>WishList</Button>
-          </Col>
-          <Col>
-          <Button onClick={handleItinerary}>See Itinerary</Button>
-          </Col>
-        </Row>
             <Row>
               <br />
               <Col>
