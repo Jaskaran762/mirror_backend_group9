@@ -9,6 +9,7 @@ public class State {
     private String description;
     private Integer countryID;
     private List<City> cityList;
+    private String stateImageLink;
 
     public List<City> getCityList() {
         return cityList;
@@ -88,5 +89,13 @@ public class State {
      */
     public void setCountryID(Integer countryID) {
         this.countryID = countryID;
+    }
+
+    public String getStateImageLink() {
+        return stateImageLink;
+    }
+
+    public void setStateImageLink(String stateImageLink) {
+        this.stateImageLink = stateImageLink;
     }
 }

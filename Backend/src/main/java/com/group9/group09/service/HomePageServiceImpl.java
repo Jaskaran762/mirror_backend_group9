@@ -297,6 +297,8 @@ public class HomePageServiceImpl implements HomePageService {
                 city.setPlaces(placeRepository.getPlacesbyCityID(city.getCityId()));
             }
         }
+        countryResponseDTO.setCountryName(country.get().getCountryName());
+        countryResponseDTO.setDescription(country.get().getDescription());
         countryResponseDTO.setStateList(states);
 
         return countryResponseDTO;
