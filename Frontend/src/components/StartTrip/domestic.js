@@ -11,8 +11,7 @@ const Domestic = ({ selectedState }) => {
   const [itemCounter, setItemCounter] = useState(0);
   const [selectedStateName, setselectedStateName] = useState();
   const [selectedStateDesc, setselectedStateDesc] = useState();
-
-
+  
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
@@ -27,7 +26,7 @@ const Domestic = ({ selectedState }) => {
     console.log(stateDescription);
     setselectedStateName(stateName);
     setselectedStateDesc(stateDescription);
-
+   
     axios.post('http://localhost:8090/home/location', { location: selectedValue.stateName }, { headers })
       .then((response) => {
         console.log(response.data);
@@ -259,7 +258,6 @@ const Domestic = ({ selectedState }) => {
                 <div>
                   {selectedStateDesc}
                 </div>
-
                 <div>
                   <h2 className="mb-3">Cities to Visit</h2>
                 </div>

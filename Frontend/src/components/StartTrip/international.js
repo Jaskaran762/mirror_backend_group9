@@ -8,9 +8,9 @@ import Footer from '../footer';
 import axios  from 'axios';
 const International = ({ selectedCountry }) => {
   const [searchButton, setSearchButton] = useState(false);
-  const [itemCounter, setItemCounter] = useState(0);
   const [selectedCountryName, setselectedCountryName] = useState();
   const [selectedCountryDesc, setselectedCountryDesc] = useState();
+  const [itemCounter, setItemCounter] = useState(0);
 
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
@@ -26,14 +26,13 @@ const International = ({ selectedCountry }) => {
     console.log(countryDescription);
     setselectedCountryName(countryName);
     setselectedCountryDesc(countryDescription);
-
     axios.post('http://localhost:8090/home/location', { location: selectedCountry }, { headers })
       .then((response) => {
-        console.log(response.data.countries);
-        setPlaceToVisit(response.data.countries);
+        console.log(response.data.cities);
+        setPlaceToVisit(response.data.cities);
       })
       .catch((error) => {
-        console.error('Error fetching international regions:', error);
+        console.error('Error fetching domestic regions:', error);
       });
     setSearchButton(true);
   };
@@ -287,7 +286,6 @@ const International = ({ selectedCountry }) => {
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
-            
             <Card.Body>
             <Card.Title>
             <Button variant="link" onClick={() => handleState(item.stateID)}>
@@ -296,7 +294,7 @@ const International = ({ selectedCountry }) => {
                 <Button variant="link" onClick={() => handleReviews(item)}>
                   Review
                 </Button>
-              
+
               </Card.Title>
               <Card.Text>{item.description}</Card.Text>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
@@ -378,6 +376,7 @@ const International = ({ selectedCountry }) => {
                 <div>
                   {selectedCountryDesc}
                 </div>
+            
                 <div>
                   <h2 className="mb-3">Country to Visit</h2>
                 </div>
