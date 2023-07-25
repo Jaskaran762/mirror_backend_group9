@@ -30,10 +30,10 @@ const MainPage = () => {
   const fetchDomesticRegions = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    axios.post('http://localhost:8090/home/choice', { region: 'domestic' }, { headers })
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+    axios.post('http://localhost:8091/home/choice', { region: 'domestic' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
@@ -52,7 +52,7 @@ const MainPage = () => {
     Authorization: `Bearer ${token}`,
   };
 
-    axios.post('http://localhost:8090/home/choice', { region: 'International' }, { headers })
+    axios.post('http://localhost:8091/home/choice', { region: 'International' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
@@ -133,7 +133,7 @@ useEffect(() => {
                   <Form.Group controlId="formStateChange">
                     <Form.Label> Which state you want to go </Form.Label>
                     <Form.Control as="select" value={selectState} onChange={handleChangeState}>
-                    <option>Select State</option>      
+                    <option>Select State</option>
                       {regionList.map((region) => (
                         <option key={`${region.stateName}-${region.id}`} value={JSON.stringify(region)}>
                           {region.stateName}
@@ -148,8 +148,8 @@ useEffect(() => {
                     <div>
                       <Form.Group controlId="formCountryChange">
                         <Form.Label> Country</Form.Label>
-                        <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >  
-                        <option>Select Country</option>      
+                        <Form.Control as="select" value={selectCountry} onChange={handleChangeCountry} >
+                        <option>Select Country</option>
                         {regionList.map((region) => (
                               <option key={`${region.countryName}-${region.countryID}`} value={JSON.stringify(region)}>
                                 {region.countryName}
