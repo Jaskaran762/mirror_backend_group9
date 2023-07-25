@@ -14,6 +14,7 @@ public class CountryRowMapper implements RowMapper<Country> {
        country.setCountryID(rs.getInt("country_id"));
        country.setCountryName(rs.getString("country_name"));
        country.setDescription(rs.getString("description"));
+       country.setCountryImageLink(rs.getString("countryImageLink"));
 
        return country;
     }

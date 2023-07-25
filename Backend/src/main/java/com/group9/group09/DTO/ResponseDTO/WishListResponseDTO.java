@@ -6,8 +6,6 @@ import java.util.List;
 
 public class WishListResponseDTO {
 
-    private Integer wishlistID;
-    private Integer userId;
 
     private List<wishList> wishLists;
 
@@ -19,39 +17,5 @@ public class WishListResponseDTO {
         this.wishLists = wishLists;
     }
 
-    public Integer getWishlistID() {
-        return wishlistID;
-    }
-
-    public void setWishlistID(Integer wishlistID) {
-        this.wishlistID = wishlistID;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getPlaceid() {
-        return placeid;
-    }
-
-    public void setPlaceid(Integer placeid) {
-        this.placeid = placeid;
-    }
-
-    public Integer getActivityid() {
-        return activityid;
-    }
-
-    public void setActivityid(Integer activityid) {
-        this.activityid = activityid;
-    }
-
-    private Integer placeid;
-    private Integer activityid;
 
 }

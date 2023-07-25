@@ -56,18 +56,18 @@ public interface HomePageService {
     /**
      * Handles the wishlist service.
      *
-     * @param wishListRequestDTO the WishListRequestDTO object
+     * @param requestDTO the WishListRequestDTO object
      * @return the WishListResponseDTO object
      */
-    WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO);
+    WishListResponseDTO getWishListService(RequestDTO requestDTO);
 
     /**
      * Handles the itinerary service.
      *
-     * @param itineraryRequestDTO the ItineraryRequestDTO object
+     * @param requestDTO the ItineraryRequestDTO object
      * @return the ItineraryResponseDTO object
      */
-    ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO);
+    ItineraryResponseDTO getItinerary(RequestDTO requestDTO);
 
     /**
      *
@@ -83,4 +83,5 @@ public interface HomePageService {
      */
     ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO);
 
+    CountryResponseDTO countrySelectorService(CountryRequestDTO countryRequestDTO);
 }
