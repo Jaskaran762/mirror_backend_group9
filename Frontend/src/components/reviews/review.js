@@ -37,7 +37,7 @@ const ReviewsPage = () => {
             </Carousel.Item>
         </Carousel>
        <Row>
-        <h3> About </ h3>
+        <h3> About </h3>
         <p> { item.content } </p>
        </Row>
        <Row>

@@ -12,6 +12,7 @@ const International = ({ selectedCountry }) => {
   const [selectedCountryName, setselectedCountryName] = useState();
   const [selectedCountryDesc, setselectedCountryDesc] = useState();
   const [itemCounter, setItemCounter] = useState(0);
+  const [selectedCountryimg, setselectedCountryimg] = useState();
 
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
@@ -20,17 +21,21 @@ const International = ({ selectedCountry }) => {
       Authorization: `Bearer ${token}`,
     };
     console.log(selectedCountry);
-    const selectedValue = JSON.parse(selectedCountry);
-    const countryName = selectedValue.countryName;
-    const countryDescription = selectedValue.description;
+    const parsedCountry = JSON.parse(selectedCountry);
+    const countryName = parsedCountry.countryName;
+    const countryDescription = parsedCountry.description;
+    const countryimg = parsedCountry.countryImageLink;
     console.log(countryName);
     console.log(countryDescription);
     setselectedCountryName(countryName);
     setselectedCountryDesc(countryDescription);
-    axios.post('http://localhost:8090/home/location', { location: selectedCountry }, { headers })
+    setselectedCountryimg(countryimg);
+
+    axios.post('http://localhost:8091/home/country', { country_name: countryName }, { headers })
       .then((response) => {
-        console.log(response.data.cities);
-        setPlaceToVisit(response.data.cities);
+        
+        console.log(response.data.stateList);
+        setPlaceToVisit(response.data.stateList);
       })
       .catch((error) => {
         console.error('Error fetching domestic regions:', error);
@@ -147,12 +152,19 @@ const International = ({ selectedCountry }) => {
   };
 
   const renderCards = (data, type) => {
+    debugger;
+    
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
       const isInWishlist = isItemInWishlist(item.title);
+      console.log(item.data);
+
+      debugger;
+
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
+          {item.stateImageLink && <Card.Img variant="top" src={item.stateImageLink} />}
             <Card.Body>
               <Card.Title>
                 <Button variant="link" onClick={() => handleState(item.stateID)}>
@@ -236,20 +248,17 @@ const International = ({ selectedCountry }) => {
               <br />
               <Col>
               <div>
-                  {selectedCountryName}
+              <h2 style={{ fontSize: '2rem' }}>{selectedCountryName}</h2>
                 </div>
+              <div>
+                {selectedCountryimg && <img src={selectedCountryimg} alt="Country"/>}
+              </div>
+              
                 <div>
                   {selectedCountryDesc}
                 </div>
-            
                 <div>
-                  {selectedCountryName}
-                </div>
-                <div>
-                  {selectedCountryDesc}
-                </div>
-                <div>
-                  <h2 className="mb-3">Country to Visit</h2>
+                  <h2 className="mb-3">States to Visit</h2>
                 </div>
               </Col>
             </Row>
