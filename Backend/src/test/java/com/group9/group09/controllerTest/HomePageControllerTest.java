@@ -94,18 +94,6 @@ class HomePageControllerTest {
 
     // Add more test cases for other controller methods...
 
-    // For instance, add test cases for:
-    // - testCountrySelector_Success
-    // - testCountrySelector_Exception
-    // - testLocationSelector_Success
-    // - testLocationSelector_Exception
-    // - testCitySelector_Success
-    // - testCitySelector_Exception
-    // - testPlaceSelector_Success
-    // - testPlaceSelector_Exception
-    // - testGetActivities_Success
-    // - testGetActivities_Exception
-    // - testGetWishList_Success
     // - testGetWishList_Exception
     // - testAddWishList_Success
     // - testAddWishList_Exception

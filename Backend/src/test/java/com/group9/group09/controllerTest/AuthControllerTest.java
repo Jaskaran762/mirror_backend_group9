@@ -51,7 +51,7 @@ class AuthControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(responseDTO, responseEntity.getBody());
 
-        // Verify that the loginUserService method was called once
+
         verify(userService, times(1)).loginUserService(user);
     }
 
@@ -61,14 +61,14 @@ class AuthControllerTest {
         user.setUserId("1");
         user.setPassword("testPassword");
 
-        // Mock userService's loginUserService method to throw an exception
+
         when(userService.loginUserService(user)).thenThrow(new RuntimeException());
 
         ResponseEntity<?> responseEntity = authController.userLogin(user);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertTrue(responseEntity.getBody() instanceof ErrorResponse);
 
-        // Verify that the loginUserService method was called once
+
         verify(userService, times(1)).loginUserService(user);
     }
 
@@ -78,7 +78,7 @@ class AuthControllerTest {
         user.setUserId("1");
         user.setPassword("testPassword");
 
-        // Mock userService's registerUserService method
+
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setSuccess("Registration successful");
         when(userService.registerUserService(user)).thenReturn(responseDTO);
@@ -87,7 +87,7 @@ class AuthControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(responseDTO, responseEntity.getBody());
 
-        // Verify that the registerUserService method was called once
+
         verify(userService, times(1)).registerUserService(user);
     }
 
@@ -108,7 +108,7 @@ class AuthControllerTest {
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
         assertEquals("User already present", errorResponse.getMessage());
 
-        // Verify that the registerUserService method was called once
+        
         verify(userService, times(1)).registerUserService(user);
     }
 

@@ -23,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AdminControllerTest {
 
@@ -74,7 +73,6 @@ class AdminControllerTest {
 
     // Add more test cases for other controller methods...
 
-    // For instance, add test cases for:
     // - testAddCountry_Success
     // - testAddCountry_NotAdminAccessException
     // - testAddState_Success
