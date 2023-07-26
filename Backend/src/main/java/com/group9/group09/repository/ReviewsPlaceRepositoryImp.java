@@ -1,6 +1,7 @@
 package com.group9.group09.repository;
 
 
+import com.group9.group09.DTO.RequestDTO.ReviewsPlaceRequestDTO;
 import com.group9.group09.model.ReviewsPlace;
 import com.group9.group09.repository.interfaces.ReviewsPlaceRepository;
 import com.group9.group09.repository.rowmapper.ReviewsPlaceRowMapper;
@@ -28,6 +29,19 @@ public class ReviewsPlaceRepositoryImp implements ReviewsPlaceRepository{
             return jdbcTemplate.query(getReviewsPlaceByReviewId,new ReviewsPlaceRowMapper(),placeId);
         }catch (Exception e){
             logger.error("Error Message: ");
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public int addReviewplace(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
+
+        try{
+            logger.info("Info Message: in ReviewsPlaceRepositoryImp addreviewplace");
+            String addReviewsPlace = "INSERT INTO ReviewsPlace (user_id,rating,place_id,`review_message`) VALUES(?,?,?,?);";
+            return jdbcTemplate.update(addReviewsPlace,reviewsPlaceRequestDTO.getUserid(),reviewsPlaceRequestDTO.getRating(),reviewsPlaceRequestDTO.getPlace_id(),reviewsPlaceRequestDTO.getReview_message());
+        }catch (Exception e){
+            logger.error("Error Message:issue in review place repo ");
             throw new RuntimeException(e.getMessage());
         }
     }
