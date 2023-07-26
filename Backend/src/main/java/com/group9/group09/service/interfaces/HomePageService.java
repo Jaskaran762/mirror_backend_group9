@@ -84,4 +84,12 @@ public interface HomePageService {
     ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO);
 
     CountryResponseDTO countrySelectorService(CountryRequestDTO countryRequestDTO);
+
+    WishListResponseDTO addWishListService(WishListRequestDTO wishListRequestDTO);
+
+    ItineraryResponseDTO addtoItinerary(ItineraryRequestDTO itineraryRequestDTO);
+
+    WishListResponseDTO deleteWishListService(WishListRequestDTO wishListRequestDTO);
+
+    ItineraryResponseDTO deleteItineraryService(ItineraryRequestDTO itineraryRequestDTO);
 }

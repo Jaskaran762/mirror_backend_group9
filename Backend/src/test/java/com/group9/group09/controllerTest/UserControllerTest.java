@@ -1,217 +1,110 @@
 package com.group9.group09.controllerTest;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import com.group9.group09.DTO.RequestDTO.OTPRequestDTO;
 import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
-import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
-import com.group9.group09.controller.UserController;
+import com.group9.group09.controller.AuthController;
+import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.service.interfaces.OTPService;
 import com.group9.group09.service.interfaces.UserService;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserControllerTest {/*
+class UserControllerTest {
+
+
     @Mock
     private UserService userService;
 
     @InjectMocks
-    private UserController userController;
+    private AuthController userController;
     private final OTPService otpService;
 
-    public UserControllerTest(UserService userService, UserController userController, OTPService otpService) {
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    public UserControllerTest(UserService userService, AuthController userController, OTPService otpService) {
         this.userService = userService;
         this.userController = userController;
         this.otpService = otpService;
     }
 
     @Test
-    public void testUserLogin_Success() {
-        // Prepare the user object with login credentials
+    void testUserLogin_Success() {
         User user = new User();
-        user.setUserId("10004");
-        user.setPassword("test_password");
 
-        // Prepare the service response
-        ResponseDTO serviceResponse = new ResponseDTO();
+        // Mock userService's loginUserService method
+        ResponseDTO mockResponse = new ResponseDTO();
+        when(userService.loginUserService(any(User.class))).thenReturn(mockResponse);
 
-        // Mock the userService method to return the service response
-        Mockito.when(userService.loginUserService(user))
-                .thenReturn(serviceResponse);
-
-        // Perform the test
         ResponseEntity<?> responseEntity = userController.userLogin(user);
 
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assertions.assertEquals(serviceResponse, responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(mockResponse, responseEntity.getBody());
     }
 
     @Test
-    public void testUserLogin_Failure() {
-        // Prepare the user object with login credentials
+    void testUserLogin_Exception() {
         User user = new User();
-        user.setUserId("10004");
-        user.setPassword("test_password");
 
-        // Mock the userService method to throw an exception or return null (login failure)
-        Mockito.when(userService.loginUserService(user))
-                .thenReturn(null);
+        // Mock userService's loginUserService method to throw an exception
+        when(userService.loginUserService(any(User.class))).thenThrow(new RuntimeException());
 
-        // Perform the test
         ResponseEntity<?> responseEntity = userController.userLogin(user);
 
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
-        Assertions.assertNotNull(errorResponse);
-        Assertions.assertEquals("Login Issue", errorResponse.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        // Add assertions for the response body as needed.
     }
 
     @Test
-    public void testUserRegister_UserAlreadyPresent() {
-        // Prepare the user object with registration details
+    void testUserRegister_Success() {
         User user = new User();
-        user.setUserId("10004");
-        user.setPassword("test_password");
 
-        // Prepare the service response with "User already present" message
-        ResponseDTO serviceResponse = new ResponseDTO();
-        serviceResponse.setSuccess("User already present");
+        // Mock userService's registerUserService method
+        ResponseDTO mockResponse = new ResponseDTO();
+        when(userService.registerUserService(any(User.class))).thenReturn(mockResponse);
 
-        // Mock the userService method to return the service response
-        Mockito.when(userService.registerUserService(user))
-                .thenReturn(serviceResponse);
-
-        // Perform the test
         ResponseEntity<?> responseEntity = userController.userRegister(user);
 
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
-        Assertions.assertNotNull(errorResponse);
-        Assertions.assertEquals("User already present", errorResponse.getMessage());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(mockResponse, responseEntity.getBody());
     }
 
     @Test
-    public void testUserInfoEdit_UserNotFound() {
-        // Prepare the user edit request DTO with a null email (user not found)
-        UserEditRequestDTO userEditRequestDTO = new UserEditRequestDTO();
-
-        // Mock the userService method to return null (user not found)
-        Mockito.when(userService.getUserbyEmail(userEditRequestDTO))
-                .thenReturn(null);
-
-        // Perform the test
-        ResponseEntity<?> responseEntity = userController.userInfoEdit(userEditRequestDTO);
-
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
-        Assertions.assertNotNull(errorResponse);
-        Assertions.assertEquals("User edit api failed", errorResponse.getMessage());
-    }
-
-    @Test
-    public void testForgotPasswordForUser_OTPGenerationSuccess() {
-        // Prepare the user object with email
+    void testUserRegister_UserNotFoundException() {
         User user = new User();
-        user.setEmail("test@example.com");
 
-        // Prepare the user edit request DTO
-        UserEditRequestDTO userEditRequestDTO = new UserEditRequestDTO();
-        userEditRequestDTO.setEmail(user.getEmail());
+        // Mock userService's registerUserService method to throw UserNotFoundException
+        when(userService.registerUserService(any(User.class))).thenThrow(new UserNotFoundException("User already present"));
 
-        // Prepare the user object to be returned by getUserbyEmail method
-        User userFromDb = new User();
-        userFromDb.setUserId("10004");
-        userFromDb.setPassword("test_password");
+        ResponseEntity<?> responseEntity = userController.userRegister(user);
 
-        // Mock the userService method to return the user object
-        Mockito.when(userService.getUserbyEmail(userEditRequestDTO))
-                .thenReturn(userFromDb);
-
-        // Mock the OTPService method to return true (OTP generation success)
-        Mockito.when(otpService.generateOTP(userFromDb.getEmail()))
-                .thenReturn(true);
-
-        // Perform the test
-        ResponseEntity<?> responseEntity = userController.forgotPasswordForUser(user);
-
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        ResponseDTO responseDTO = (ResponseDTO) responseEntity.getBody();
-        Assertions.assertNotNull(responseDTO);
-        Assertions.assertEquals("OTP Generated", responseDTO.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        // Add assertions for the response body as needed.
     }
 
-    @Test
-    public void testForgotPasswordForUser_UserNotFound() {
-        // Prepare the user object with email
-        User user = new User();
-        user.setEmail("non_existent_user@example.com");
+    // Add more test cases for other controller methods...
 
-        // Prepare the user edit request DTO
-        UserEditRequestDTO userEditRequestDTO = new UserEditRequestDTO();
-        userEditRequestDTO.setEmail(user.getEmail());
-
-        // Mock the userService method to return null (user not found)
-        Mockito.when(userService.getUserbyEmail(userEditRequestDTO))
-                .thenReturn(null);
-
-        // Perform the test
-        ResponseEntity<?> responseEntity = userController.forgotPasswordForUser(user);
-
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
-        Assertions.assertNotNull(errorResponse);
-        Assertions.assertEquals("User Not Found", errorResponse.getMessage());
-    }
-
-    @Test
-    public void testVerifyUser_Success() {
-        // Prepare the OTPRequestDTO with a valid OTP
-        OTPRequestDTO otpRequestDTO = new OTPRequestDTO();
-        otpRequestDTO.setOtp("1234"); // Replace "1234" with the valid OTP generated during the test
-
-        // Mock the OTPService method to return true (successful OTP verification)
-        Mockito.when(otpService.verifyUserUsingOTP(otpRequestDTO))
-                .thenReturn(true);
-
-        // Perform the test
-        ResponseEntity<?> responseEntity = userController.verifyUser(otpRequestDTO);
-
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        ResponseDTO responseDTO = (ResponseDTO) responseEntity.getBody();
-        Assertions.assertNotNull(responseDTO);
-        Assertions.assertEquals("success", responseDTO.getMessage());
-    }
-
-    @Test
-    public void testVerifyUser_IncorrectOTP() {
-        // Prepare the OTPRequestDTO with an incorrect OTP
-        OTPRequestDTO otpRequestDTO = new OTPRequestDTO();
-        otpRequestDTO.setOtp("0000"); // Set an incorrect OTP
-
-        // Mock the OTPService method to return false (incorrect OTP)
-        Mockito.when(otpService.verifyUserUsingOTP(otpRequestDTO))
-                .thenReturn(false);
-
-        // Perform the test
-        ResponseEntity<?> responseEntity = userController.verifyUser(otpRequestDTO);
-
-        // Assert the response
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        ResponseDTO responseDTO = (ResponseDTO) responseEntity.getBody();
-        Assertions.assertNotNull(responseDTO);
-        Assertions.assertEquals("Incorrect OTP", responseDTO.getMessage());
-    }*/
+    // - userRegister_Exception
+    // - userInfoEdit_Success
+    // - userInfoEdit_Exception
+    // - forgotPasswordForUser_Success
+    // - forgotPasswordForUser_UserNotFoundException
+    // - forgotPasswordForUser_Exception
+    // - verifyUser_Success
+    // - verifyUser_Exception
+    // - verifyUser_IncorrectOTP
 }

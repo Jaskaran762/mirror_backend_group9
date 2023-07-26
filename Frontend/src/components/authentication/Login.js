@@ -18,10 +18,11 @@ const LoginPage = () => {
     try {
       setIsLoading(true);
    
-      const response = await axios.post('http://localhost:8091/auth/login', { email, password });
+      const response = await axios.post('http://localhost:8090/auth/login', { email, password });
 
       console.log('API response:', response.data);
       sessionStorage.setItem("token",response?.data?.token ?? "");
+      localStorage.setItem("token",response?.data?.token ?? "");
 
       setIsLoading(false);
       setShowToast(true); 

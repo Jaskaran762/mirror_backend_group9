@@ -5,33 +5,37 @@ import DateRangePicker from '../DateRangePicker';
 import { useNavigate } from 'react-router-dom';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
-import axios  from 'axios';
+import axios from 'axios';
+
 const International = ({ selectedCountry }) => {
   const [searchButton, setSearchButton] = useState(false);
   const [selectedCountryName, setselectedCountryName] = useState();
   const [selectedCountryDesc, setselectedCountryDesc] = useState();
   const [itemCounter, setItemCounter] = useState(0);
-  const [placeToVisit,setPlaceToVisit] = useState([]);
+  const [selectedCountryimg, setselectedCountryimg] = useState();
 
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
     const headers = {
-    Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     };
     console.log(selectedCountry);
-    const selectedValue = JSON.parse(selectedCountry);
-    const countryName = selectedValue.countryName;
-    const countryDescription = selectedValue.description;
+    const parsedCountry = JSON.parse(selectedCountry);
+    const countryName = parsedCountry.countryName;
+    const countryDescription = parsedCountry.description;
+    const countryimg = parsedCountry.countryImageLink;
     console.log(countryName);
     console.log(countryDescription);
     setselectedCountryName(countryName);
     setselectedCountryDesc(countryDescription);
-  //  setselectedCountryDesc();
-    axios.post('http://localhost:8090/home/location', { location:selectedCountry }, { headers })
+    setselectedCountryimg(countryimg);
+
+    axios.post('http://localhost:8090/home/country', { country_name: countryName }, { headers })
       .then((response) => {
-        console.log(response.data.cities);
-        setPlaceToVisit(response.data.cities);
+        
+        console.log(response.data.stateList);
+        setPlaceToVisit(response.data.stateList);
       })
       .catch((error) => {
         console.error('Error fetching domestic regions:', error);
@@ -47,142 +51,7 @@ const International = ({ selectedCountry }) => {
   const [itinerary, setItinerary] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [reviewsToShow, setReviewsToShow] = useState([]);
-  const [placeToVisit,setPlaceToVisit] = useState([]);
-
-
-  // const placesToVisit = [
-  //   {
-  //     title: 'Place 1',
-  //     content: 'Some content for tile 1.',
-  //     imgSrc:
-  //       'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
-  //     link: 'http://www.example.com',
-  //     reviews: [
-  //       {
-  //         review: 'Abcdefghi',
-  //         rating: 4,
-  //         dateofreview: '2019-05-02',
-  //         username: 'Bhavisha'
-  //       },
-  //       {
-  //         review: 'Review 2',
-  //         rating: 5,
-  //         dateofreview: '2023-09-21',
-  //         username: 'Krishna'
-  //       }
-  //      ]
-  //   },
-  //   {
-  //     title: 'Place 2',
-  //     content: 'Some content for tile 2.',
-  //     imgSrc:
-  //       'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
-  //     link: 'http://www.example.com',
-  //     reviews: [
-  //       {
-  //         review: 'Abcdefghi',
-  //         rating: 4,
-  //         dateofreview: '2019-05-02',
-  //         username: 'Bhavisha'
-  //       },
-  //       {
-  //         review: 'Review 2',
-  //         rating: 5,
-  //         dateofreview: '2023-09-21',
-  //         username: 'Krishna'
-  //       }
-  //      ]
-  //   },
-  //   {
-  //     title: 'Place 3',
-  //     content: 'Some content for tile 3.',
-  //     imgSrc:
-  //       'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
-  //     link: 'http://www.example.com',
-  //     reviews: [
-  //       {
-  //         review: 'Abcdefghi',
-  //         rating: 4,
-  //         dateofreview: '2019-05-02',
-  //         username: 'Bhavisha'
-  //       },
-  //       {
-  //         review: 'Review 2',
-  //         rating: 5,
-  //         dateofreview: '2023-09-21',
-  //         username: 'Krishna'
-  //       }
-  //      ]
-  //   },
-  
-  // ];
-
-  // const activitiesToTry = [
-  //   {
-  //     title: 'Activity 1',
-  //     content: 'Some content for tile 1.',
-  //     imgSrc:
-  //       'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
-  //     link: 'http://www.example.com',
-  //     reviews: [
-  //       {
-  //         review: 'Abcdefghi',
-  //         rating: 4,
-  //         dateofreview: '2019-05-02',
-  //         username: 'Bhavisha'
-  //       },
-  //       {
-  //         review: 'Review 2',
-  //         rating: 5,
-  //         dateofreview: '2023-09-21',
-  //         username: 'Krishna'
-  //       }
-  //      ]
-  //   },
-  //   {
-  //     title: 'Activity 2',
-  //     content: 'Some content for tile 2.',
-  //     imgSrc:
-  //       'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
-  //     link: 'http://www.example.com',
-  //     reviews: [
-  //       {
-  //         review: 'Abcdefghi',
-  //         rating: 4,
-  //         dateofreview: '2019-05-02',
-  //         username: 'Bhavisha'
-  //       },
-  //       {
-  //         review: 'Review 2',
-  //         rating: 5,
-  //         dateofreview: '2023-09-21',
-  //         username: 'Krishna'
-  //       }
-  //      ]
-  //   },
-  //   {
-  //     title: 'Activity 3',
-  //     content: 'Some content for tile 3.',
-  //     imgSrc:
-  //       'https://img.freepik.com/free-photo/top-view-travel-elements-collection_23-2148691085.jpg?w=996&t=st=1689391748~exp=1689392348~hmac=c616a095abb5a2edc3c0d43255c1c17d404f230c3c27999afa984d632df16ae6',
-  //     link: 'http://www.example.com',
-  //     reviews: [
-  //       {
-  //         review: 'Abcdefghi',
-  //         rating: 4,
-  //         dateofreview: '2019-05-02',
-  //         username: 'Bhavisha'
-  //       },
-  //       {
-  //         review: 'Review 2',
-  //         rating: 5,
-  //         dateofreview: '2023-09-21',
-  //         username: 'Krishna'
-  //       }
-  //      ]
-  //   },
-  // ];
-
+  const [placeToVisit, setPlaceToVisit] = useState([]);
 
   const handleOpenDialog = (index) => {
     setShowDialog(index);
@@ -199,6 +68,7 @@ const International = ({ selectedCountry }) => {
   const handleTimeChange = (event) => {
     setSelectedTime(event.target.value);
   };
+
   const handleEndDateChange = (event) => {
     setSelectedEndDate(event.target.value);
   };
@@ -210,20 +80,19 @@ const International = ({ selectedCountry }) => {
   const handleSaveItinerary = (title) => {
     const item = {
       date: selectedDate,
-      endDate: selectedEndDate, 
+      endDate: selectedEndDate,
       title: title,
       time: selectedTime,
-      endTime: selectedEndTime, 
+      endTime: selectedEndTime,
     };
     setItinerary([...itinerary, item]);
     setItemCounter((prevCounter) => prevCounter + 1);
     setShowDialog(false);
     setSelectedDate('');
-    setSelectedEndDate(''); 
+    setSelectedEndDate('');
     setSelectedTime('');
     setSelectedEndTime('');
   };
-
 
   const handleAddToWishlist = (title) => {
     const itemIndex = wishlist.findIndex((item) => item.title === title);
@@ -245,6 +114,7 @@ const International = ({ selectedCountry }) => {
   };
 
   const changePage = useNavigate();
+
   const handleItinerary = () => {
     console.log(itinerary);
     const pass = encodeURIComponent(JSON.stringify(itinerary));
@@ -272,36 +142,48 @@ const International = ({ selectedCountry }) => {
     );
   };
 
+  
   const handleReviews = (item) => {
     const pass = encodeURIComponent(JSON.stringify(item));
-    changePage('/reviews/'+pass);
+    changePage('/reviews/' + pass);
   };
 
+  const handleState = (stateName) => {
+    changePage('/state/' + stateName);
+  };
+
+  
   const renderCards = (data, type) => {
+    debugger;
+    
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
       const isInWishlist = isItemInWishlist(item.title);
+      console.log(item.data);
+
+      debugger;
+
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
-
+          {item.stateImageLink && <Card.Img variant="top" src={item.stateImageLink} />}
             <Card.Body>
-            <Card.Title>
-            <Button variant="link" onClick={() => handleState(item.stateID)}>
-                {item.stateName}
-                </Button>
-                <Button variant="link" onClick={() => handleReviews(item)}>
-                  Review
+              <Card.Title>
+                <Button variant="link" onClick={() => handleState(item.stateName)}>
+                  <h5>{item.stateName}</h5>
                 </Button>
 
               </Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{item.description}
+            </Card.Text>
+            <Card.Footer>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
               <Button variant="link" onClick={() => handleAddToWishlist(item.title)}>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
+              </Card.Footer>              
             </Card.Body>
           </Card>
           <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
@@ -317,7 +199,6 @@ const International = ({ selectedCountry }) => {
                 <Form.Label>Start Time</Form.Label>
                 <Form.Control type="time" value={selectedTime} onChange={handleTimeChange} />
               </Form.Group>
-    
               <Form.Group>
                 <Form.Label>End Date</Form.Label>
                 <Form.Control type="date" value={selectedEndDate} onChange={handleEndDateChange} />
@@ -345,7 +226,6 @@ const International = ({ selectedCountry }) => {
 
   return (
     <>
-    
       <br />
       <Container>
         <Row>
@@ -369,14 +249,18 @@ const International = ({ selectedCountry }) => {
             <Row>
               <br />
               <Col>
-                <div>
-                  {selectedCountryName}
+              <div>
+              <h2 style={{ fontSize: '2rem' }}>{selectedCountryName}</h2>
                 </div>
+              <div>
+                {selectedCountryimg && <img src={selectedCountryimg} alt="Country"/>}
+              </div>
+              
                 <div>
                   {selectedCountryDesc}
                 </div>
                 <div>
-                  <h2 className="mb-3">Country to Visit</h2>
+                  <h2 className="mb-3">States to Visit</h2>
                 </div>
               </Col>
             </Row>
@@ -384,18 +268,18 @@ const International = ({ selectedCountry }) => {
           </Container>
           <br />
           {reviewsToShow.length > 0 && (
-        <Container>
-          <Row>
-            <br />
-            <Col>
-              <div>
-                <h2 className="mb-3">Reviews</h2>
-                <ReviewsDisplay reviews={reviewsToShow} />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-        )}
+            <Container>
+              <Row>
+                <br />
+                <Col>
+                  <div>
+                    <h2 className="mb-3">Reviews</h2>
+                    <ReviewsDisplay reviews={reviewsToShow} />
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          )}
         </>
       )}
     </>

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/auth")
 @CrossOrigin(origins = "http://localhost:3000")
-public class UserController {
+public class AuthController {
 
     private static String userName;
     @Autowired
@@ -29,7 +29,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private static Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     /**
      * Handles the user login request.
@@ -181,6 +181,6 @@ public class UserController {
     }
 
     public static void setUserName(String userName) {
-        UserController.userName = userName;
+        AuthController.userName = userName;
     }
 }

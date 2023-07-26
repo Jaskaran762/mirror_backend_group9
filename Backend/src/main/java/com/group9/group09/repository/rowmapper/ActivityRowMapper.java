@@ -10,7 +10,7 @@ public class ActivityRowMapper implements RowMapper<Activity> {
     @Override
     public Activity mapRow(ResultSet rs, int rowNum) throws SQLException {
         Activity activity = new Activity();
-        activity.setActivityId(rs.getInt("Activity_ID"));
+        activity.setActivityId(rs.getInt("activity_id"));
         activity.setActivityName(rs.getString("activity_name"));
         activity.setDescription(rs.getString("description"));
         activity.setPlaceId(rs.getInt("place_id"));
