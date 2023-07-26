@@ -287,7 +287,7 @@ public class HomePageController {
             Optional<User> user = userRepository.findByUsermail(username);
             itineraryRequestDTO.setUserid(Integer.parseInt(user.get().getUserId()));
             ItineraryResponseDTO itineraryResponseDTO = homeService.deleteItineraryService(itineraryRequestDTO);
-            return new ResponseEntity<>(itineraryRequestDTO, HttpStatus.OK);
+            return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
             System.out.println(e);
