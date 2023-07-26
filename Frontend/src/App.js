@@ -49,7 +49,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route path = "/itinerary/:data" element ={<Auth><Itinerary/></Auth>}/>
+        <Route path = "/itinerary" element ={<Auth><Itinerary/></Auth>}/>
         <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
