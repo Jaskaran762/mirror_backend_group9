@@ -77,6 +77,9 @@ const Landing = () => {
    // setSearchButton(true);
   };
 
+  const getactivityList = (activityid) => {
+    changePage('/activity/' + activityid);
+  }
 
   const renderCards = (placeList, type) => {
     const cards = placeList.map((item, index) => {
@@ -91,7 +94,7 @@ const Landing = () => {
             </a>
             <Card.Body>
               <Card.Title>
-              <Button variant="link" onClick={() => getplaceList(item.placeID ? item.placeID : item.activityId) }>
+              <Button variant="link" onClick={() => item.placeID ? getplaceList(item.placeID ): getactivityList(item.activityId) }>
                 {item.placeName ? item.placeName : item.activityName} 
               </Button>
               </Card.Title>

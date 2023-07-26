@@ -1,4 +1,4 @@
-/*package com.group9.group09.controller;
+package com.group9.group09.controller;
 
 import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.DTO.ResponseDTO.*;
@@ -174,4 +174,3 @@ public class AdminController {
     }
 }
 
- */

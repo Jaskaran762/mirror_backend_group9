@@ -23,6 +23,7 @@ import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
 import City from "./components/StartTrip/City";
 import OTP from "./components/authentication/otp";
 import ResetForgotPassword from "./components/authentication/resetForgotPassword";
+import ActivityPage from "./components/Landing-page/activity";
 
 export function isLoggedIn() {
   const token = sessionStorage.getItem("token");
@@ -51,6 +52,7 @@ function App() {
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
         <Route path = "/place/:placeID" element = {<Auth><PlacePage/></Auth>}/>
+        <Route path = "/activity/:activityid" element = {<Auth><ActivityPage/></Auth>}/>
         <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
         <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
         <Route path = "/city/:cityID" element = {<Auth><City/></Auth>}/>
