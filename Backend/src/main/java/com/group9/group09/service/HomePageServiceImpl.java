@@ -128,6 +128,7 @@ public class HomePageServiceImpl implements HomePageService {
         Optional<User> user = userRepository.findByUsermail(username);
         Optional<City> city = cityRepository.findByCityId(cityRequestDTO.getCityID());
         List<Place> placeList = placeRepository.getPlacesbyCityID(city.get().getCityId());
+        List<Activity> activityList = activityRepository.getActivitiesbyCityID(city.get().getCityId());
 
         List<String> placeStringList = new ArrayList<>();
 
@@ -138,8 +139,9 @@ public class HomePageServiceImpl implements HomePageService {
         cityResponseDTO.setCityID(city.get().getCityId());
         cityResponseDTO.setCityName(city.get().getCityName());
         cityResponseDTO.setDescription(city.get().getDescription());
-        cityResponseDTO.setPlaceResponseList(placeStringList);
         cityResponseDTO.setPlaceObjectResponseList(placeList);
+        cityResponseDTO.setActivityList(activityList);
+
         return cityResponseDTO;
     }
 
@@ -166,7 +168,6 @@ public class HomePageServiceImpl implements HomePageService {
         placeResponseDTO.setPlaceName(place.get().getPlaceName());
         placeResponseDTO.setPlaceID(place.get().getPlaceId());
         placeResponseDTO.setDescription(place.get().getDescription());
-        placeResponseDTO.setActivityStringResponseList(activityStringList);
         placeResponseDTO.setActivityObjectsResponseList(activityList);
         return placeResponseDTO;
     }
