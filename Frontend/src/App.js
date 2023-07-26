@@ -16,16 +16,18 @@ import Wish from "./components/wishlist/Wish";
 import UserProfile from "./components/UserProfile/profile";
 import ReviewsPage from "./components/reviews/review";
 import Landing from "./components/Landing-page/landing";
-import RecommendPlace from "./components/Landing-page/RecommendPlace";
+import PlacePage from "./components/Landing-page/place";
 import Resetpwd from "./components/UserProfile/Resetpwd";
-import RecommendActivity from "./components/Landing-page/RecommendActivity";
+
 import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
 import City from "./components/StartTrip/City";
 import OTP from "./components/authentication/otp";
 import ResetForgotPassword from "./components/authentication/resetForgotPassword";
+import ActivityPage from "./components/Landing-page/activity";
 import Place from "./components/StartTrip/Place";
-import Activity from "./components/StartTrip/Activity";
 import State from "./components/StartTrip/State";
+
+import AddReviewsPage from "./components/reviews/Addreview";
 
 export function isLoggedIn() {
   const token = sessionStorage.getItem("token");

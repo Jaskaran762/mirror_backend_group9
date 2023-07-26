@@ -1,5 +1,6 @@
 package com.group9.group09.model;
 
+import javax.xml.transform.sax.SAXResult;
 import java.util.Date;
 
 public class Itinerary {
@@ -7,6 +8,8 @@ public class Itinerary {
     private Integer userid;
     private Date startdate;
     private Date endDate;
+    private String placename;
+    private String activityname;
 
     /**
      * Get the ID of the itinerary.
@@ -78,5 +81,21 @@ public class Itinerary {
      */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getPlacename() {
+        return placename;
+    }
+
+    public void setPlacename(String placename) {
+        this.placename = placename;
+    }
+
+    public String getActivityname() {
+        return activityname;
+    }
+
+    public void setActivityname(String activityname) {
+        this.activityname = activityname;
     }
 }

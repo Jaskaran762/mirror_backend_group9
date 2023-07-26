@@ -1,18 +1,75 @@
-import React, { useState, useEffect }  from 'react';
-import { useParams } from 'react-router-dom';
-import axios  from 'axios';
-import HomeNavbar from '../HomeNav';
-import Footer from '../footer';
-import { useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import HomeNavbar from "../HomeNav";
+import Footer from "../footer";
 
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  Modal,
+  Form,
+} from "react-bootstrap";
 
-const RecommendActivity = () => {
-   const { activityid }  = useParams();
-   const [activityDetail,setactivityDetail] = useState();
-   const changePage = useNavigate();
-   const handletrip = () => {
-    changePage('/mainpage');
+const ActivityPage = () => {
+  const { activityid } = useParams();
+  const [activityDetail, setactivityDetail] = useState();
+  const changePage = useNavigate();
+  const handletrip = () => {
+    changePage("/mainpage");
+  };
+  const [reviewDetail, setreviewDetail] = useState([]);
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const activityidnum = parseInt(activityid, 10);
+  console.log(activityidnum);
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:8090/home/activities",
+        { activityID: activityidnum },
+        { headers }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setactivityDetail(response.data);
+        console.log(activityDetail);
+      })
+      .catch((error) => {
+        console.error("Error fetching activity regions:", error);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:8090/home/reviewactivity",
+        { activityid: activityidnum },
+        { headers }
+      )
+      .then((response) => {
+        console.log(response.data.reviewsActivities);
+        setreviewDetail(response.data.reviewsActivities);
+      })
+      .catch((error) => {
+        console.error("Error fetching places list:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(activityDetail); // Log placeDetail when it gets updated
+  }, [activityDetail]);
+  useEffect(() => {
+    console.log(reviewDetail); // Log placeDetail when it gets updated
+  }, [reviewDetail]);
+
+  if (!activityDetail) {
+    return <div>Loading...</div>;
   }
    const [reviewDetail, setreviewDetail ] = useState([]);
    const token = sessionStorage.getItem('token');
@@ -75,32 +132,37 @@ const RecommendActivity = () => {
       <div style={{ marginTop: '0px' }}>
         <HomeNavbar />
       </div>
-      <Button onClick={handletrip} style={{ marginTop: '2rem', marginLeft:'7rem', marginBottom:'2rem' }}>
+      <Button
+        onClick={handletrip}
+        style={{ marginTop: "2rem", marginLeft: "7rem", marginBottom: "2rem" }}
+      >
         Start your trip
-      </Button> 
+      </Button>
       <Container>
-        <Row> 
-           <h1>  { activityDetail.activityName }</h1>
+        <Row>
+          <h1> {activityDetail.activityName}</h1>
         </Row>
-     <p> { activityDetail.activitydesc } </p>
-      <img src={ activityDetail.activityLink }></img> 
-      <Row>
-        <h2>Reviews</h2>
-       </Row>
-      {reviewDetail.map((review) => (
-                       <div key={review.reviewActivityID}>
-                       <p>Rating: {renderStars(review.rating)}</p>
-                       <p>Comment: {review.reviewactivityComment}</p>
-                       <p> DateofReview : { review.dateofreview } </p>
-                       {/* Render other review details as needed */}
-                     </div>
-                      ))}
-                      <div style={{ marginTop: '10rem' }}>
-        <Footer />
-      </div>
+        <p> {activityDetail.activitydesc} </p>
+        <img src={activityDetail.activityLink}></img>
+        <Row>
+          <h2>Reviews</h2>
+        </Row>
+        {reviewDetail.map((review) => (
+          <div key={review.reviewActivityID}>
+            <p>Rating: {renderStars(review.rating)}</p>
+            <p>Comment: {review.reviewactivityComment}</p>
+            <p> DateofReview : {review.dateofreview} </p>
+            {/* Render other review details as needed */}
+          </div>
+        ))}
+        <div style={{ marginTop: "10rem" }}>
+          <Footer />
+        </div>
+        {/* 'Add review' button */}
+        <Button onClick={handleAddReview}>Add review</Button>
       </Container>
-      </div>
-    );
-  };
-  
-  export default RecommendActivity;
+    </div>
+  );
+};
+
+export default ActivityPage;
