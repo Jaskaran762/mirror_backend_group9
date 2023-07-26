@@ -11,6 +11,8 @@ const Domestic = ({ selectedState }) => {
   const [itemCounter, setItemCounter] = useState(0);
   const [selectedStateName, setselectedStateName] = useState();
   const [selectedStateDesc, setselectedStateDesc] = useState();
+  const [selectedStateimg, setselectedStateimg] = useState();
+  
   
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
@@ -22,12 +24,14 @@ const Domestic = ({ selectedState }) => {
     const selectedValue = JSON.parse(selectedState);
     const stateName = selectedValue.stateName;
     const stateDescription = selectedValue.description;
+    const stateimg = selectedValue.stateImageLink;
     console.log(stateName);
     console.log(stateDescription);
     setselectedStateName(stateName);
     setselectedStateDesc(stateDescription);
+    setselectedStateimg(stateimg);
    
-    axios.post('http://localhost:8090/home/location', { location: selectedValue.stateName }, { headers })
+    axios.post('http://localhost:8091/home/location', { location: selectedValue.stateName }, { headers })
       .then((response) => {
         console.log(response.data);
         console.log(response.data.cities);
@@ -156,10 +160,12 @@ const Domestic = ({ selectedState }) => {
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
       const isInWishlist = isItemInWishlist(item.title);
+      console.log(item.data);
 
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
+          {item.cityImageLink && <Card.Img variant="top" src={item.cityImageLink} />}
             <Card.Body>
               <Card.Title>
                 <Button variant="link" onClick={() => handleCity(item.cityId)}>
@@ -244,17 +250,16 @@ const Domestic = ({ selectedState }) => {
               <br />
               <Col>
               <div>
-                  {selectedStateName}
+              <h2 style={{ fontSize: '2rem' }}>{selectedStateName}</h2>
                 </div>
+              <div>
+              {selectedStateimg && <img src={selectedStateimg} alt="State" />}
+              </div>
+              
                 <div>
                   {selectedStateDesc}
                 </div>
-                <div>
-                  {selectedStateName}
-                </div>
-                <div>
-                  {selectedStateDesc}
-                </div>
+
                 <div>
                   <h2 className="mb-3">Cities to Visit</h2>
                 </div>
