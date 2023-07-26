@@ -23,7 +23,7 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    private static Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping(path = "fetchNotifications")
     public ResponseEntity<?> fetchAllNotifications(NotificationRequestDTO requestDTO, HttpServletRequest request){

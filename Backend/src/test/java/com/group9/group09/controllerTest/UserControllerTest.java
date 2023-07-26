@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 import com.group9.group09.DTO.RequestDTO.OTPRequestDTO;
 import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
-import com.group9.group09.controller.UserController;
+import com.group9.group09.controller.AuthController;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.service.interfaces.OTPService;
@@ -23,18 +23,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserControllerTest {
 
-    @Mock
-    private OTPService otpService;
 
     @Mock
     private UserService userService;
 
     @InjectMocks
-    private UserController userController;
+    private AuthController userController;
+    private final OTPService otpService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    public UserControllerTest(UserService userService, AuthController userController, OTPService otpService) {
+        this.userService = userService;
+        this.userController = userController;
+        this.otpService = otpService;
     }
 
     @Test
