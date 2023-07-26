@@ -22,6 +22,7 @@ const LoginPage = () => {
 
       console.log('API response:', response.data);
       sessionStorage.setItem("token",response?.data?.token ?? "");
+      localStorage.setItem("token",response?.data?.token ?? "");
 
       setIsLoading(false);
       setShowToast(true); 

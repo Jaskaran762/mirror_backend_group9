@@ -1,32 +1,32 @@
 import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import axios  from 'axios';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
+import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
 
 
-const PlacePage = () => {
-   const { placeID }  = useParams();
+const RecommendActivity = () => {
+   const { activityid }  = useParams();
+   const [activityDetail,setactivityDetail] = useState();
    const changePage = useNavigate();
-   const [placeDetail,setplaceDetail] = useState();
-   const [reviewDetail, setreviewDetail ] = useState([]);
    const handletrip = () => {
     changePage('/mainpage');
   }
+   const [reviewDetail, setreviewDetail ] = useState([]);
    const token = sessionStorage.getItem('token');
    const headers = {
    Authorization: `Bearer ${token}`,
    };
-   const placeIDNum= parseInt(placeID, 10);
-    console.log(placeIDNum);
+   const activityidnum = parseInt(activityid, 10);
+    console.log(activityidnum);
     useEffect(()=>{
-        axios.post('http://localhost:8090/home/place', { placeID:placeIDNum }, { headers })
+        axios.post('http://localhost:8090/home/activities', { activityID:activityidnum }, { headers })
         .then((response) => {
             console.log(response.data);
-            setplaceDetail(response.data);
-            console.log(placeDetail);
+            setactivityDetail(response.data);
+            console.log(activityDetail);
           })
           .catch((error) => {
             console.error('Error fetching place regions:', error);
@@ -34,10 +34,10 @@ const PlacePage = () => {
     
         },[])
           useEffect(()=>{
-            axios.post('http://localhost:8090/home/reviewplace', { placeid:placeIDNum }, { headers })
+            axios.post('http://localhost:8091/home/reviewactivity', { activityid:activityidnum }, { headers })
             .then((response) => {
-                console.log(response.data.reviewsPlaces);
-                setreviewDetail(response.data.reviewsPlaces);
+                console.log(response.data.reviewsActivities);
+                setreviewDetail(response.data.reviewsActivities);
               })
               .catch((error) => {
                 console.error('Error fetching places list:', error);
@@ -46,19 +46,18 @@ const PlacePage = () => {
             },[])
         
             useEffect(() => {
-                console.log(placeDetail); // Log placeDetail when it gets updated
-              }, [placeDetail]);
+                console.log(activityDetail); // Log placeDetail when it gets updated
+              }, [activityDetail]);
             useEffect(() => {
                 console.log(reviewDetail); // Log placeDetail when it gets updated
               }, [reviewDetail]);
        
-              if (!placeDetail) {
+              if (!activityDetail) {
                 return <div>Loading...</div>;
               }
               if (!reviewDetail) {
                 return <div>Loading..reviews</div>;
               }
-
               const renderStars = (rating) => {
                 const stars = [];
                 for (let i = 1; i <= 5; i++) {
@@ -70,7 +69,6 @@ const PlacePage = () => {
                 }
                 return stars;
               };
-            
    // Now you can use the fetched placeList and activityList data here
     return (
       <div>
@@ -82,26 +80,27 @@ const PlacePage = () => {
       </Button> 
       <Container>
         <Row> 
-           <h1>  { placeDetail.placeName }</h1>
+           <h1>  { activityDetail.activityName }</h1>
         </Row>
-     <p> { placeDetail.description } </p>
-      <img src={ placeDetail.placeImageLink }></img> 
+     <p> { activityDetail.activitydesc } </p>
+      <img src={ activityDetail.activityLink }></img> 
       <Row>
         <h2>Reviews</h2>
        </Row>
-
       {reviewDetail.map((review) => (
-                       <div key={review.reviewPlaceID}>
+                       <div key={review.reviewActivityID}>
                        <p>Rating: {renderStars(review.rating)}</p>
-                       <p>Comment: {review.reviewplaceComment}</p>
+                       <p>Comment: {review.reviewactivityComment}</p>
                        <p> DateofReview : { review.dateofreview } </p>
                        {/* Render other review details as needed */}
                      </div>
                       ))}
-                            </Container>
-
+                      <div style={{ marginTop: '10rem' }}>
+        <Footer />
+      </div>
+      </Container>
       </div>
     );
   };
   
-  export default PlacePage;
+  export default RecommendActivity;

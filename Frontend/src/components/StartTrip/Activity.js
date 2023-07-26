@@ -3,22 +3,18 @@ import { useParams } from 'react-router-dom';
 import axios  from 'axios';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
-import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
 
-
-const ActivityPage = () => {
+const Activity = () => {
    const { activityid }  = useParams();
    const [activityDetail,setactivityDetail] = useState();
-   const changePage = useNavigate();
-   const handletrip = () => {
-    changePage('/mainpage');
-  }
+
    const [reviewDetail, setreviewDetail ] = useState([]);
    const token = sessionStorage.getItem('token');
    const headers = {
    Authorization: `Bearer ${token}`,
    };
+   console.log(headers);
    const activityidnum = parseInt(activityid, 10);
     console.log(activityidnum);
     useEffect(()=>{
@@ -34,7 +30,7 @@ const ActivityPage = () => {
     
         },[])
           useEffect(()=>{
-            axios.post('http://localhost:8091/home/reviewactivity', { activityid:activityidnum }, { headers })
+            axios.post('http://localhost:8090/home/reviewactivity', { activityid:activityidnum }, { headers })
             .then((response) => {
                 console.log(response.data.reviewsActivities);
                 setreviewDetail(response.data.reviewsActivities);
@@ -75,9 +71,7 @@ const ActivityPage = () => {
       <div style={{ marginTop: '0px' }}>
         <HomeNavbar />
       </div>
-      <Button onClick={handletrip} style={{ marginTop: '2rem', marginLeft:'7rem', marginBottom:'2rem' }}>
-        Start your trip
-      </Button> 
+     
       <Container>
         <Row> 
            <h1>  { activityDetail.activityName }</h1>
@@ -92,6 +86,7 @@ const ActivityPage = () => {
                        <p>Rating: {renderStars(review.rating)}</p>
                        <p>Comment: {review.reviewactivityComment}</p>
                        <p> DateofReview : { review.dateofreview } </p>
+                       <p> UserId { review.user_id } </p>
                        {/* Render other review details as needed */}
                      </div>
                       ))}
@@ -103,4 +98,4 @@ const ActivityPage = () => {
     );
   };
   
-  export default ActivityPage;
+  export default Activity;

@@ -1,11 +1,16 @@
 package com.group9.group09.service;
 
+import com.group9.group09.DTO.RequestDTO.RequestDTO;
+import com.group9.group09.DTO.RequestDTO.UserProfileRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
+import com.group9.group09.DTO.ResponseDTO.UserProfileResponseDTO;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.UserNotFoundException;
+import com.group9.group09.model.Country;
 import com.group9.group09.model.Notification;
 import com.group9.group09.model.User;
+import com.group9.group09.repository.interfaces.CountryRepository;
 import com.group9.group09.repository.interfaces.NotificationRepository;
 import com.group9.group09.repository.interfaces.UserRepository;
 import com.group9.group09.service.interfaces.UserService;
@@ -34,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private NotificationRepository notificationRepository;
+
+    @Autowired
+    private CountryRepository countryRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
@@ -216,6 +224,72 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseDTO updateUserphoneNumberService(User user) {
         return null;
+    }
+
+    @Override
+    public UserProfileResponseDTO getUserDetails(RequestDTO requestDTO) {
+
+        try {
+            String token = requestDTO.getToken();
+            token = token.replace("Bearer ", "");
+            String username = jwtService.extractUsername(token);
+            Optional<User> user = userRepository.findByUsermail(username);
+
+            UserProfileResponseDTO responseDTO = new UserProfileResponseDTO();
+            responseDTO.setEmail(user.get().getEmail());
+            responseDTO.setInterests(user.get().getInterest());
+            responseDTO.setName(user.get().getName());
+            responseDTO.setPhoneNumber(user.get().getPhone());
+
+            Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
+            responseDTO.setCountry(country.get().getCountryName());
+
+            return responseDTO;
+        }
+        catch (Exception e){
+            throw new RuntimeException("Error in fetching user details");
+        }
+    }
+
+    @Override
+    public ResponseDTO setUserDetails(UserProfileRequestDTO requestDTO) {
+        try {
+            String token = requestDTO.getToken();
+            token = token.replace("Bearer ", "");
+            String username = jwtService.extractUsername(token);
+            Optional<User> user = userRepository.findByUsermail(username);
+
+            ResponseDTO responseDTO = new ResponseDTO();
+            User updatedUser = new User();
+            updatedUser.setUserId(user.get().getUserId());
+
+            if (requestDTO.getCountry()!=null) {
+                Optional<Country> country = countryRepository.findByCountryName(requestDTO.getCountry());
+                Integer countryId = country.get().getCountryID();
+                updatedUser.setHomeCountry(countryId);
+                userRepository.updateUserCountry(updatedUser);
+            }
+            if (requestDTO.getInterests()!=null){
+                updatedUser.setInterest(requestDTO.getInterests());
+                userRepository.updateUserInterests(updatedUser);
+            }
+            if (requestDTO.getName()!=null){
+                updatedUser.setName(requestDTO.getName());
+                userRepository.updateUserName(updatedUser);
+            }
+            if (requestDTO.getPhoneNumber()!= null){
+                updatedUser.setPhone(requestDTO.getPhoneNumber());
+                userRepository.updateUserPhone(updatedUser);
+            }
+            if (requestDTO.getEmail()!=null){
+                updatedUser.setEmail(requestDTO.getEmail());
+                userRepository.updateUserEmail(updatedUser);
+            }
+            return responseDTO;
+        }
+        catch (Exception e){
+            throw new RuntimeException("Error in updating profile");
+        }
     }
 
     private boolean isNullOrEmpty(String value) {

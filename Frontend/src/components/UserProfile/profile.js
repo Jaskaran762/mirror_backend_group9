@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useN } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { Container, Row, Col, Form, Button, Toast } from 'react-bootstrap';
 import { BsPersonFill } from 'react-icons/bs';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
@@ -7,28 +8,34 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
   const [userData, setUserData] = useState(null);
-
+  
   useEffect(() => {
-    // const userData = fetchUserData(); 
-    // setUserData(userData);
-    const fetchedUserData = {
-        fullName: 'Riya Patel',
-        email: 'riya@example.com',
-        contact: '+123232422',
-        password: 'abc',
-        country: 'USA',
-        interest:'History'
+    const fetchUserData = async () => {
+      const apiUrl = 'http://localhost:8090/getProfile';
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '.concat(token)
       };
-      setUserData(fetchedUserData);
-    }, []);
 
-    return [userData, setUserData]; 
+      try {
+        const response = await axios.post(apiUrl, {}, { headers: headers });
+        setUserData(response.data); // Assuming the server returns the entire user data object
+      } catch (error) {
+        console.error('API error:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  return [userData, setUserData];
 };
 
 const UserProfile = () => {
-    const [userData, setUserData] = useAuth();
-
+  const [userData, setUserData] = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -36,17 +43,20 @@ const UserProfile = () => {
 
   const handleSave = () => {
     setIsEditing(false);
+    // Save the updated user data to the server if needed.
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserData({ ...userData, [name]: value });
+    // Note: Since the userData object is immutable, create a new object and update the specific field.
+    const updatedUserData = { ...userData, [name]: value };
+    setUserData(updatedUserData);
   };
 
   const changepage = useNavigate();
-  const handleResetPassword = () =>{
-    changepage('/resetpassword')
-  }
+  const handleResetPassword = () => {
+    changepage('/resetpassword');
+  };
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -77,7 +87,7 @@ const UserProfile = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formEmail"style={{ marginTop: '1rem' }}>
+              <Form.Group controlId="formEmail" style={{ marginTop: '1rem' }}>
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
@@ -89,7 +99,7 @@ const UserProfile = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formPassword"style={{ marginTop: '1rem' }}>
+              <Form.Group controlId="formPassword" style={{ marginTop: '1rem' }}>
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -101,14 +111,14 @@ const UserProfile = () => {
                 />
               </Form.Group>
 
-              <Link to='/resetpassword'>
+              <Link to="/resetpassword" onClick={handleResetPassword}>
                 Reset Password
               </Link>
 
-              <Form.Group controlId="formContact"style={{ marginTop: '1rem' }}>
+              <Form.Group controlId="formContact" style={{ marginTop: '1rem' }}>
                 <Form.Label>Contact No</Form.Label>
                 <Form.Control
-                  type="contact"
+                  type="text"
                   name="contact"
                   value={userData.contact}
                   onChange={handleInputChange}
@@ -117,12 +127,10 @@ const UserProfile = () => {
                 />
               </Form.Group>
 
-
-
-              <Form.Group controlId="formInterest"style={{ marginTop: '1rem' }}>
+              <Form.Group controlId="formInterest" style={{ marginTop: '1rem' }}>
                 <Form.Label>Interest</Form.Label>
                 <Form.Control
-                  type="interest"
+                  type="text"
                   name="interest"
                   value={userData.interest}
                   onChange={handleInputChange}
@@ -130,7 +138,6 @@ const UserProfile = () => {
                   className="rounded-pill"
                 />
               </Form.Group>
-
 
               <Form.Group controlId="formCountry" style={{ marginTop: '1rem' }}>
                 <Form.Label>Country</Form.Label>
@@ -145,11 +152,21 @@ const UserProfile = () => {
               </Form.Group>
 
               {isEditing ? (
-                <Button variant="primary" onClick={handleSave} className="rounded-pill" style={{ marginTop: '2rem', width: '3cm' }}>
+                <Button
+                  variant="primary"
+                  onClick={handleSave}
+                  className="rounded-pill"
+                  style={{ marginTop: '2rem', width: '3cm' }}
+                >
                   Save
                 </Button>
               ) : (
-                <Button variant="secondary" onClick={handleEdit} className="rounded-pill" style={{ marginTop: '2rem', width: '3cm' }}>
+                <Button
+                  variant="secondary"
+                  onClick={handleEdit}
+                  className="rounded-pill"
+                  style={{ marginTop: '2rem', width: '3cm' }}
+                >
                   Edit
                 </Button>
               )}
@@ -159,6 +176,23 @@ const UserProfile = () => {
       </Container>
 
       <Footer />
+
+      <Toast
+        show={showErrorToast}
+        onClose={() => setShowErrorToast(false)}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          zIndex: 9999,
+          backgroundColor: '#dc3545',
+          color: '#ffffff',
+        }}
+        delay={2000}
+        autohide
+      >
+        <Toast.Body>Something went wrong..</Toast.Body>
+      </Toast>
     </div>
   );
 };

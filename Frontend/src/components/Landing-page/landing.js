@@ -16,7 +16,6 @@ const Landing = () => {
   const [wishlist, setWishlist] = useState([]);
   const[placeList,setPlaceList] = useState([]);
   const[activityList,setActivityList] = useState([]);
-  const[placeAPIList,setPlaceAPIList] = useState([]);
   //getplaces - based on user interest. This page will be different for user
 
   useEffect(() => {
@@ -73,12 +72,12 @@ const Landing = () => {
   };
 
   const getplaceList = (placeID) => {
-        changePage('/place/' + placeID);
+        changePage('/recommendplace/' + placeID);
    // setSearchButton(true);
   };
 
   const getactivityList = (activityid) => {
-    changePage('/activity/' + activityid);
+    changePage('/recommendactivity/' + activityid);
   }
 
   const renderCards = (placeList, type) => {
