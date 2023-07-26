@@ -93,10 +93,9 @@ const State = () => {
   };
 
   const isItemInWishlist = (title) => {
+    console.log(title);
     return wishlist.some((item) => item.activityName === title);
   };
-
-
 
   const renderCities = () => {
     if (!stateData.cities) {
@@ -106,9 +105,9 @@ const State = () => {
     return stateData.cities.map((city, index) => {
       const uniqueIndex = index;
       const cityInWishlist = isItemInWishlist(city.cityName);
+      console.log(cityInWishlist);
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
-          
             <Card>
             <Link to={`/city/${city.cityId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             {city.cityImageLink && <Card.Img variant="top" src={city.cityImageLink} />}
