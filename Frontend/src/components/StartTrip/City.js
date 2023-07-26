@@ -86,7 +86,7 @@ const City = () => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:8091/home/city', { cityID: cityIDAsNumber }, { headers })
+      .post('http://localhost:8090/home/city', { cityID: cityIDAsNumber }, { headers })
       .then((response) => {
         console.log(response.data);
         setCityDetail(response.data);

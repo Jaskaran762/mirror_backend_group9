@@ -31,7 +31,7 @@ const Domestic = ({ selectedState }) => {
     setselectedStateDesc(stateDescription);
     setselectedStateimg(stateimg);
    
-    axios.post('http://localhost:8091/home/location', { location: selectedValue.stateName }, { headers })
+    axios.post('http://localhost:8090/home/location', { location: selectedValue.stateName }, { headers })
       .then((response) => {
         console.log(response.data);
         console.log(response.data.cities);

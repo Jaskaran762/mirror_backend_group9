@@ -31,7 +31,7 @@ const International = ({ selectedCountry }) => {
     setselectedCountryDesc(countryDescription);
     setselectedCountryimg(countryimg);
 
-    axios.post('http://localhost:8091/home/country', { country_name: countryName }, { headers })
+    axios.post('http://localhost:8090/home/country', { country_name: countryName }, { headers })
       .then((response) => {
         
         console.log(response.data.stateList);

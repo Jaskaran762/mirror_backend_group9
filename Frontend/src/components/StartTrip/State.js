@@ -24,7 +24,7 @@ const State = () => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:8091/home/location', { location: stateName }, { headers })
+      .post('http://localhost:8090/home/location', { location: stateName }, { headers })
       .then((response) => {
         setStateData(response.data);
       })

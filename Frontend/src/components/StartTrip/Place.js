@@ -25,7 +25,7 @@ const Place = () => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:8091/home/place', { placeID: placeIDAsNumber }, { headers })
+      .post('http://localhost:8090/home/place', { placeID: placeIDAsNumber }, { headers })
       .then((response) => {
         console.log(response.data);
         setPlaceDetail(response.data);
