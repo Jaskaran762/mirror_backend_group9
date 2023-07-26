@@ -15,6 +15,11 @@ public class PlaceResponseDTO {
 
     private List<Activity> activityObjectsResponseList;
 
+    private String placeImageLink;
+
+    public List<String> getActivityStringResponseList() {
+        return activityStringResponseList;
+    }
 
 
     public Integer getPlaceID() {
@@ -55,5 +60,13 @@ public class PlaceResponseDTO {
 
     public void setInterest(String interest) {
         this.interest = interest;
+    }
+
+    public String getPlaceImageLink() {
+        return placeImageLink;
+    }
+
+    public void setPlaceImageLink(String placeImageLink) {
+        this.placeImageLink = placeImageLink;
     }
 }

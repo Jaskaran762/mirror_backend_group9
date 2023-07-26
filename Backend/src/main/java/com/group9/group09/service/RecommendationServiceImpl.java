@@ -94,6 +94,7 @@ public class RecommendationServiceImpl implements RecommendationService {
                 placeResponseDTO.setInterest(place.getInterest());
                 placeResponseDTO.setPlaceName(place.getPlaceName());
                 placeResponseDTO.setDescription(place.getDescription());
+                placeResponseDTO.setPlaceImageLink(place.getPlaceImageLink());
 
                 placeResponseDTOList.add(placeResponseDTO);
             }
