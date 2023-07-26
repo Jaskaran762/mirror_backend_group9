@@ -27,6 +27,8 @@ import ActivityPage from "./components/Landing-page/activity";
 import Place from "./components/StartTrip/Place";
 import State from "./components/StartTrip/State";
 
+import AddReviewsPage from "./components/reviews/Addreview";
+
 export function isLoggedIn() {
   const token = sessionStorage.getItem("token");
   return token !== null;
@@ -49,17 +51,95 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route path = "/itinerary/:data" element ={<Auth><Itinerary/></Auth>}/>
-        <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
-        <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
-        <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
-        <Route path = "/place/:placeID" element = {<Auth><PlacePage/></Auth>}/>
-        <Route path = "/activity/:activityid" element = {<Auth><ActivityPage/></Auth>}/>
-        <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
-        <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
-        <Route path = "/city/:cityID" element = {<Auth><City/></Auth>}/>
-        <Route path = "/place/:placeID" element = {<Auth><Place/></Auth>}/>
-        <Route path = "/state/:stateName" element = {<Auth><State/></Auth>}/>
+        <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
+        <Route
+          path="/itinerary/:data"
+          element={
+            <Auth>
+              <Itinerary />
+            </Auth>
+          }
+        />
+        <Route
+          path="/wish/:data"
+          element={
+            <Auth>
+              <Wish />
+            </Auth>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Auth>
+              <UserProfile />
+            </Auth>
+          }
+        />
+        <Route
+          path="/landing"
+          element={
+            <Auth>
+              <Landing />
+            </Auth>
+          }
+        />
+        <Route
+          path="/place/:placeID"
+          element={
+            <Auth>
+              <PlacePage />
+            </Auth>
+          }
+        />
+        <Route
+          path="/activity/:activityid"
+          element={
+            <Auth>
+              <ActivityPage />
+            </Auth>
+          }
+        />
+        <Route
+          path="/resetpassword"
+          element={
+            <Auth>
+              <Resetpwd />
+            </Auth>
+          }
+        />
+        <Route
+          path="/thingsToCarry"
+          element={
+            <Auth>
+              <ThingsToCarry />
+            </Auth>
+          }
+        />
+        <Route
+          path="/city/:cityID"
+          element={
+            <Auth>
+              <City />
+            </Auth>
+          }
+        />
+        <Route
+          path="/place/:placeID"
+          element={
+            <Auth>
+              <Place />
+            </Auth>
+          }
+        />
+        <Route
+          path="/state/:stateName"
+          element={
+            <Auth>
+              <State />
+            </Auth>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
