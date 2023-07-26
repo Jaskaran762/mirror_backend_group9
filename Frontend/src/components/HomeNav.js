@@ -18,8 +18,8 @@ const logoHoverStyle = {
 };
 
 const navBarGroup = {
-  marginLeft: "70%",
-  fontSize: '40',
+  marginLeft: "65%",
+  fontSize: '50',
 };
 
 const optionStyle = {

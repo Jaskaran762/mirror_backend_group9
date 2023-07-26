@@ -34,7 +34,7 @@ const ActivityPage = () => {
     
         },[])
           useEffect(()=>{
-            axios.post('http://localhost:8090/home/reviewactivity', { activityid:activityidnum }, { headers })
+            axios.post('http://localhost:8091/home/reviewactivity', { activityid:activityidnum }, { headers })
             .then((response) => {
                 console.log(response.data.reviewsActivities);
                 setreviewDetail(response.data.reviewsActivities);

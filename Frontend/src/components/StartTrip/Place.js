@@ -107,6 +107,7 @@ const Place = () => {
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
+          
             {activity.activityImageLink && <Card.Img variant="top" src={activity.activityImageLink} />}
             <Card.Body>
               <Card.Title>{activity.activityName}</Card.Title>
