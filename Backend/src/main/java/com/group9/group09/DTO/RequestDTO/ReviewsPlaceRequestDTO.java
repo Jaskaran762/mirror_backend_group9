@@ -6,6 +6,7 @@ public class ReviewsPlaceRequestDTO extends RequestDTO{
     private Integer rating;
     private Integer place_id;
     private String review_message;
+    private Integer activity_id;
 
     public Integer getPlace_id() {
         return place_id;
@@ -37,5 +38,21 @@ public class ReviewsPlaceRequestDTO extends RequestDTO{
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
+
+    public Integer getActivity_id() {
+        return activity_id;
+    }
+
+    public void setActivity_id(Integer activity_id) {
+        this.activity_id = activity_id;
     }
 }
