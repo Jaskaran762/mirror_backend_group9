@@ -205,7 +205,13 @@ const Place = () => {
             )}
           </Col>
         </Row>
-        <Row>{reviewDetail.map((review) => (
+       
+        <Row>
+          <h2>Activities to Enjoy</h2>
+        </Row>
+        <Row>{renderActivityCards()}</Row>
+
+        <Row> <h2> Place Reviews </h2>{reviewDetail.map((review) => (
                        <div key={review.reviewPlaceID}>
                        <p>Rating: {renderStars(review.rating)}</p>
                        <p>Comment: {review.reviewplaceComment}</p>
@@ -214,10 +220,6 @@ const Place = () => {
                      </div>
                       ))}
                       </Row>
-        <Row>
-          <h2>Activities to Enjoy</h2>
-        </Row>
-        <Row>{renderActivityCards()}</Row>
       </Container>
       <Footer />
     </>
