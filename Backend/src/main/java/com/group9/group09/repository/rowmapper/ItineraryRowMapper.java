@@ -15,6 +15,8 @@ public class ItineraryRowMapper implements RowMapper<Itinerary> {
         itinerary.setItineraryid(rs.getInt("itinerary_id"));
         itinerary.setStartdate(rs.getDate("start_date"));
         itinerary.setEndDate(rs.getDate("end_date"));
+        itinerary.setPlacename(rs.getString("placename"));
+        itinerary.setActivityname(rs.getString("activityname"));
 
         return itinerary;
     }
