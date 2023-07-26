@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Form, Button, Row, Col, Toast } from 'react-bootstrap';
-import { Link, useNavigate  } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate  } from 'react-router-dom'; 
 
 const OTP = () => {
   const [otp, setOTP] = useState('');
   const [showToast, setShowToast] = useState(false); 
   const [showErrorToast, setShowErrorToast] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const handleForgotPassword = async () => {
     const apiUrl = 'https://group09.onrender.com/auth/otp';
@@ -24,10 +24,9 @@ const OTP = () => {
       const response = await axios.post(apiUrl, requestBody, { headers });
       console.log('Response:', response.data);
       navigate('/resetForgotPassword');
-      // Handle the API response as needed
     } catch (error) {
       console.error('API error:', error);
-      // Handle the error
+
     }
   };
 
@@ -50,7 +49,7 @@ const OTP = () => {
                 <Form.Group controlId="formUsername">
                   <Form.Label>OTP</Form.Label>
                   <Form.Control type="text" className="formInput"
-                  value={otp} // Bind the value to the email state
+                  value={otp}
                   onChange={(e) => setOTP(e.target.value)}
                    />
                 </Form.Group>
@@ -59,7 +58,7 @@ const OTP = () => {
                   variant="primary"
                   className="submitButton my-2"
                   type="button" 
-                  onClick={handleForgotPassword} // Call handleForgotPassword on button click
+                  onClick={handleForgotPassword} 
                 >
                   {isLoading ? 'Loading...' : 'Proceed'}
                 </Button>
