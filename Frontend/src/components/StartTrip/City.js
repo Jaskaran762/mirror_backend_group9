@@ -106,14 +106,17 @@ const City = () => {
       const isInWishlist = isItemInWishlist(item.placeName);
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
-        <Link to={`/place/${item.placeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        
             <Card>
+            <Link to={`/place/${item.placeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Card.Img variant="top" src={item.placeImageLink} alt={item.placeName} />
                 <Card.Body>
                   <Card.Title>{item.placeName}</Card.Title>
                   <Card.Text>{item.description}</Card.Text>
                 </Card.Body>
+                </Link>
                 <Card.Footer>
+               
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
@@ -122,7 +125,7 @@ const City = () => {
               </Button>
              </Card.Footer>
             </Card>
-          </Link>
+       
           <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
             <Modal.Header closeButton>
               <Modal.Title>Select Date and Time</Modal.Title>
