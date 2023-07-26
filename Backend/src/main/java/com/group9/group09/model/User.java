@@ -16,7 +16,7 @@ public class User implements UserDetails {
 	private String phone;
 	private Integer homeCountry;
 	private String interest;
-	private Integer isadmin;
+	private Integer isAdmin;
 
 	/**
 	 * Get the ID of the user's home country.
@@ -188,8 +188,11 @@ public class User implements UserDetails {
 		this.interest = interest;
 	}
 
-	public Integer getIsadmin() {
-		return isadmin;
+	public Integer getIsAdmin() {
+		return isAdmin;
 	}
 
+	public void setIsAdmin(Integer isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 }

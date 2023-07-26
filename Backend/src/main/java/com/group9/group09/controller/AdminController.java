@@ -39,14 +39,13 @@ public class AdminController {
     public ResponseEntity<?> addCountry(@RequestBody CountryRequestDTO countryRequestDTO, HttpServletRequest request) {
         try {
             logger.info("Info Message:");
-            String token = countryRequestDTO.getToken();
-            token = token.replace("Bearer ","");
-            String username = jwtService.extractUsername(token);
+            countryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(countryRequestDTO.getToken());
             Optional<User> user = userRepository.findByUsermail(username);
 
-            if(user.get().getIsadmin()==1){
+            if(user.get().getIsAdmin()==1){
 
-            countryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+          //  countryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
             ResponseDTO responseDTO = adminService.addCountryService(countryRequestDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
             }else{
@@ -54,10 +53,11 @@ public class AdminController {
             }
 
         } catch (Exception e) {
-            logger.error("Error Message: ");
+            logger.error("Error Message: Add country admin api failed ");
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Add country admin api failed");
+            //response.setMessage("Add country admin api failed");
+            response.setMessage(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -67,12 +67,11 @@ public class AdminController {
     public ResponseEntity<?> addState(@RequestBody StateRequestDTO stateRequestDTO, HttpServletRequest request) {
         try {
             logger.info("Info Message:");
-            String token = stateRequestDTO.getToken();
-            token = token.replace("Bearer ","");
-            String username = jwtService.extractUsername(token);
+            stateRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(stateRequestDTO.getToken());
             Optional<User> user = userRepository.findByUsermail(username);
 
-            if(user.get().getIsadmin()==1){
+            if(user.get().getIsAdmin()==1){
 
             ResponseDTO responseDTO = adminService.addStateService(stateRequestDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
@@ -96,12 +95,11 @@ public class AdminController {
             logger.info("Info Message:'addCity method running'");
 
             logger.info("Info Message:");
-            String token = cityRequestDTO.getToken();
-            token = token.replace("Bearer ","");
-            String username = jwtService.extractUsername(token);
+            cityRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(cityRequestDTO.getToken());
             Optional<User> user = userRepository.findByUsermail(username);
 
-            if(user.get().getIsadmin()==1){
+            if(user.get().getIsAdmin()==1){
 
             ResponseDTO responseDTO = adminService.addCityService(cityRequestDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
@@ -125,12 +123,12 @@ public class AdminController {
         try {
             logger.info("Info Message:'addPlace method running in controller'");
             logger.info("Info Message:");
-            String token = placeRequestDTO.getToken();
-            token = token.replace("Bearer ","");
-            String username = jwtService.extractUsername(token);
+
+            placeRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(placeRequestDTO.getToken());
             Optional<User> user = userRepository.findByUsermail(username);
 
-            if(user.get().getIsadmin()==1){
+            if(user.get().getIsAdmin()==1){
             ResponseDTO responseDTO = adminService.addPlaceService(placeRequestDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
             }else{
@@ -152,14 +150,13 @@ public class AdminController {
     public ResponseEntity<?> addActivity(@RequestBody ActivityRequestDTO activityRequestDTO, HttpServletRequest request) {
         try {
             logger.info("Info Message:'addactivity method running in controller'");
-
             logger.info("Info Message:");
-            String token = activityRequestDTO.getToken();
-            token = token.replace("Bearer ","");
-            String username = jwtService.extractUsername(token);
+            activityRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(activityRequestDTO.getToken());
+
             Optional<User> user = userRepository.findByUsermail(username);
 
-            if(user.get().getIsadmin()==1){
+            if(user.get().getIsAdmin()==1){
             ResponseDTO responseDTO = adminService.addActivityService(activityRequestDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
             }else{
