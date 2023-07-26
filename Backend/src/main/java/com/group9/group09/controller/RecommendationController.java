@@ -21,7 +21,7 @@ public class RecommendationController {
     @Autowired
     private RecommendationService recommendationService;
 
-    private static Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping(path = "/recommendation")
     public ResponseEntity<?> getRecommendations(@RequestBody RequestDTO requestDTO, HttpServletRequest request){

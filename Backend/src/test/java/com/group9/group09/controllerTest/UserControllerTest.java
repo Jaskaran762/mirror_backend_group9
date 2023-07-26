@@ -1,31 +1,15 @@
 package com.group9.group09.controllerTest;
 
-import com.group9.group09.DTO.RequestDTO.OTPRequestDTO;
-import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
-import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
-import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
-import com.group9.group09.controller.UserController;
-import com.group9.group09.model.User;
-import com.group9.group09.service.interfaces.OTPService;
-import com.group9.group09.service.interfaces.UserService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 
 public class UserControllerTest {/*
     @Mock
     private UserService userService;
 
     @InjectMocks
-    private UserController userController;
+    private AuthController userController;
     private final OTPService otpService;
 
-    public UserControllerTest(UserService userService, UserController userController, OTPService otpService) {
+    public UserControllerTest(UserService userService, AuthController userController, OTPService otpService) {
         this.userService = userService;
         this.userController = userController;
         this.otpService = otpService;
