@@ -10,4 +10,6 @@ public interface ItineraryRepository {
     List<Itinerary> getItineraryList(Integer userid);
 
     int addtoItinerary(ItineraryRequestDTO itineraryRequestDTO);
+
+    int deleteitinerarybyid(Integer itineraryid);
 }

@@ -48,4 +48,20 @@ public class ItineraryRespositoryImp implements ItineraryRepository {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @Override
+    public int deleteitinerarybyid(Integer itineraryid) {
+
+
+        try{
+            logger.info("Info Message: in itinerary repository, deleteitinerarybyid method  ");
+            String deleteItineraryByIDQuery = "Delete from Itinerary where itinerary_id=?;";
+            return jdbcTemplate.update(deleteItineraryByIDQuery, itineraryid);
+
+        }catch (Exception e){
+            logger.error("Error Message: ");
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
 }
