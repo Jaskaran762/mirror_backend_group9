@@ -13,7 +13,7 @@ const ThingsToCarry = () => {
 
     useEffect(() => {
         const fetchItemsToCarry = async () => {
-            const apiUrl = 'http://localhost:8091/home/itemstocarry';
+            const apiUrl = 'http://localhost:8090/home/itemstocarry';
             const token = window.localStorage.getItem("token");
             const headers = {
                 'Content-Type': 'application/json',

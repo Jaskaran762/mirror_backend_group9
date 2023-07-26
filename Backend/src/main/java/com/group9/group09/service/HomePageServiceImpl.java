@@ -169,6 +169,7 @@ public class HomePageServiceImpl implements HomePageService {
         placeResponseDTO.setPlaceID(place.get().getPlaceId());
         placeResponseDTO.setDescription(place.get().getDescription());
         placeResponseDTO.setActivityObjectsResponseList(activityList);
+        placeResponseDTO.setPlaceImageLink(place.get().getPlaceImageLink());
         return placeResponseDTO;
     }
 

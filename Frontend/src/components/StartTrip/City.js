@@ -15,7 +15,7 @@ const City = () => {
     const cityIDAsNumber = parseInt(cityID, 10);
     console.log(cityIDAsNumber);
     useEffect(()=>{
-    axios.post('http://localhost:8091/home/city', { cityID:cityIDAsNumber}, { headers })
+    axios.post('http://localhost:8090/home/city', { cityID:cityIDAsNumber}, { headers })
       .then((response) => {
         console.log(response.data);
         setCityDetail(response.data);

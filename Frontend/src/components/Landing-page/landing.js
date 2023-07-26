@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { RiHeartAddLine, RiHeartFill } from 'react-icons/ri';
@@ -7,7 +7,6 @@ import Footer from '../footer';
 import axios  from 'axios';
 
 const Landing = () => {
-
   const changePage = useNavigate();
   const handletrip = () => {
     changePage('/mainpage');
@@ -74,33 +73,8 @@ const Landing = () => {
   };
 
   const getplaceList = (placeID) => {
-
-    const token = sessionStorage.getItem('token');
-    console.log(token);
-    const headers = {
-    Authorization: `Bearer ${token}`,
-    };
-    console.log(placeID);
-   
-    axios.post('http://localhost:8090/home/reviewplace', { placeid: placeID }, { headers })
-      .then((response) => {
-        console.log(response.data);
-        console.log(response.data);
-        setPlaceAPIList(response.data);
-        //setPlaceToVisit(response.data.cities);
-        console.log(JSON.stringify(response.data.reviewsPlaces[0].rating))
-        console.log(placeAPIList);
-        changePage('/place', {
-          placeAPIList: response.data,
-        });
-        console.log(placeAPIList);
-      })
-      .catch((error) => {
-        console.error('Error fetching domestic regions:', error);
-      });
-
+        changePage('/place/' + placeID);
    // setSearchButton(true);
-
   };
 
 
@@ -113,16 +87,16 @@ const Landing = () => {
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
             <a href={item.link}>
-              <Card.Img src={item.imgSrc} variant="top" />
+              <Card.Img src={item.placeImageLink ? item.placeImageLink : item.activityImageLink} variant="top" />
             </a>
             <Card.Body>
               <Card.Title>
-              <Button variant="link" onClick={() => getplaceList(item.placeID) }>
-                {item.placeName} {item.activityName } 
+              <Button variant="link" onClick={() => getplaceList(item.placeID ? item.placeID : item.activityId) }>
+                {item.placeName ? item.placeName : item.activityName} 
               </Button>
               </Card.Title>
               <Card.Text>{item.description}</Card.Text>
-              <Button variant="link" onClick={() => handleAddToWishlist(item.placeName) || handleAddToWishlist(item.activityName) }>
+              <Button variant="link" onClick={() => handleAddToWishlist(item.placeName ? item.placeName : item.activityName) }>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
             </Card.Body>

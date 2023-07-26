@@ -50,7 +50,7 @@ function App() {
         <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
-        <Route path = "/place" element = {<Auth><PlacePage/></Auth>}/>
+        <Route path = "/place/:placeID" element = {<Auth><PlacePage/></Auth>}/>
         <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
         <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
         <Route path = "/city/:cityID" element = {<Auth><City/></Auth>}/>

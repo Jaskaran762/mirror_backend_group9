@@ -1,4 +1,4 @@
-package com.group9.group09.exception;
+/*package com.group9.group09.exception;
 
 public class NotAdminAccessException extends RuntimeException{
     // Constructs a new UserNotFoundException with no detail message.
@@ -8,3 +8,4 @@ public class NotAdminAccessException extends RuntimeException{
 
     public NotAdminAccessException(String message){ super(message);}
 }
+*/
