@@ -16,6 +16,7 @@ import Wish from "./components/wishlist/Wish";
 import UserProfile from "./components/UserProfile/profile";
 import ReviewsPage from "./components/reviews/review";
 import Landing from "./components/Landing-page/landing";
+import PlacePage from "./components/Landing-page/place";
 import Resetpwd from "./components/UserProfile/Resetpwd";
 
 import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
@@ -49,6 +50,7 @@ function App() {
         <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
+        <Route path = "/place" element = {<Auth><PlacePage/></Auth>}/>
         <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
         <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
         <Route path = "/city/:cityID" element = {<Auth><City/></Auth>}/>

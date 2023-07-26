@@ -17,7 +17,7 @@ const Landing = () => {
   const [wishlist, setWishlist] = useState([]);
   const[placeList,setPlaceList] = useState([]);
   const[activityList,setActivityList] = useState([]);
-
+  const[placeAPIList,setPlaceAPIList] = useState([]);
   //getplaces - based on user interest. This page will be different for user
 
   useEffect(() => {
@@ -73,6 +73,37 @@ const Landing = () => {
     return wishlist.some((item) => item.title === title);
   };
 
+  const getplaceList = (placeID) => {
+
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+    const headers = {
+    Authorization: `Bearer ${token}`,
+    };
+    console.log(placeID);
+   
+    axios.post('http://localhost:8090/home/reviewplace', { placeid: placeID }, { headers })
+      .then((response) => {
+        console.log(response.data);
+        console.log(response.data);
+        setPlaceAPIList(response.data);
+        //setPlaceToVisit(response.data.cities);
+        console.log(JSON.stringify(response.data.reviewsPlaces[0].rating))
+        console.log(placeAPIList);
+        changePage('/place', {
+          placeAPIList: response.data,
+        });
+        console.log(placeAPIList);
+      })
+      .catch((error) => {
+        console.error('Error fetching domestic regions:', error);
+      });
+
+   // setSearchButton(true);
+
+  };
+
+
   const renderCards = (placeList, type) => {
     const cards = placeList.map((item, index) => {
       const uniqueIndex = index + placeList.length * type;
@@ -85,7 +116,11 @@ const Landing = () => {
               <Card.Img src={item.imgSrc} variant="top" />
             </a>
             <Card.Body>
-              <Card.Title>{item.placeName} {item.activityName } </Card.Title>
+              <Card.Title>
+              <Button variant="link" onClick={() => getplaceList(item.placeID) }>
+                {item.placeName} {item.activityName } 
+              </Button>
+              </Card.Title>
               <Card.Text>{item.description}</Card.Text>
               <Button variant="link" onClick={() => handleAddToWishlist(item.placeName) || handleAddToWishlist(item.activityName) }>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
