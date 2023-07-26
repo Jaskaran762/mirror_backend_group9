@@ -142,6 +142,7 @@ const International = ({ selectedCountry }) => {
     );
   };
 
+  
   const handleReviews = (item) => {
     const pass = encodeURIComponent(JSON.stringify(item));
     changePage('/reviews/' + pass);
@@ -151,6 +152,7 @@ const International = ({ selectedCountry }) => {
     changePage('/state/' + stateID);
   };
 
+  
   const renderCards = (data, type) => {
     debugger;
     
@@ -175,7 +177,8 @@ const International = ({ selectedCountry }) => {
                 </Button>
 
               </Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{item.description}
+</Card.Text>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>

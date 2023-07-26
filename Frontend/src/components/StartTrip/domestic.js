@@ -175,7 +175,7 @@ const Domestic = ({ selectedState }) => {
                   Review
                 </Button>
               </Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{item.description}</Card.Text>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
