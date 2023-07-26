@@ -108,7 +108,7 @@ const City = () => {
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
         
             <Card>
-            <Link to={`/place/${item.placeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={`/Place/${item.placeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Card.Img variant="top" src={item.placeImageLink} alt={item.placeName} />
                 <Card.Body>
                   <Card.Title>{item.placeName}</Card.Title>
