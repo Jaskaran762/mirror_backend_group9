@@ -17,10 +17,6 @@ public class PlaceResponseDTO {
 
     private String placeImageLink;
 
-    public List<String> getActivityStringResponseList() {
-        return activityStringResponseList;
-    }
-
 
     public Integer getPlaceID() {
         return placeID;
