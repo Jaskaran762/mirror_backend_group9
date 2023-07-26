@@ -10,4 +10,6 @@ public interface WishlistRepository {
     List<wishList> getWishListbyUserID(Integer userID);
 
     int addtoWishlist(WishListRequestDTO wishListRequestDTO);
+
+    int deletewishlistbyID(Integer wishlistid);
 }

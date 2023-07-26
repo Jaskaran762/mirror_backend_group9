@@ -336,4 +336,28 @@ public class HomePageServiceImpl implements HomePageService {
         itineraryResponseDTO.setMessage("Itinerary created");
         return  itineraryResponseDTO;
     }
+
+    @Override
+    public WishListResponseDTO deleteWishListService(WishListRequestDTO wishListRequestDTO) {
+
+        WishListResponseDTO wishListResponseDTO = new WishListResponseDTO();
+
+        int success = wishlistRepository.deletewishlistbyID(wishListRequestDTO.getWishlistid());
+        wishListResponseDTO.setMessage("deleted wishlist item");
+
+        return wishListResponseDTO;
+    }
+
+    @Override
+    public ItineraryResponseDTO deleteItineraryService(ItineraryRequestDTO itineraryRequestDTO) {
+
+        ItineraryResponseDTO itineraryResponseDTO = new ItineraryResponseDTO();
+
+        int success = itineraryRepository.deleteitinerarybyid(itineraryRequestDTO.getItineraryid());
+        itineraryResponseDTO.setMessage("delete itinerary ");
+
+        return itineraryResponseDTO;
+    }
+
+
 }

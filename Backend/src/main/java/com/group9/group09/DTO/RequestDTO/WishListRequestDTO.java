@@ -2,6 +2,7 @@ package com.group9.group09.DTO.RequestDTO;
 
 public class WishListRequestDTO extends RequestDTO{
 
+    private Integer wishlistid;
     private Integer userid;
     private Integer placeId;
     private Integer activityId;
@@ -64,5 +65,13 @@ public class WishListRequestDTO extends RequestDTO{
 
     public void setCityid(Integer cityid) {
         this.cityid = cityid;
+    }
+
+    public Integer getWishlistid() {
+        return wishlistid;
+    }
+
+    public void setWishlistid(Integer wishlistid) {
+        this.wishlistid = wishlistid;
     }
 }

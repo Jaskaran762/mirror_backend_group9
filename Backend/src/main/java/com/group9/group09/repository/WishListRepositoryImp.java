@@ -48,4 +48,18 @@ public class WishListRepositoryImp implements WishlistRepository {
         }
 
     }
+
+    @Override
+    public int deletewishlistbyID(Integer wishlistid) {
+
+        try{
+            logger.info("Info Message: in wishlist repository, deleteWishlist method  ");
+            String deleteWishlistQuery = "Delete from Wishlist where wishlist_id=?;";
+            return jdbcTemplate.update(deleteWishlistQuery, wishlistid);
+
+        }catch (Exception e){
+            logger.error("Error Message: ");
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

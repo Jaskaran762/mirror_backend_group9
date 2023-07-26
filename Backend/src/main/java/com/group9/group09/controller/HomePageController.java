@@ -212,6 +212,27 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/deletewishlist")
+    public ResponseEntity<?> deleteWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message: in addwishlist api call");
+            wishListRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(wishListRequestDTO.getToken());
+            Optional<User> user = userRepository.findByUsermail(username);
+            wishListRequestDTO.setUserid(Integer.parseInt(user.get().getUserId()));
+            WishListResponseDTO wishListResponseDTO = homeService.deleteWishListService(wishListRequestDTO);
+            return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("delete wishlist api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
+
     /**
      * Handles the itinerary request.
      *
@@ -256,6 +277,28 @@ public class HomePageController {
                     .body(response);
         }
     }
+
+    @PostMapping(path = "/deleteitinerary")
+    public ResponseEntity<?> deleteWishList(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message: in addwishlist api call");
+            itineraryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(itineraryRequestDTO.getToken());
+            Optional<User> user = userRepository.findByUsermail(username);
+            itineraryRequestDTO.setUserid(Integer.parseInt(user.get().getUserId()));
+            ItineraryResponseDTO itineraryResponseDTO = homeService.deleteItineraryService(itineraryRequestDTO);
+            return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("delete itinerary api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
+
 
     @PostMapping(path = "/reviewplace")
     public ResponseEntity<?> getReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {

@@ -88,4 +88,8 @@ public interface HomePageService {
     WishListResponseDTO addWishListService(WishListRequestDTO wishListRequestDTO);
 
     ItineraryResponseDTO addtoItinerary(ItineraryRequestDTO itineraryRequestDTO);
+
+    WishListResponseDTO deleteWishListService(WishListRequestDTO wishListRequestDTO);
+
+    ItineraryResponseDTO deleteItineraryService(ItineraryRequestDTO itineraryRequestDTO);
 }
