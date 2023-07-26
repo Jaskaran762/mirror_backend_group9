@@ -169,19 +169,18 @@ const Domestic = ({ selectedState }) => {
             <Card.Body>
               <Card.Title>
                 <Button variant="link" onClick={() => handleCity(item.cityId)}>
-                  {item.cityName}
-                </Button>
-                <Button variant="link" onClick={() => handleReviews(item)}>
-                  Review
+                  <h5>{item.cityName}</h5>
                 </Button>
               </Card.Title>
               <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{item.description}</Card.Text>
+              <Card.Footer>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
               <Button variant="link" onClick={() => handleAddToWishlist(item.title)}>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
+              </Card.Footer>
             </Card.Body>
           </Card>
           <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
