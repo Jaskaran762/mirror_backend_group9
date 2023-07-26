@@ -12,7 +12,6 @@ public class PlaceResponseDTO {
 
     private String description;
     private String interest;
-
     private List<Activity> activityObjectsResponseList;
 
     private String placeImageLink;

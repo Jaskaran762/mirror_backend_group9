@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { RiHeartAddLine, RiHeartFill } from 'react-icons/ri';
@@ -7,7 +7,6 @@ import Footer from '../footer';
 import axios  from 'axios';
 
 const Landing = () => {
-
   const changePage = useNavigate();
   const handletrip = () => {
     changePage('/mainpage');
@@ -17,7 +16,7 @@ const Landing = () => {
   const [wishlist, setWishlist] = useState([]);
   const[placeList,setPlaceList] = useState([]);
   const[activityList,setActivityList] = useState([]);
-
+  const[placeAPIList,setPlaceAPIList] = useState([]);
   //getplaces - based on user interest. This page will be different for user
 
   useEffect(() => {
@@ -73,6 +72,15 @@ const Landing = () => {
     return wishlist.some((item) => item.title === title);
   };
 
+  const getplaceList = (placeID) => {
+        changePage('/place/' + placeID);
+   // setSearchButton(true);
+  };
+
+  const getactivityList = (activityid) => {
+    changePage('/activity/' + activityid);
+  }
+
   const renderCards = (placeList, type) => {
     const cards = placeList.map((item, index) => {
       const uniqueIndex = index + placeList.length * type;
@@ -82,12 +90,16 @@ const Landing = () => {
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
             <a href={item.link}>
-              <Card.Img src={item.imgSrc} variant="top" />
+              <Card.Img src={item.placeImageLink ? item.placeImageLink : item.activityImageLink} variant="top" />
             </a>
             <Card.Body>
-              <Card.Title>{item.placeName} {item.activityName } </Card.Title>
+              <Card.Title>
+              <Button variant="link" onClick={() => item.placeID ? getplaceList(item.placeID ): getactivityList(item.activityId) }>
+                {item.placeName ? item.placeName : item.activityName} 
+              </Button>
+              </Card.Title>
               <Card.Text>{item.description}</Card.Text>
-              <Button variant="link" onClick={() => handleAddToWishlist(item.placeName) || handleAddToWishlist(item.activityName) }>
+              <Button variant="link" onClick={() => handleAddToWishlist(item.placeName ? item.placeName : item.activityName) }>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
             </Card.Body>

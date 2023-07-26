@@ -171,6 +171,7 @@ public class HomePageServiceImpl implements HomePageService {
         placeResponseDTO.setPlaceID(place.get().getPlaceId());
         placeResponseDTO.setDescription(place.get().getDescription());
         placeResponseDTO.setActivityObjectsResponseList(activityList);
+        placeResponseDTO.setPlaceImageLink(place.get().getPlaceImageLink());
         return placeResponseDTO;
     }
 
@@ -186,10 +187,15 @@ public class HomePageServiceImpl implements HomePageService {
 
         String username = jwtService.extractUsername(activityRequestDTO.getToken());
         Optional<User> user = userRepository.findByUsermail(username);
+        Optional<Activity> getbyactivityId = activityRepository.findByActivityId(activityRequestDTO.getActivityID());
         List<Activity> activityList = activityRepository.getAllActivities();
 
         activityResponseDTO.setActivityObjectsResponseList(activityList);
-
+        //set the response dto.
+        activityResponseDTO.setActivityId(getbyactivityId.get().getActivityId());
+        activityResponseDTO.setActivityName(getbyactivityId.get().getActivityName());
+        activityResponseDTO.setActivitydesc(getbyactivityId.get().getDescription());
+        activityResponseDTO.setActivityLink(getbyactivityId.get().getActivityImageLink());
 
         return activityResponseDTO;
     }

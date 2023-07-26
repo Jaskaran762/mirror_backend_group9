@@ -65,7 +65,7 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8091/auth/register', userObject);
+      const response = await axios.post('http://localhost:8090/auth/register', userObject);
       console.log('API response:', response.data);
       sessionStorage.setItem("token",response?.data?.token ?? "");
       setIsLoading(false); 
