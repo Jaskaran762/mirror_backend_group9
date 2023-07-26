@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ch.qos.logback.core.util.OptionHelper.isNullOrEmpty;
+
 @Service
 public class HomePageServiceImpl implements HomePageService {
 
@@ -306,4 +308,32 @@ public class HomePageServiceImpl implements HomePageService {
 
     }
 
+    @Override
+    public WishListResponseDTO addWishListService(WishListRequestDTO wishListRequestDTO) {
+
+        WishListResponseDTO wishListResponseDTO = new WishListResponseDTO();
+
+
+        /*if (isNullOrEmpty(wishListRequestDTO.getPlacename()) && isNullOrEmpty(wishListRequestDTO.getActivityname()) ) {
+            throw new RuntimeException();
+        }*/
+
+        wishlistRepository.addtoWishlist(wishListRequestDTO);
+        wishListResponseDTO.setMessage("added to wishlist");
+        return wishListResponseDTO;
+    }
+
+    @Override
+    public ItineraryResponseDTO addtoItinerary(ItineraryRequestDTO itineraryRequestDTO) {
+
+        ItineraryResponseDTO itineraryResponseDTO = new ItineraryResponseDTO();
+
+        /*if(isNullOrEmpty(itineraryRequestDTO.getStartdate())&& isNullOrEmpty(itineraryRequestDTO.getStartdate()) ){
+            throw new RuntimeException();
+        }*/
+
+        itineraryRepository.addtoItinerary(itineraryRequestDTO);
+        itineraryResponseDTO.setMessage("Itinerary created");
+        return  itineraryResponseDTO;
+    }
 }
