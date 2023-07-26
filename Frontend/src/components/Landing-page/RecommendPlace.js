@@ -7,7 +7,7 @@ import Footer from '../footer';
 import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
 
 
-const PlacePage = () => {
+const RecommendPlace = () => {
    const { placeID }  = useParams();
    const changePage = useNavigate();
    const [placeDetail,setplaceDetail] = useState();
@@ -104,4 +104,4 @@ const PlacePage = () => {
     );
   };
   
-  export default PlacePage;
+  export default RecommendPlace;
