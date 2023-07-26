@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link,useNavigate, useParams } from 'react-router-dom';
 import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
 import { RiHeartAddLine, RiHeartFill } from 'react-icons/ri';
-import axios from 'axios';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
 
-const City = () => {
-  const [cityDetail, setCityDetail] = useState();
+const State = () => {
+  const [stateData, setStateData] = useState();
   const [showDialog, setShowDialog] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
@@ -15,6 +15,28 @@ const City = () => {
   const [selectedEndTime, setSelectedEndTime] = useState('');
   const [itinerary, setItinerary] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+
+  const { stateName } = useParams();
+  const token = sessionStorage.getItem('token');
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  useEffect(() => {
+    axios
+      .post('http://localhost:8091/home/location', { location: stateName }, { headers })
+      .then((response) => {
+        setStateData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching state data:', error);
+      });
+  }, []);
+
+  if (!stateData) {
+    return <div>Loading...</div>;
+  }
+
   const handleOpenDialog = (index) => {
     setShowDialog(index);
   };
@@ -39,8 +61,6 @@ const City = () => {
     setSelectedEndTime(event.target.value);
   };
 
-
-
   const handleSaveItinerary = (title) => {
     const item = {
       date: selectedDate,
@@ -50,7 +70,6 @@ const City = () => {
       endTime: selectedEndTime,
     };
     setItinerary([...itinerary, item]);
-   // setItemCounter((prevCounter) => prevCounter + 1);
     setShowDialog(false);
     setSelectedDate('');
     setSelectedEndDate('');
@@ -59,7 +78,7 @@ const City = () => {
   };
 
   const handleAddToWishlist = (title) => {
-    const itemIndex = wishlist.findIndex((item) => item.placeName === title);
+    const itemIndex = wishlist.findIndex((item) => item.activityName === title);
 
     if (itemIndex !== -1) {
       const updatedWishlist = [...wishlist];
@@ -67,61 +86,45 @@ const City = () => {
       setWishlist(updatedWishlist);
     } else {
       const item = {
-        placeName: title,
+        activityName: title,
       };
       setWishlist([...wishlist, item]);
     }
   };
 
   const isItemInWishlist = (title) => {
-    return wishlist.some((item) => item.placeName === title);
+    return wishlist.some((item) => item.activityName === title);
   };
 
-  const { cityID } = useParams();
-  const token = sessionStorage.getItem('token');
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  const cityIDAsNumber = parseInt(cityID, 10);
 
-  useEffect(() => {
-    axios
-      .post('http://localhost:8091/home/city', { cityID: cityIDAsNumber }, { headers })
-      .then((response) => {
-        console.log(response.data);
-        setCityDetail(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching city details:', error);
-      });
-  }, []);
 
-  const handleAddToItinerary = (placeId) => {
-        console.log(`Added place with ID: ${placeId} to itinerary.`);
-  };
+  const renderCities = () => {
+    if (!stateData.cities) {
+      return <div>No cities to display.</div>;
+    }
 
-  const renderCards = (data, type) => {
-    const cards = data.map((item, index) => {
-      const uniqueIndex = index + data.length * type;
-      const isInWishlist = isItemInWishlist(item.placeName);
+    return stateData.cities.map((city, index) => {
+      const uniqueIndex = index;
+      const cityInWishlist = isItemInWishlist(city.cityName);
       return (
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
-        <Link to={`/place/${item.placeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to={`/city/${city.cityId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Card>
-                <Card.Img variant="top" src={item.placeImageLink} alt={item.placeName} />
-                <Card.Body>
-                  <Card.Title>{item.placeName}</Card.Title>
-                  <Card.Text>{item.description}</Card.Text>
-                </Card.Body>
-                <Card.Footer>
+          
+            {city.cityImageLink && <Card.Img variant="top" src={city.cityImageLink} />}
+            <Card.Body>
+              <Card.Title>{city.cityName}</Card.Title>
+              <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{city.description}</Card.Text>
+            </Card.Body>
+            <Card.Footer>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
-              <Button variant="link" onClick={() => handleAddToWishlist(item.placeName)}>
-                {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
+              <Button variant="link" onClick={() => handleAddToWishlist(city.cityName)}>
+                {cityInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
-             </Card.Footer>
-            </Card>
+            </Card.Footer>
+          </Card>
           </Link>
           <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
             <Modal.Header closeButton>
@@ -149,7 +152,7 @@ const City = () => {
               <Button variant="secondary" onClick={handleCloseDialog}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={() => handleSaveItinerary(item.title)}>
+              <Button variant="primary" onClick={() => handleSaveItinerary(city.cityName)}>
                 Save
               </Button>
             </Modal.Footer>
@@ -157,13 +160,9 @@ const City = () => {
         </Col>
       );
     });
-
-    return cards;
   };
 
-  if (!cityDetail) {
-    return <div>Loading...</div>;
-  }
+
 
   return (
     <>
@@ -171,18 +170,22 @@ const City = () => {
       <Container>
         <Row>
           <Col>
-            <h1>{cityDetail.cityName}</h1>
-            <p>{cityDetail.description}</p>
+            <div>
+              <h2 style={{ fontSize: '2rem' }}>{stateData.stateName}</h2>
+            </div>
+            <div>
+              {stateData.description && <p>{stateData.description}</p>}
+            </div>
+            <div>
+              <h2 className="mb-3">Cities to Visit</h2>
+              <Row>{renderCities()}</Row>
+            </div>
           </Col>
         </Row>
-        <Row>
-          <h2>Places to Visit</h2>
-        </Row>
-        <Row>{renderCards(cityDetail.placeObjectResponseList, 1)}</Row>
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 };
 
-export default City;
+export default State;
