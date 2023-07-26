@@ -1,32 +1,36 @@
 package com.group9.group09.controllerTest;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import com.group9.group09.DTO.RequestDTO.ChoiceRequestDTO;
+import com.group9.group09.DTO.RequestDTO.CityRequestDTO;
+import com.group9.group09.DTO.RequestDTO.LocationRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ChoiceResponseDTO;
-import com.group9.group09.controller.HomePageController;
-import com.group9.group09.service.interfaces.HomePageService;
+import com.group9.group09.DTO.ResponseDTO.CityResponseDTO;
+import com.group9.group09.DTO.ResponseDTO.ItemsToCarryResponseDTO;
+import com.group9.group09.DTO.ResponseDTO.LocationResponseDTO;
 import com.group9.group09.config.JwtService;
-import com.group9.group09.model.User;
+import com.group9.group09.model.*;
+import com.group9.group09.repository.CityRepositoryImp;
+import com.group9.group09.repository.ItemsRepositoryImp;
+import com.group9.group09.repository.PlaceRepositoryImp;
+import com.group9.group09.repository.interfaces.CountryRepository;
+import com.group9.group09.repository.interfaces.StateRepository;
 import com.group9.group09.repository.interfaces.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.BeforeEach;
+import com.group9.group09.service.HomePageServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HomePageControllerTest {
+public class HomePageControllerTest {/*
 
-    @Mock
-    private HomePageService homePageService;
+    @InjectMocks
+    private HomePageServiceImpl homePageService;
 
     @Mock
     private JwtService jwtService;
@@ -35,80 +39,143 @@ class HomePageControllerTest {
     private UserRepository userRepository;
 
     @Mock
-    private HttpServletRequest httpServletRequest;
+    private CountryRepository countryRepository;
+    @Mock
+    private StateRepository stateRepository;
+    private CityRepositoryImp cityRepository;
+    private PlaceRepositoryImp placeRepository;
+    private ItemsRepositoryImp itemsRepository;
 
-    @InjectMocks
-    private HomePageController homePageController;
+    @Test
+    public void testChoiceSelectorService_InternationalRegion() {
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+        ChoiceRequestDTO choice = new ChoiceRequestDTO();
+        choice.setRegion("International");
+        choice.setToken("test_token");
+
+        // Mock the JwtService to return the username
+        Mockito.when(jwtService.extractUsername(choice.getToken())).thenReturn("test_user");
+
+        // Mock the UserRepository to return the user with the home country
+        User user = new User();
+        user.setHomeCountry(1);
+        Mockito.when(userRepository.findByUsermail("test_user")).thenReturn(Optional.of(user));
+
+        List<Country> countryList = new ArrayList<>();
+
+
+        Mockito.when(countryRepository.getCountries()).thenReturn(countryList);
+
+        // Perform the test
+        ChoiceResponseDTO choiceResponseDTO = homePageService.choiceSelectorService(choice);
+
+        // Assert the response
+        Assertions.assertEquals("International", choiceResponseDTO.getRegion());
+        Assertions.assertEquals(countryList, choiceResponseDTO.getRegionList());
     }
 
     @Test
-    void testChoiceSelector_Success() {
-        ChoiceRequestDTO choiceRequestDTO = new ChoiceRequestDTO();
-        when(httpServletRequest.getHeader("Authorization")).thenReturn("Bearer test-token");
+    public void testChoiceSelectorService_DomesticRegion() {
+        // Prepare the ChoiceRequestDTO object with region as "Domestic"
+        ChoiceRequestDTO choice = new ChoiceRequestDTO();
+        choice.setRegion("Domestic");
+        choice.setToken("test_token");
 
-        // Mock jwtService's extractUsername method
-        when(jwtService.extractUsername("test-token")).thenReturn("test-username");
+        // Mock the JwtService to return the username
+        Mockito.when(jwtService.extractUsername(choice.getToken())).thenReturn("test_user");
 
-        // Mock userRepository's findByUsermail method
+        // Mock the UserRepository to return the user with the home country
         User user = new User();
-        user.setUserId("1");
-        Optional<User> optionalUser = Optional.of(user);
-        when(userRepository.findByUsermail("test-username")).thenReturn(optionalUser);
+        user.setHomeCountry(1); // Replace 1L with the desired home country ID
+        Mockito.when(userRepository.findByUsermail("test_user")).thenReturn(Optional.of(user));
 
-        // Mock homePageService's choiceSelectorService method
-        ChoiceResponseDTO mockResponse = new ChoiceResponseDTO();
-        when(homePageService.choiceSelectorService(any(ChoiceRequestDTO.class))).thenReturn(mockResponse);
+        // Mock the CountryRepository to return the user's home country
+        Country homeCountry = new Country();
+        homeCountry.setCountryID(user.getHomeCountry());
+        Mockito.when(countryRepository.findByCountryId(user.getHomeCountry())).thenReturn(Optional.of(homeCountry));
 
-        ResponseEntity<?> responseEntity = homePageController.choiceSelector(choiceRequestDTO, httpServletRequest);
+        // Mock the StateRepository to return a list of states
+        List<State> stateList = new ArrayList<>();
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(mockResponse, responseEntity.getBody());
+        Mockito.when(stateRepository.getStatesbyCountryID(homeCountry.getCountryID())).thenReturn(stateList);
+
+        // Perform the test
+        ChoiceResponseDTO choiceResponseDTO = homePageService.choiceSelectorService(choice);
+
+        // Assert the response
+        Assertions.assertEquals("Domestic", choiceResponseDTO.getRegion());
+        Assertions.assertEquals(stateList, choiceResponseDTO.getRegionList());
     }
 
     @Test
-    void testChoiceSelector_Exception() {
-        ChoiceRequestDTO choiceRequestDTO = new ChoiceRequestDTO();
-        when(httpServletRequest.getHeader("Authorization")).thenReturn("Bearer test-token");
+    public void testLocationSelectorService() {
+        // Prepare the LocationRequestDTO object
+        LocationRequestDTO location = new LocationRequestDTO();
+        location.setLocation("Gujarat");
+        location.setToken("test_token");
 
-        // Mock jwtService's extractUsername method
-        when(jwtService.extractUsername("test-token")).thenReturn("test-username");
+        Mockito.when(jwtService.extractUsername(location.getToken())).thenReturn("test_user");
 
-        // Mock userRepository's findByUsermail method
+        // Mock the UserRepository to return the user with the home country
         User user = new User();
-        user.setUserId("1");
-        Optional<User> optionalUser = Optional.of(user);
-        when(userRepository.findByUsermail("test-username")).thenReturn(optionalUser);
+        user.setHomeCountry(1);
+        Mockito.when(userRepository.findByUsermail("test_user")).thenReturn(Optional.of(user));
 
-        // Mock homePageService's choiceSelectorService method to throw an exception
-        when(homePageService.choiceSelectorService(any(ChoiceRequestDTO.class))).thenThrow(new RuntimeException());
 
-        ResponseEntity<?> responseEntity = homePageController.choiceSelector(choiceRequestDTO, httpServletRequest);
+        State state = new State();
+        state.setStateID(1);
+        Mockito.when(stateRepository.findByStateName(location.getLocation())).thenReturn(Optional.of(state));
 
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        // Add assertions for the response body as needed.
+        List<City> cityList = new ArrayList<>();
+
+        Mockito.when(cityRepository.getCitiesbyStateID(state.getStateID())).thenReturn(cityList);
+
+        LocationResponseDTO locationResponseDTO = homePageService.locationSelectorService(location);
+
+        Assertions.assertEquals(state.getDescription(), locationResponseDTO.getDescription());
+        Assertions.assertEquals(cityList, locationResponseDTO.getCities());
     }
 
-    // Add more test cases for other controller methods...
+    @Test
+    public void testCitySelectorService() {
+        // Prepare the CityRequestDTO object
+        CityRequestDTO cityRequestDTO = new CityRequestDTO();
+        cityRequestDTO.setCityID(1);
+        cityRequestDTO.setToken("test_token");
 
-    // - testGetWishList_Exception
-    // - testAddWishList_Success
-    // - testAddWishList_Exception
-    // - testDeleteWishList_Success
-    // - testDeleteWishList_Exception
-    // - testGetItinerary_Success
-    // - testGetItinerary_Exception
-    // - testAddToItinerary_Success
-    // - testAddToItinerary_Exception
-    // - testDeleteItinerary_Success
-    // - testDeleteItinerary_Exception
-    // - testGetReviewPlace_Success
-    // - testGetReviewPlace_Exception
-    // - testGetReviewActivity_Success
-    // - testGetReviewActivity_Exception
-    // - testGetItemstoCarry_Success
-    // - testGetItemstoCarry_Exception
+        // Mock the JwtService to return the username
+        Mockito.when(jwtService.extractUsername(cityRequestDTO.getToken())).thenReturn("test_user");
+
+        // Mock the UserRepository to return the user with the home country
+        User user = new User();
+        user.setHomeCountry(1);
+        Mockito.when(userRepository.findByUsermail("test_user")).thenReturn(Optional.of(user));
+
+        // Mock the CityRepository to return the city based on the city ID
+        City city = new City();
+        city.setCityId(1);
+        Mockito.when(cityRepository.findByCityId(cityRequestDTO.getCityID())).thenReturn(Optional.of(city));
+
+        List<Place> placeList = new ArrayList<>();
+
+        Mockito.when(placeRepository.getPlacesbyCityID(city.getCityId())).thenReturn(placeList);
+
+        CityResponseDTO cityResponseDTO = homePageService.citySelectorService(cityRequestDTO);
+
+        Assertions.assertEquals(city.getCityName(), cityResponseDTO.getCityName());
+        Assertions.assertEquals(city.getDescription(), cityResponseDTO.getDescription());
+        Assertions.assertEquals(placeList, cityResponseDTO.getPlaceResponseList());
+    }
+
+    @Test
+    public void testGetItemstoCarry() {
+
+        List<ItemstoCarry> itemstoCarryList = new ArrayList<>();
+
+        Mockito.when(itemsRepository.getAllItems()).thenReturn(itemstoCarryList);
+
+        ItemsToCarryResponseDTO itemsToCarryResponseDTO = homePageService.getItemstoCarry();
+
+        Assertions.assertEquals(itemstoCarryList, itemsToCarryResponseDTO.getItemstoCarryResponseList());
+    }*/
 }

@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Card, Modal, Form } from 'react-bootstrap';
-import { RiHeartAddLine, RiHeartFill } from 'react-icons/ri';
+import { RiHeartAddLine,RiHeartFill } from 'react-icons/ri';
 import DateRangePicker from '../DateRangePicker';
 import { useNavigate } from 'react-router-dom';
 import ReviewsPage from '../reviews/review.js';
-import axios from 'axios';
+import axios  from 'axios';
 
 const Domestic = ({ selectedState }) => {
   const [searchButton, setSearchButton] = useState(false);
   const [itemCounter, setItemCounter] = useState(0);
   const [selectedStateName, setselectedStateName] = useState();
   const [selectedStateDesc, setselectedStateDesc] = useState();
-  const [selectedStateimg, setselectedStateimg] = useState();
-  
   
   const handleSearchButton = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
     const headers = {
-      Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
     };
     console.log(selectedState);
     const selectedValue = JSON.parse(selectedState);
     const stateName = selectedValue.stateName;
     const stateDescription = selectedValue.description;
-    const stateimg = selectedValue.stateImageLink;
     console.log(stateName);
     console.log(stateDescription);
     setselectedStateName(stateName);
     setselectedStateDesc(stateDescription);
-    setselectedStateimg(stateimg);
    
     axios.post('http://localhost:8090/home/location', { location: selectedValue.stateName }, { headers })
       .then((response) => {
@@ -52,8 +48,9 @@ const Domestic = ({ selectedState }) => {
   const [itinerary, setItinerary] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [reviewsToShow, setReviewsToShow] = useState([]);
-  const [placeToVisit, setPlaceToVisit] = useState([]);
+  const [placeToVisit,setPlaceToVisit] = useState([]);
 
+ 
   const handleOpenDialog = (index) => {
     setShowDialog(index);
   };
@@ -81,23 +78,24 @@ const Domestic = ({ selectedState }) => {
   const handleseeReviews = (reviews) => {
     setReviewsToShow(reviews);
   };
-
+  
   const handleSaveItinerary = (title) => {
     const item = {
       date: selectedDate,
-      endDate: selectedEndDate,
+      endDate: selectedEndDate, 
       title: title,
       time: selectedTime,
-      endTime: selectedEndTime,
+      endTime: selectedEndTime, 
     };
     setItinerary([...itinerary, item]);
     setItemCounter((prevCounter) => prevCounter + 1);
     setShowDialog(false);
     setSelectedDate('');
-    setSelectedEndDate('');
+    setSelectedEndDate(''); 
     setSelectedTime('');
     setSelectedEndTime('');
   };
+
 
   const handleAddToWishlist = (title) => {
     const itemIndex = wishlist.findIndex((item) => item.title === title);
@@ -105,7 +103,7 @@ const Domestic = ({ selectedState }) => {
     if (itemIndex !== -1) {
       const updatedWishlist = [...wishlist];
       updatedWishlist.splice(itemIndex, 1);
-      setWishlist(updatedWishlist);
+      setWishlist(updatedWishlist);   
     } else {
       const item = {
         title: title,
@@ -113,7 +111,6 @@ const Domestic = ({ selectedState }) => {
       setWishlist([...wishlist, item]);
     }
   };
-
   const isItemInWishlist = (title) => {
     return wishlist.some((item) => item.title === title);
   };
@@ -149,38 +146,36 @@ const Domestic = ({ selectedState }) => {
 
   const handleReviews = (item) => {
     const pass = encodeURIComponent(JSON.stringify(item));
-    changePage('/reviews/' + pass);
+    changePage('/reviews/'+pass);
   };
-
-  const handleCity = (cityID) => {
-    changePage('/city/' + cityID);
-  };
-
+  const handleCity = (cityID ) => {
+      changePage('/city/'+cityID);
+  }
   const renderCards = (data, type) => {
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
       const isInWishlist = isItemInWishlist(item.title);
-      console.log(item.data);
-
       return (
+       
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
           <Card>
-          {item.cityImageLink && <Card.Img variant="top" src={item.cityImageLink} />}
             <Card.Body>
               <Card.Title>
-                <Button variant="link" onClick={() => handleCity(item.cityId)}>
-                  <h5>{item.cityName}</h5>
+              <Button variant="link" onClick={() => handleCity(item.cityId)}>
+                {item.cityName}
                 </Button>
+              <Button variant="link" onClick={() => handleReviews(item)}>
+                  Review
+                </Button>
+                
               </Card.Title>
-              <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{item.description}</Card.Text>
-              <Card.Footer>
+              <Card.Text>{item.description}</Card.Text>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
               <Button variant="link" onClick={() => handleAddToWishlist(item.title)}>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
-              </Card.Footer>
             </Card.Body>
           </Card>
           <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
@@ -196,6 +191,7 @@ const Domestic = ({ selectedState }) => {
                 <Form.Label>Start Time</Form.Label>
                 <Form.Control type="time" value={selectedTime} onChange={handleTimeChange} />
               </Form.Group>
+    
               <Form.Group>
                 <Form.Label>End Date</Form.Label>
                 <Form.Control type="date" value={selectedEndDate} onChange={handleEndDateChange} />
@@ -224,41 +220,43 @@ const Domestic = ({ selectedState }) => {
   return (
     <>
       <br />
+      
       <Container>
         <Row>
           <br />
           <Col>
-           
             <div>
               <p className="mb-3">Select your travel date</p>
               <DateRangePicker style={{ height: '100px', width: '100px', fontSize: '1rem' }} />
             </div>
           </Col>
         </Row>
+        
       </Container>
+      
       <div className="text-left" style={{ padding: '15px' }}>
         <Button variant="primary" size="lg" onClick={handleSearchButton}>
           Search
         </Button>
       </div>
-      <Container></Container>
+      
+      
+      <Container>
+        
+      </Container>
+
       {searchButton && (
         <>
-          <Container>
+        <Container>
             <Row>
               <br />
               <Col>
               <div>
-              <h2 style={{ fontSize: '2rem' }}>{selectedStateName}</h2>
+                  {selectedStateName}
                 </div>
-              <div>
-              {selectedStateimg && <img src={selectedStateimg} alt="State" />}
-              </div>
-              
                 <div>
                   {selectedStateDesc}
                 </div>
-
                 <div>
                   <h2 className="mb-3">Cities to Visit</h2>
                 </div>
@@ -267,21 +265,23 @@ const Domestic = ({ selectedState }) => {
             <Row>{renderCards(placeToVisit, 1)}</Row>
           </Container>
           <br />
+
           {reviewsToShow.length > 0 && (
-            <Container>
-              <Row>
-                <br />
-                <Col>
-                  <div>
-                    <h2 className="mb-3">Reviews</h2>
-                    <ReviewsDisplay reviews={reviewsToShow} />
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          )}
+        <Container>
+          <Row>
+            <br />
+            <Col>
+              <div>
+                <h2 className="mb-3">Reviews</h2>
+                <ReviewsDisplay reviews={reviewsToShow} />
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      )}
         </>
       )}
+     
     </>
   );
 };

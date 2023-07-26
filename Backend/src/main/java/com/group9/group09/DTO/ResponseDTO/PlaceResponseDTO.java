@@ -1,8 +1,6 @@
 package com.group9.group09.DTO.ResponseDTO;
 
 import com.group9.group09.model.Activity;
-import com.group9.group09.model.City;
-import com.group9.group09.model.Place;
 
 import java.util.List;
 
@@ -12,10 +10,17 @@ public class PlaceResponseDTO {
 
     private String description;
     private String interest;
+
     private List<Activity> activityObjectsResponseList;
+    private List<String> activityStringResponseList;
 
-    private String placeImageLink;
+    public List<String> getActivityStringResponseList() {
+        return activityStringResponseList;
+    }
 
+    public void setActivityStringResponseList(List<String> activityStringResponseList) {
+        this.activityStringResponseList = activityStringResponseList;
+    }
 
     public Integer getPlaceID() {
         return placeID;
@@ -55,13 +60,5 @@ public class PlaceResponseDTO {
 
     public void setInterest(String interest) {
         this.interest = interest;
-    }
-
-    public String getPlaceImageLink() {
-        return placeImageLink;
-    }
-
-    public void setPlaceImageLink(String placeImageLink) {
-        this.placeImageLink = placeImageLink;
     }
 }

@@ -11,7 +11,6 @@ public class ItineraryResponseDTO {
 
 
 
-    private String message ;
     private List<Itinerary> itineraryObjectList;
 
     /**
@@ -30,13 +29,5 @@ public class ItineraryResponseDTO {
      */
     public void setItineraryObjectList(List<Itinerary> itineraryObjectList) {
         this.itineraryObjectList = itineraryObjectList;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

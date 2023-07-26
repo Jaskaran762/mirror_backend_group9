@@ -5,7 +5,6 @@ public class wishList {
     private Integer userID;
     private Integer placeID;
     private Integer activityID;
-    private Integer cityID;
 
     /**
      * Get the ID of the wishlist.
@@ -77,13 +76,5 @@ public class wishList {
      */
     public void setActivityID(Integer activityID) {
         this.activityID = activityID;
-    }
-
-    public Integer getCityID() {
-        return cityID;
-    }
-
-    public void setCityID(Integer cityID) {
-        this.cityID = cityID;
     }
 }

@@ -14,7 +14,6 @@ public class WishListRowMapper implements RowMapper<wishList> {
 
        wishList wishList = new wishList();
        wishList.setWishListID(rs.getInt("wishlist_id"));
-       wishList.setPlaceID(rs.getInt("city_id"));
        wishList.setActivityID(rs.getInt("activity_id"));
        wishList.setUserID(rs.getInt("user_id"));
        wishList.setPlaceID(rs.getInt("place_id"));

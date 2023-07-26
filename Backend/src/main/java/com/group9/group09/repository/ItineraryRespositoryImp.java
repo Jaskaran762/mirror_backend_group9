@@ -1,7 +1,5 @@
 package com.group9.group09.repository;
 
-import com.group9.group09.DTO.RequestDTO.ItineraryRequestDTO;
-import com.group9.group09.DTO.ResponseDTO.ItineraryResponseDTO;
 import com.group9.group09.model.ItemstoCarry;
 import com.group9.group09.model.Itinerary;
 import com.group9.group09.repository.interfaces.ItineraryRepository;
@@ -31,34 +29,6 @@ public class ItineraryRespositoryImp implements ItineraryRepository {
             String getItinerarybyUserIDQuery = "SELECT * FROM Itinerary where user_id=?";
             return jdbcTemplate.query(getItinerarybyUserIDQuery, new ItineraryRowMapper(), userid);
         } catch (Exception e) {
-            logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
-        }
-
-    }
-
-    @Override
-    public int addtoItinerary(ItineraryRequestDTO itineraryRequestDTO) {
-        try{
-            logger.info("Info Message: in itinerary repository, addtoitinerary method  ");
-            String addtoItineraryQuery = "Insert INTO Itinerary  (user_id,`start_date`,`end_date`,`placeid`,`activityid`) VALUES(?,?,?,?,?);";
-            return jdbcTemplate.update(addtoItineraryQuery, itineraryRequestDTO.getUserid(), itineraryRequestDTO.getStartdate(),itineraryRequestDTO.getEnddate(),itineraryRequestDTO.getPlaceid(),itineraryRequestDTO.getActivityid());
-        }catch (Exception e){
-            logger.error("Error Message: error adding to itinerary list ");
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    @Override
-    public int deleteitinerarybyid(Integer itineraryid) {
-
-
-        try{
-            logger.info("Info Message: in itinerary repository, deleteitinerarybyid method  ");
-            String deleteItineraryByIDQuery = "Delete from Itinerary where itinerary_id=?;";
-            return jdbcTemplate.update(deleteItineraryByIDQuery, itineraryid);
-
-        }catch (Exception e){
             logger.error("Error Message: ");
             throw new RuntimeException(e.getMessage());
         }

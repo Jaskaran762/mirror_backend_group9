@@ -1,9 +1,6 @@
 package com.group9.group09.DTO.ResponseDTO;
 
-import com.group9.group09.model.Activity;
 import com.group9.group09.model.City;
-import com.group9.group09.model.Place;
-
 import java.util.List;
 
 public class StateResponseDTO {
@@ -11,11 +8,8 @@ public class StateResponseDTO {
     private Integer stateID;
     private String stateName;
     private String description;
-
-    private List<City> cityList;
-
-    private List<Place> placeList;
-    private List<Activity> activityList;
+    private List<City> cityObjectList;
+    private List<String> cityStringList;
 
     public Integer getStateID() {
         return stateID;
@@ -41,27 +35,19 @@ public class StateResponseDTO {
         this.description = description;
     }
 
-    public List<City> getCityList() {
-        return cityList;
+    public List<City> getCityObjectList() {
+        return cityObjectList;
     }
 
-    public void setCityList(List<City> cityList) {
-        this.cityList = cityList;
+    public void setCityObjectList(List<City> cityObjectList) {
+        this.cityObjectList = cityObjectList;
     }
 
-    public List<Place> getPlaceList() {
-        return placeList;
+    public List<String> getCityStringList() {
+        return cityStringList;
     }
 
-    public void setPlaceList(List<Place> placeList) {
-        this.placeList = placeList;
-    }
-
-    public List<Activity> getActivityList() {
-        return activityList;
-    }
-
-    public void setActivityList(List<Activity> activityList) {
-        this.activityList = activityList;
+    public void setCityStringList(List<String> cityStringList) {
+        this.cityStringList = cityStringList;
     }
 }

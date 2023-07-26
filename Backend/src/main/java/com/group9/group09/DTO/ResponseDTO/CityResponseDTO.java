@@ -1,7 +1,5 @@
 package com.group9.group09.DTO.ResponseDTO;
 
-import com.group9.group09.model.Activity;
-import com.group9.group09.model.City;
 import com.group9.group09.model.Place;
 
 import java.util.List;
@@ -15,7 +13,7 @@ public class CityResponseDTO {
     private String cityName;
     private String description;
     private List<Place> placeObjectResponseList;
-    private List<Activity> activityList;
+    private List<String> placeResponseList;
 
     /**
      * Get the list of Place objects from the response.
@@ -94,13 +92,16 @@ public class CityResponseDTO {
      *
      * @return the list of place names
      */
-
-
-    public List<Activity> getActivityList() {
-        return activityList;
+    public List<String> getPlaceResponseList() {
+        return placeResponseList;
     }
 
-    public void setActivityList(List<Activity> activityList) {
-        this.activityList = activityList;
+    /**
+     * Set the list of place names in the response.
+     *
+     * @param placeResponseList the list of place names to set
+     */
+    public void setPlaceResponseList(List<String> placeResponseList) {
+        this.placeResponseList = placeResponseList;
     }
 }

@@ -29,7 +29,7 @@ public class ActivityRepositoryImp implements ActivityRepository {
 
         try {
             logger.info("Info Message: ");
-            String findActivitybyIDQuery = "SELECT * FROM Activity where activity_id=?";
+            String findActivitybyIDQuery = "SELECT * FROM Activity where Activity_ID = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(findActivitybyIDQuery, new ActivityRowMapper(), activityID));
         } catch (Exception e) {
             logger.error("Error Message: ");

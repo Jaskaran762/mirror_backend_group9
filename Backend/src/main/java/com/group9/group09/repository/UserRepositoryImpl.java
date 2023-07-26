@@ -58,30 +58,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int updateUserName(User user) {
-        String sql = "UPDATE User SET name = ? WHERE UserID = ?";
-        return jdbcTemplate.update(sql, user.getName(), user.getUserId());
-    }
-
-    @Override
-    public int updateUserPhone(User user) {
-        String sql = "UPDATE User SET contact_no = ? WHERE UserID = ?";
-        return jdbcTemplate.update(sql, user.getPhone(), user.getUserId());
-    }
-
-    @Override
-    public int updateUserInterests(User user) {
-        String sql = "UPDATE User SET interest = ? WHERE UserID = ?";
-        return jdbcTemplate.update(sql, user.getInterest(), user.getUserId());
-    }
-
-    @Override
-    public int updateUserCountry(User user) {
-        String sql = "UPDATE User SET homeCountry = ? WHERE UserID = ?";
-        return jdbcTemplate.update(sql, user.getHomeCountry(), user.getUserId());
-    }
-
-    @Override
     public Optional<User> findByUserId(String userId) {
         try {
             logger.info("Info Message: ");

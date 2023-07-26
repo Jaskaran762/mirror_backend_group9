@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form} from 'react-bootstrap';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
 import International from '../StartTrip/international';
@@ -16,27 +16,24 @@ const MainPage = () => {
   const handleDestinationTypeChange = (event) => {
     const selectedDestination = event.target.value;
     setDestinationType(selectedDestination);
-
     if (selectedDestination === 'National') {
       fetchDomesticRegions();
     } else {
       setRegionList([]);
     }
-
     if (selectedDestination === 'International') {
       fetchInternationalRegions();
     } else {
       setRegionList([]);
     }
   };
-
   const fetchDomesticRegions = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-    axios.post('http://localhost:8090/home/choice', { region: 'domestic' }, { headers })
+    axios.post('http://localhost:8091/home/choice', { region: 'domestic' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
@@ -48,14 +45,14 @@ const MainPage = () => {
       });
   };
 
-  const fetchInternationalRegions = () => {
+   const fetchInternationalRegions = () => {
     const token = sessionStorage.getItem('token');
     console.log(token);
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
 
-    axios.post('http://localhost:8090/home/choice', { region: 'International' }, { headers })
+    axios.post('http://localhost:8091/home/choice', { region: 'International' }, { headers })
       .then((response) => {
         console.log(response.data.regionList);
         setRegionList(response.data.regionList);
@@ -64,27 +61,30 @@ const MainPage = () => {
       .catch((error) => {
         console.error('Error fetching international regions:', error);
       });
+
   };
 
-  useEffect(() => {
-    fetchInternationalRegions();
-  }, []);
+useEffect(() => {
+  fetchInternationalRegions();
+  },[]);
 
   const handleChangeState = (event) => {
     setselectState(event.target.value);
-  };
 
-  const [selectCity, setselectCity] = useState();
+  }
+  const[selectCity,setselectCity] = useState();
   const handleChangeCity = (event) => {
     setselectState(event.target.value);
-  };
+  }
 
   const handleChangeCountry = (event) => {
     setselectCountry(event.target.value);
-  };
+  }
 
   return (
+
     <div
+
       style={{
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -94,6 +94,7 @@ const MainPage = () => {
         justifyContent: 'space-between',
       }}
     >
+
       <HomeNavbar />
       <Container>
         <Row className="my-4">
@@ -105,6 +106,7 @@ const MainPage = () => {
               <Form>
                 <Form.Group>
                   <div className="d-flex justify-content-center">
+
                     <Form.Check
                       type="radio"
                       label="International"
@@ -114,6 +116,7 @@ const MainPage = () => {
                       onChange={handleDestinationTypeChange}
                       style={{ marginRight: '20px' }}
                     />
+
                     <Form.Check
                       type="radio"
                       label="Domestic"
@@ -124,6 +127,7 @@ const MainPage = () => {
                     />
                   </div>
                 </Form.Group>
+
                 {destinationType === 'National' && (
                 <div>
                   <Form.Group controlId="formStateChange">
@@ -169,6 +173,7 @@ const MainPage = () => {
         </Row>
       </Container>
       <Footer />
+
     </div>
   );
 };
