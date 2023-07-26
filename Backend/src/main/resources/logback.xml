@@ -1,8 +1,8 @@
-<!--?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            //< Deny all messages with level below INFO>
+            <!-- Deny all messages with level below INFO -->
             <level>INFO</level>
         </filter>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
@@ -15,10 +15,10 @@
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/Tripify_Grp_09.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            //< daily rollover >
+            <!-- daily rollover -->
             <fileNamePattern>logs/Tripify_Grp_09.%d{yyyy-MM-dd}.log</fileNamePattern>
 
-            //< keep 30 days' worth of history >
+            <!-- keep 30 days' worth of history -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
 
@@ -31,4 +31,4 @@
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ROLLING" />
     </root>
-</configuration-->
+</configuration>

@@ -2,6 +2,9 @@ package com.group9.group09.controller;
 
 import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.DTO.ResponseDTO.*;
+import com.group9.group09.config.JwtService;
+import com.group9.group09.model.User;
+import com.group9.group09.repository.interfaces.UserRepository;
 import com.group9.group09.service.interfaces.HomePageService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -11,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/home")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,6 +23,12 @@ public class HomePageController {
 
     @Autowired
     private HomePageService homeService;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private static Logger logger = LoggerFactory.getLogger(HomePageController.class);
     /**
@@ -181,6 +192,26 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/addwishlist")
+    public ResponseEntity<?> addWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message: in addwishlist api call");
+            wishListRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(wishListRequestDTO.getToken());
+            Optional<User> user = userRepository.findByUsermail(username);
+            wishListRequestDTO.setUserid(Integer.parseInt(user.get().getUserId()));
+            WishListResponseDTO wishListResponseDTO = homeService.addWishListService(wishListRequestDTO);
+            return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("add wishlist api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
     /**
      * Handles the itinerary request.
      *
@@ -200,6 +231,27 @@ public class HomePageController {
             System.out.println(e);
             ErrorResponse response = new ErrorResponse();
             response.setMessage("itinerary api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+    @PostMapping(path = "/addtoitinerary")
+    public ResponseEntity<?> addtoItinerary(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message: addtoitinerary api call ");
+            itineraryRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+
+            String username = jwtService.extractUsername(itineraryRequestDTO.getToken());
+            Optional<User> user = userRepository.findByUsermail(username);
+            itineraryRequestDTO.setUserid(Integer.parseInt(user.get().getUserId()));
+
+            ItineraryResponseDTO itineraryResponseDTO = homeService.addtoItinerary(itineraryRequestDTO);
+            return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("add to itinerary api failed");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }

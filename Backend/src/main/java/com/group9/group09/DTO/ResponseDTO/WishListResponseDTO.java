@@ -7,6 +7,7 @@ import java.util.List;
 public class WishListResponseDTO {
 
 
+    private String message;
     private List<wishList> wishLists;
 
     public List<wishList> getWishLists() {
@@ -17,5 +18,11 @@ public class WishListResponseDTO {
         this.wishLists = wishLists;
     }
 
+    public String getMessage() {
+        return message;
+    }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
