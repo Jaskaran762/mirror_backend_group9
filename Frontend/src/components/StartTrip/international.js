@@ -142,15 +142,17 @@ const International = ({ selectedCountry }) => {
     );
   };
 
+  
   const handleReviews = (item) => {
     const pass = encodeURIComponent(JSON.stringify(item));
     changePage('/reviews/' + pass);
   };
 
-  const handleState = (stateID) => {
-    changePage('/state/' + stateID);
+  const handleState = (stateName) => {
+    changePage('/state/' + stateName);
   };
 
+  
   const renderCards = (data, type) => {
     debugger;
     
@@ -167,21 +169,21 @@ const International = ({ selectedCountry }) => {
           {item.stateImageLink && <Card.Img variant="top" src={item.stateImageLink} />}
             <Card.Body>
               <Card.Title>
-                <Button variant="link" onClick={() => handleState(item.stateID)}>
-                  {item.stateName}
-                </Button>
-                <Button variant="link" onClick={() => handleReviews(item)}>
-                  Review
+                <Button variant="link" onClick={() => handleState(item.stateName)}>
+                  <h5>{item.stateName}</h5>
                 </Button>
 
               </Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{item.description}
+            </Card.Text>
+            <Card.Footer>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
               <Button variant="link" onClick={() => handleAddToWishlist(item.title)}>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
+              </Card.Footer>              
             </Card.Body>
           </Card>
           <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>

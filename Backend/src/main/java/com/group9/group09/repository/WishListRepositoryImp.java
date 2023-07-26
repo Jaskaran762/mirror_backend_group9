@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.DTO.RequestDTO.WishListRequestDTO;
 import com.group9.group09.model.wishList;
 import com.group9.group09.repository.interfaces.WishlistRepository;
 import com.group9.group09.repository.rowmapper.WishListRowMapper;
@@ -27,6 +28,34 @@ public class WishListRepositoryImp implements WishlistRepository {
             logger.info("Info Message: ");
             String getWishListbyUserIDQuery = "Select * from Wishlist where user_id=?";
             return jdbcTemplate.query(getWishListbyUserIDQuery,new WishListRowMapper(),userID);
+
+        }catch (Exception e){
+            logger.error("Error Message: ");
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public int addtoWishlist(WishListRequestDTO wishListRequestDTO) {
+        try{
+            logger.info("Info Message: in wishlist repository, addtoWishlist method  ");
+            String addtoWishlistQuery = "Insert INTO Wishlist (city_id,place_id,activity_id,user_id) VALUES(?,?,?,?);";
+            return jdbcTemplate.update(addtoWishlistQuery, wishListRequestDTO.getCityid(), wishListRequestDTO.getActivityId(),wishListRequestDTO.getPlaceId(),wishListRequestDTO.getUserid());
+
+        }catch (Exception e){
+            logger.error("Error Message: ");
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public int deletewishlistbyID(Integer wishlistid) {
+
+        try{
+            logger.info("Info Message: in wishlist repository, deleteWishlist method  ");
+            String deleteWishlistQuery = "Delete from Wishlist where wishlist_id=?;";
+            return jdbcTemplate.update(deleteWishlistQuery, wishlistid);
 
         }catch (Exception e){
             logger.error("Error Message: ");
