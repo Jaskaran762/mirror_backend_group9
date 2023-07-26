@@ -98,7 +98,6 @@ class UserControllerTest {
 
     // Add more test cases for other controller methods...
 
-    // For instance, add test cases for:
     // - userRegister_Exception
     // - userInfoEdit_Success
     // - userInfoEdit_Exception

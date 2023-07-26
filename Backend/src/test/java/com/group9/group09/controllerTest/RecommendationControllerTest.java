@@ -66,7 +66,6 @@ class RecommendationControllerTest {
 
     // Add more test cases for other scenarios...
 
-    // For instance, add test cases for:
     // - getUserRecommendationsBasedOnInterests_Success
     // - getUserRecommendationsBasedOnInterests_Exception
     // - getUserRecommendationsBasedOnInterests_EmptyResponse
