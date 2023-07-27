@@ -14,10 +14,18 @@ public class ItineraryRequestDTO extends RequestDTO{
     private String startdate;
     private String enddate;
 
-    private  String placename;
-    private String activityname;
-
+//    private  String placename;
+//    private String activityname;
+    private String title;
     private Integer itineraryid;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     /**
      * Get the user ID from the itinerary request.
@@ -71,21 +79,6 @@ public class ItineraryRequestDTO extends RequestDTO{
     }
 
 
-    public String getPlacename() {
-        return placename;
-    }
-
-    public void setPlacename(String placename) {
-        this.placename = placename;
-    }
-
-    public String getActivityname() {
-        return activityname;
-    }
-
-    public void setActivityname(String activityname) {
-        this.activityname = activityname;
-    }
 
     public Integer getItineraryid() {
         return itineraryid;
