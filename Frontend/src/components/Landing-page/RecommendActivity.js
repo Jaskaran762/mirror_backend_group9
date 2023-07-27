@@ -17,7 +17,7 @@ import {
 
 const RecommendActivity = () => {
   const { activityid } = useParams();
-  const [activityDetail, setactivityDetail] = useState();
+  const [activityDetail, setactivityDetail] = useState([]);
   const changePage = useNavigate();
   const [reviewDetail, setreviewDetail] = useState([]);
   const token = sessionStorage.getItem("token");
@@ -87,73 +87,13 @@ const RecommendActivity = () => {
   useEffect(() => {
     console.log(reviewDetail); // Log placeDetail when it gets updated
   }, [reviewDetail]);
-
-
-    useEffect(()=>{
-        axios.post('http://localhost:8090/home/activities', { activityID:activityidnum }, { headers })
-        .then((response) => {
-            console.log(response.data);
-            setactivityDetail(response.data);
-            console.log(activityDetail);
-          })
-          .catch((error) => {
-            console.error('Error fetching place regions:', error);
-          });
-
-        },[])
-          useEffect(()=>{
-            axios.post('http://localhost:809/home/reviewactivity', { activityid:activityidnum }, { headers })
-            .then((response) => {
-                console.log(response.data.reviewsActivities);
-                setreviewDetail(response.data.reviewsActivities);
-              })
-              .catch((error) => {
-                console.error('Error fetching places list:', error);
-              });
-        
-            },[])
-        
-            useEffect(() => {
-                console.log(activityDetail); // Log placeDetail when it gets updated
-              }, [activityDetail]);
-            useEffect(() => {
-                console.log(reviewDetail); // Log placeDetail when it gets updated
-              }, [reviewDetail]);
-       
-   // Now you can use the fetched placeList and activityList data here
-
   useEffect(() => {
-    axios
-      .post(
-        "http://localhost:8090/home/activities",
-        { activityID: activityidnum },
-        { headers }
-      )
-      .then((response) => {
-        console.log(response.data);
-        setactivityDetail(response.data);
-        console.log(activityDetail);
-      })
-      .catch((error) => {
-        console.error("Error fetching place regions:", error);
-      });
-  }, []);
-
+    console.log(activityDetail); // Log placeDetail when it gets updated
+  }, [activityDetail]);
   useEffect(() => {
-    axios
-      .post(
-        "http://localhost:8091/home/reviewactivity",
-        { activityid: activityidnum },
-        { headers }
-      )
-      .then((response) => {
-        console.log(response.data.reviewsActivities);
-        setreviewDetail(response.data.reviewsActivities);
-      })
-      .catch((error) => {
-        console.error("Error fetching places list:", error);
-      });
-  }, []);
+    console.log(reviewDetail); // Log placeDetail when it gets updated
+  }, [reviewDetail]);
+      
   // Now you can use the fetched placeList and activityList data here
   return (
     <div>
