@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, Toast } from 'react-bootstrap';
+import axios from 'axios';
+import { Link, useNavigate  } from 'react-router-dom'; // Import useNavigate
 
 const Resetpwd = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   const [retypeNewPassword, setRetypeNewPassword] = useState('');
   const [passwordsMatch, setPasswordsMatch] = useState(false);
   const [oldAndNewDifferent, setOldAndNewDifferent] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleOldPasswordChange = (e) => {
     setOldPassword(e.target.value);
     setOldAndNewDifferent(e.target.value !== newPassword);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handleNewPasswordChange = (e) => {
@@ -27,11 +37,38 @@ const Resetpwd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (passwordsMatch && oldAndNewDifferent) {
-      console.log('Password reset successful!');
+      const fetchUserData = async () => {
+        const apiUrl = 'http://localhost:8090/auth/edit';
+        const headers = {
+          'Content-Type': 'application/json'
+        };
+
+        const requestBody = {
+          "email" : email,
+          "password": oldPassword,
+          "newpassword" : newPassword
+        }
+  
+        try {
+          const response = await axios.post(apiUrl, requestBody, { headers: headers });
+          console.log(response);
+          setMessage(response.data.success);
+          await setShowSuccessToast(true);
+        } catch (error) {
+          console.error('API error:', error);
+        }
+      };
+  
+      fetchUserData();
+      setTimeout(() => {
+      navigate('/profile');
+      },2000);
     } else {
-      console.log('Passwords do not match or Old and New Passwords are the same!');
+      setMessage('Passwords do not match or Old and New Passwords are the same!');
     }
   };
+
+
 
   return (
     <div
@@ -51,7 +88,9 @@ const Resetpwd = () => {
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formEmail">
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control type="text" className="formInput" />
+                  <Form.Control type="text" className="formInput" 
+                  value={email}
+                  onChange={handleEmailChange}/>
                 </Form.Group>
 
                 <Form.Group controlId="formPassword">
@@ -97,6 +136,23 @@ const Resetpwd = () => {
           </Col>
         </Row>
       </Container>
+
+      <Toast
+        show={showSuccessToast}
+        onClose={() => setShowSuccessToast(false)}
+        style={{
+          position: 'absolute',
+          top: '60px',
+          right: '30px',
+          zIndex: 9999,
+          backgroundColor: '#dc3545',
+          color: '#ffffff',
+        }}
+        delay={2000}
+        autohide
+      >
+        <Toast.Body>{message}</Toast.Body>
+      </Toast>
     </div>
   );
 };
