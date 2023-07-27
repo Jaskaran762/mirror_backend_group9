@@ -40,8 +40,6 @@ class ActivityRepositoryImplTest {
         assertEquals(activity, result.get());
     }
 
-    // ... (other test methods as before)
-
     @Test
     void testAddPlace() {
         String activityName = "Activity 1";
