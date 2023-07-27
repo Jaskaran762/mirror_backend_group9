@@ -233,7 +233,7 @@ const Place = () => {
         <Row> <h2> Place Reviews </h2>{reviewDetail.map((review) => (
                        <div key={review.reviewPlaceID}>
                        <p>Rating: {renderStars(review.rating)}</p>
-                       <p>Comment: {review.review_message}</p>
+                       <p>Comment: {review.reviewplaceComment}</p>
                        <p> DateofReview : { review.dateofreview } </p>
                        {/* Render other review details as needed */}
                      </div>
