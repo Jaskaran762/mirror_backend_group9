@@ -7,44 +7,60 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [interest, setIntrest] = useState('');
+  const [contact_no, setPhone] = useState('');
   const [homeCountry, setHomeCountry] = useState('Canada');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [interest, setInterests] = useState('');
   const [showSuccessToast, setShowSuccessToast] = useState(false); 
   const [showErrorToast, setShowErrorToast] = useState(false); 
 
+  const interestsOptions = [ 
+    'Adventure',
+    'Beach',
+    'City Exploration',
+    'Nature',
+    'Food',
+    'History',
+  ];
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'email':
-        setEmail(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      case 'phone':
-        setPhone(value);
-        break;
-      case 'homeCountry':
-        setHomeCountry(value);
-        break;
-      case 'interest':
-        setIntrest(value);
-        break;
-      default:
-        break;
+    const { name, value, checked } = e.target;
+    if (name === 'interest') {
+      
+      if (checked) {
+        setInterests((prevInterests) => [...prevInterests, value]);
+      } else {
+        setInterests((prevInterests) => prevInterests.filter((interest) => interest !== value));
+      }
+    } else {
+      switch (name) {
+        case 'name':
+          setName(value);
+          break;
+        case 'email':
+          setEmail(value);
+          break;
+        case 'password':
+          setPassword(value);
+          break;
+        case 'contact_no':
+          setPhone(value);
+          break;
+        case 'homeCountry':
+          setHomeCountry(value);
+          break;
+        default:
+          break;
+      }
     }
   };
+
+
   const changePage=useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const intrestString = interest.join(',');
+    console.log(intrestString);
     setIsLoading(true);
     const homeCountryValueMap = {
       Canada: 1,
@@ -56,13 +72,14 @@ const Signup = () => {
     };
 
     const userObject = {
-      interest,
+      interest: intrestString,
       password,
       name,
       email,
-      phone,
+      contact_no,
       homeCountry: homeCountryValueMap[homeCountry], 
     };
+
 
     try {
       const response = await axios.post('http://localhost:8090/auth/register', userObject);
@@ -116,11 +133,21 @@ const Signup = () => {
                 </Form.Group>
                 <Form.Group controlId="formPhone">
                   <Form.Label>Phone</Form.Label>
-                  <Form.Control type="text" name="phone" placeholder="Enter your phone number" value={phone} onChange={handleChange} />
+                  <Form.Control type="text" name="contact_no" placeholder="Enter your phone number" value={contact_no} onChange={handleChange} />
                 </Form.Group>
-                <Form.Group controlId="formName">
-                  <Form.Label>Your Interest</Form.Label>
-                  <Form.Control type="text" name="interest" placeholder="Enter your interest" value={interest} onChange={handleChange} />
+                <Form.Group controlId="formInterest">
+                  <Form.Label>Your Interests</Form.Label>
+                  {interestsOptions.map((interestOption) => (
+                    <Form.Check
+                      key={interestOption}
+                      type="checkbox"
+                      name="interest"
+                      value={interestOption}
+                      label={interestOption}
+                      checked={interest.includes(interestOption)} 
+                      onChange={handleChange}
+                    />
+                  ))}
                 </Form.Group>
                 <br />
                 <Form.Group controlId="formCountrySelect">
