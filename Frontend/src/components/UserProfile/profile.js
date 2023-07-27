@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
   const [userData, setUserData] = useState(null);
-  
+
   useEffect(() => {
     const fetchUserData = async () => {
       const apiUrl = 'http://localhost:8090/getProfile';
@@ -36,14 +36,55 @@ const UserProfile = () => {
   const [userData, setUserData] = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const password = "password";
+  const [regionList, setRegionList] = useState([]);
+  const[selectCountry, setselectCountry] = useState('Default');
+
+  const fetchInternationalRegions = () => {
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    axios.post('http://localhost:8090/home/choice', { region: 'International' }, { headers })
+      .then((response) => {
+        console.log(response.data.regionList);
+        setRegionList(response.data.regionList);
+        setselectCountry(response.data.regionList);
+      })
+      .catch((error) => {
+        console.error('Error fetching international regions:', error);
+      });
+  };
+  fetchInternationalRegions();
 
   const handleEdit = () => {
-    setIsEditing(true);
+    setIsEditing(prevIsEditing => !prevIsEditing);
   };
 
   const handleSave = () => {
     setIsEditing(false);
+
     // Save the updated user data to the server if needed.
+    const fetchUserData = async () => {
+      const apiUrl = 'http://localhost:8090/setProfile';
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '.concat(token)
+      };
+
+      try {
+        const response = await axios.post(apiUrl, userData , { headers: headers });
+        // Assuming the server returns the entire user data object
+        await setShowSuccessToast(true);
+      } catch (error) {
+        console.error('API error:', error);
+      }
+    };
+    fetchUserData();
   };
 
   const handleInputChange = (event) => {
@@ -61,6 +102,16 @@ const UserProfile = () => {
   if (!userData) {
     return <div>Loading...</div>;
   }
+  const handleChangeCountry = (event) => {
+  const selectedCountryString = event.target.value;
+  const selectedCountryObj = JSON.parse(selectedCountryString);
+  const selectedCountryName = selectedCountryObj.countryName;
+
+  setselectCountry(selectedCountryName);
+  
+  const updatedUserData = { ...userData, country: selectedCountryName };
+  setUserData(updatedUserData);
+  };
 
   return (
     <div>
@@ -79,8 +130,8 @@ const UserProfile = () => {
                 <Form.Label>Full Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="fullName"
-                  value={userData.fullName}
+                  name="name"
+                  value={userData.name}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
                   className="rounded-pill"
@@ -104,7 +155,7 @@ const UserProfile = () => {
                 <Form.Control
                   type="password"
                   name="password"
-                  value={userData.password}
+                  value={password}
                   onChange={handleInputChange}
                   readOnly
                   className="rounded-pill"
@@ -119,8 +170,8 @@ const UserProfile = () => {
                 <Form.Label>Contact No</Form.Label>
                 <Form.Control
                   type="text"
-                  name="contact"
-                  value={userData.contact}
+                  name="phoneNumber"
+                  value={userData.phoneNumber}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
                   className="rounded-pill"
@@ -131,15 +182,15 @@ const UserProfile = () => {
                 <Form.Label>Interest</Form.Label>
                 <Form.Control
                   type="text"
-                  name="interest"
-                  value={userData.interest}
+                  name="interests"
+                  value={userData.interests}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
                   className="rounded-pill"
                 />
               </Form.Group>
 
-              <Form.Group controlId="formCountry" style={{ marginTop: '1rem' }}>
+              {/* <Form.Group controlId="formCountry" style={{ marginTop: '1rem' }}>
                 <Form.Label>Country</Form.Label>
                 <Form.Control
                   type="text"
@@ -149,9 +200,24 @@ const UserProfile = () => {
                   readOnly={!isEditing}
                   className="rounded-pill"
                 />
+              </Form.Group> */}
+
+              <Form.Group controlId="formCountryChange">
+                        <Form.Label> Country</Form.Label>
+                        <Form.Control as="select"  
+                          name="country" 
+                          value={userData.country} 
+                          onChange={handleChangeCountry} >
+                        <option>{userData.country}</option>
+                        {regionList.map((region) => (
+                              <option key={`${region.countryName}-${region.countryID}`} value={JSON.stringify(region)}>
+                                {region.countryName}
+                              </option>
+                            ))}
+                        </Form.Control>
               </Form.Group>
 
-              {isEditing ? (
+              {isEditing && (
                 <Button
                   variant="primary"
                   onClick={handleSave}
@@ -160,7 +226,9 @@ const UserProfile = () => {
                 >
                   Save
                 </Button>
-              ) : (
+              )}
+
+              {!isEditing && (
                 <Button
                   variant="secondary"
                   onClick={handleEdit}
@@ -170,6 +238,7 @@ const UserProfile = () => {
                   Edit
                 </Button>
               )}
+
             </Form>
           </Col>
         </Row>
@@ -192,6 +261,22 @@ const UserProfile = () => {
         autohide
       >
         <Toast.Body>Something went wrong..</Toast.Body>
+      </Toast>
+      <Toast
+        show={showSuccessToast}
+        onClose={() => setShowSuccessToast(false)}
+        style={{
+          position: 'absolute',
+          top: '120px',
+          right: '30px',
+          zIndex: 9999,
+          backgroundColor: '#dc3545',
+          color: '#ffffff',
+        }}
+        delay={2000}
+        autohide
+      >
+        <Toast.Body>User Profile updated</Toast.Body>
       </Toast>
     </div>
   );
