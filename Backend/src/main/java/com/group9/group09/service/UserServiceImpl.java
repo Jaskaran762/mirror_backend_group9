@@ -129,41 +129,7 @@ public class UserServiceImpl implements UserService {
      * @param
      * @return the ResponseDTO object
      */
- /*   @Override
-    public ResponseDTO updateUserpasswordService(UserEditRequestDTO userEditRequestDTO) {
-        if (isNullOrEmpty(userEditRequestDTO.getUser().getEmail()) || isNullOrEmpty(userEditRequestDTO.getUser().getPassword())) {
-            throw new UserNotFoundException("Fill in user name and password for updating password");
-        }
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        userEditRequestDTO.getUser().getEmail(),
-                        userEditRequestDTO.getUser().getPassword()
-                )
-        );
-
-        ResponseDTO updatedUserResponsedDTO = new ResponseDTO();
-
-        Optional<User> userInfo = userRepository.findByUsermail(userEditRequestDTO.getUser().getEmail());
-
-        if (userInfo != null) {
-          //  var jwtToken = jwtService.generateToken(userInfo.get());
-
-            int success = userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
-
-            if(success == 1){
-                updatedUserResponsedDTO.setSuccess("Successfully Updated");
-                updatedUserResponsedDTO.setEmail(userEditRequestDTO.getUser().getEmail());
-               // updatedUserResponsedDTO.setToken(jwtToken);
-            }else {
-                updatedUserResponsedDTO.setSuccess("Error while updating the User password");
-                updatedUserResponsedDTO.setEmail(userEditRequestDTO.getUser().getEmail());
-             //   updatedUserResponsedDTO.setToken(jwtToken);
-            }
-        }
-
-        return updatedUserResponsedDTO;
-    }*/
     @Override
     public ResponseDTO updateUserpasswordService(UserEditRequestDTO userEditRequestDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
@@ -177,10 +143,6 @@ public class UserServiceImpl implements UserService {
 
         if (userPresent.isPresent()) {
             User user = userPresent.get();
-            // Set the new password after encoding it
-            //  user.setPassword(passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
-            // Save the updated user to the database
-            //   userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
 
             userRepository.updateUserPassword(userEditRequestDTO.getUser(), passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
 
@@ -240,6 +202,7 @@ public class UserServiceImpl implements UserService {
             responseDTO.setInterests(user.get().getInterest());
             responseDTO.setName(user.get().getName());
             responseDTO.setPhoneNumber(user.get().getPhone());
+            
 
             Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
             responseDTO.setCountry(country.get().getCountryName());
