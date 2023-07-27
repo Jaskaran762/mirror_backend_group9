@@ -85,6 +85,16 @@ deploy-backend:
   only:
     - prod
 
+# deployed on render with base url https://group09.onrender.com
+deploy-backend:
+  stage: deploy-backend
+#  tags:
+#    - group_nine_runner
+  script:
+    - echo "Deploy to prod server on render"
+    - curl -s "$RENDER_TRIGGER_URL_TEST_ENV"
+  only:
+    - main
 
 #frontend - db
 build-frontend:
