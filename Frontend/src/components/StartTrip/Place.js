@@ -43,7 +43,7 @@ const Place = () => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    axios.post('http://localhost:8090/home/reviewplace', { placeid: placeIDAsNumber }, { headers })
+    axios.post('http://localhost:8090/home/reviewplace', { place_id: placeIDAsNumber }, { headers })
     .then((response) => {
         console.log(response.data.reviewsPlaces);
         setreviewDetail(response.data.reviewsPlaces);

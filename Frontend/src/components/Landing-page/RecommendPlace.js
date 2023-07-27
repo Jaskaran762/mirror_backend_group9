@@ -48,7 +48,7 @@ const RecommendPlace = () => {
     axios
       .post(
         "http://localhost:8090/home/reviewplace",
-        { placeid: placeIDNum },
+        { place_id : placeIDNum },
         { headers }
       )
       .then((response) => {
