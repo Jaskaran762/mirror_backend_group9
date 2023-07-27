@@ -268,7 +268,7 @@ public class HomePageServiceImpl implements HomePageService {
     public ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
 
         ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
-        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyPlaceId(reviewsPlaceRequestDTO.getPlaceid());
+        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyPlaceId(reviewsPlaceRequestDTO.getPlace_id());
         reviewsPlaceResponseDTO.setReviewsPlaces(reviewsPlaces);
 
         return reviewsPlaceResponseDTO;
@@ -363,6 +363,17 @@ public class HomePageServiceImpl implements HomePageService {
         itineraryResponseDTO.setMessage("delete itinerary ");
 
         return itineraryResponseDTO;
+    }
+
+    @Override
+    public ReviewsPlaceResponseDTO addReviewplaceDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
+
+        ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
+
+        reviewsPlaceRepository.addReviewplace(reviewsPlaceRequestDTO);
+        reviewsPlaceResponseDTO.setMessage("review added successfully");
+        return  reviewsPlaceResponseDTO;
+
     }
 
 

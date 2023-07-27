@@ -115,6 +115,7 @@ const Domestic = ({ selectedState }) => {
   };
 
   const isItemInWishlist = (title) => {
+    console.log(title);
     return wishlist.some((item) => item.title === title);
   };
 
@@ -159,7 +160,8 @@ const Domestic = ({ selectedState }) => {
   const renderCards = (data, type) => {
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
-      const isInWishlist = isItemInWishlist(item.title);
+      const isInWishlist = isItemInWishlist(item.cityName);
+      console.log(isInWishlist);
       console.log(item.data);
 
       return (
@@ -177,7 +179,7 @@ const Domestic = ({ selectedState }) => {
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
-              <Button variant="link" onClick={() => handleAddToWishlist(item.title)}>
+              <Button variant="link" onClick={() => handleAddToWishlist(item.cityName)}>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
               </Card.Footer>

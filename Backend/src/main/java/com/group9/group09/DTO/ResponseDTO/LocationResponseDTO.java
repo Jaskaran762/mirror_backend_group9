@@ -8,6 +8,7 @@ public class LocationResponseDTO {
 
     private String description;
     private List<City> cities;
+    private String img_link;
 
     public String getDescription() {
         return description;

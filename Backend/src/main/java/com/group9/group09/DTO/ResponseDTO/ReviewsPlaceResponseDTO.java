@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ReviewsPlaceResponseDTO {
     private List<ReviewsPlace> reviewsPlaces;
+    private String message;
 
     public List<ReviewsPlace> getReviewsPlaces() {
         return reviewsPlaces;
@@ -14,5 +15,13 @@ public class ReviewsPlaceResponseDTO {
 
     public void setReviewsPlaces(List<ReviewsPlace> reviewsPlaces) {
         this.reviewsPlaces = reviewsPlaces;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
