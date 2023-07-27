@@ -107,22 +107,31 @@ const RecommendPlace = () => {
         <Row>
           <h1> {placeDetail.placeName}</h1>
         </Row>
-        <p> {placeDetail.description} </p>
-        <img src={placeDetail.placeImageLink}></img>
+          <img src={placeDetail.placeImageLink} alt={placeDetail.placeName} style={{ width:'65%'}}></img>
+          <br/>
+          <p style={{ marginTop: '2%'}}> {placeDetail.description} </p>
+        <div style={{borderTop:'1px solid #ccc'}}></div>
+        <br/>
+        { reviewDetail.length > 0 && (
         <Row>
           <h2>Reviews</h2>
         </Row>
-
+        )}
+        <br/>
         {reviewDetail.map((review) => (
           <div key={review.reviewPlaceID}>
             <p>Rating: {renderStars(review.rating)}</p>
-            <p>Comment: {review.review_message}</p>
-            <p> DateofReview : {review.dateofreview} </p>
-            {/* Render other review details as needed */}
+            <p>Review: {review.reviewplaceComment}</p>
+            {/* <p> DateofReview : {review.dateofreview} </p> */}
+            <div style={{borderTop:'1px solid #ccc', width:'30%'}}></div>
+            <br/>
           </div>
         ))}
-        {/* 'Add review' button */}
+        <br/>
         <Button onClick={handleAddReview}>Add review</Button>
+        <div style={{ marginTop: "10rem" }}>
+          <Footer />
+        </div>
       </Container>
     </div>
   );
