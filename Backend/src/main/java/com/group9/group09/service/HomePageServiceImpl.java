@@ -55,6 +55,9 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private ReviewsActivityRepository reviewsActivityRepository;
 
+    @Autowired
+    private  NotificationRepository notificationRepository;
+
     private static Logger logger = LoggerFactory.getLogger(HomePageServiceImpl.class);
     
     /**
@@ -323,6 +326,21 @@ public class HomePageServiceImpl implements HomePageService {
         /*if (isNullOrEmpty(wishListRequestDTO.getPlacename()) && isNullOrEmpty(wishListRequestDTO.getActivityname()) ) {
             throw new RuntimeException();
         }*/
+        String username = jwtService.extractUsername(wishListRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+
+        Notification notification = new Notification();
+        notification.setUserId(Integer.parseInt(user.get().getUserId()));
+        if (wishListRequestDTO.getActivityId()!=null) {
+            Optional<Activity> activity = activityRepository.findByActivityId(wishListRequestDTO.getActivityId());
+            notification.setDescription(activity.get().getActivityName() + " has been added to wishlist.");
+        }
+        else{
+            Optional<Place> place = placeRepository.findByPlaceId(wishListRequestDTO.getPlaceId());
+            notification.setDescription(place.get().getPlaceName() + " has been added to wishlist.");
+        }
+        notification.setCategory("Wishlist");
+        notificationRepository.setNotificationsForUser(notification);
 
         wishlistRepository.addtoWishlist(wishListRequestDTO);
         wishListResponseDTO.setMessage("added to wishlist");
@@ -337,6 +355,21 @@ public class HomePageServiceImpl implements HomePageService {
         /*if(isNullOrEmpty(itineraryRequestDTO.getStartdate())&& isNullOrEmpty(itineraryRequestDTO.getStartdate()) ){
             throw new RuntimeException();
         }*/
+        String username = jwtService.extractUsername(itineraryRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+
+        Notification notification = new Notification();
+        notification.setUserId(Integer.parseInt(user.get().getUserId()));
+        if (itineraryRequestDTO.getActivityid()!=null) {
+            Optional<Activity> activity = activityRepository.findByActivityId(itineraryRequestDTO.getActivityid());
+            notification.setDescription(activity.get().getActivityName() + " has been added to wishlist.");
+        }
+        else{
+            Optional<Place> place = placeRepository.findByPlaceId(itineraryRequestDTO.getPlaceid());
+            notification.setDescription(place.get().getPlaceName() + " has been added to wishlist.");
+        }
+        notification.setCategory("Reset Password");
+        notificationRepository.setNotificationsForUser(notification);
 
         itineraryRepository.addtoItinerary(itineraryRequestDTO);
         itineraryResponseDTO.setMessage("Itinerary created");
