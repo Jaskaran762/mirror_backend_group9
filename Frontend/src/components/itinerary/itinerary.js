@@ -28,7 +28,7 @@ debugger;
 
     const requestBody = { };
 
-    axios.post('http://localhost:8091/home/itinerary',requestBody ,{ headers })
+    axios.post('http://localhost:8090/home/itinerary',requestBody ,{ headers })
       .then((response) => {
         console.log('User itinerary:', response.data.itineraryObjectList);
         // Save the fetched itinerary data to the state

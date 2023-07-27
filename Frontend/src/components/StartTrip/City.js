@@ -44,19 +44,22 @@ const City = () => {
 
   const handleSaveItinerary = (placeId, placeName) => {
 
+    const startDate = new Date(selectedDate + 'T' + selectedTime);
+    const endDate = new Date(selectedEndDate + 'T' + selectedEndTime);
+
     const token = sessionStorage.getItem('token');
   const headers = {
     Authorization: `Bearer ${token}`,
   };
 
     const data = {
-      startdate: selectedDate,
-      enddate: selectedEndDate,
+      startDate: startDate.toISOString(), 
+      endDate: endDate.toISOString(),
       placeid: placeId,
       itinerarytitle: placeName
     };
 
-    axios.post('http://localhost:8091/home/addtoitinerary', data, { headers }).then((response)=>{
+    axios.post('http://localhost:8090/home/addtoitinerary', data, { headers }).then((response)=>{
       console.log('Itinerary created:', response.data);
     }).catch((error)=>{
       console.error('Error adding item to itinerary:', error);
