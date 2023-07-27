@@ -339,7 +339,7 @@ public class HomePageServiceImpl implements HomePageService {
             Optional<Place> place = placeRepository.findByPlaceId(wishListRequestDTO.getPlaceId());
             notification.setDescription(place.get().getPlaceName() + " has been added to wishlist.");
         }
-        notification.setCategory("Wishlist");
+        notification.setCategory("Wishlist modification");
         notificationRepository.setNotificationsForUser(notification);
 
         wishlistRepository.addtoWishlist(wishListRequestDTO);
@@ -368,7 +368,7 @@ public class HomePageServiceImpl implements HomePageService {
             Optional<Place> place = placeRepository.findByPlaceId(itineraryRequestDTO.getPlaceid());
             notification.setDescription(place.get().getPlaceName() + " has been added to wishlist.");
         }
-        notification.setCategory("Reset Password");
+        notification.setCategory("Itinerary modification");
         notificationRepository.setNotificationsForUser(notification);
 
         itineraryRepository.addtoItinerary(itineraryRequestDTO);
