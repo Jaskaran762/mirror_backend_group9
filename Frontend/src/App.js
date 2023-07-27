@@ -17,13 +17,13 @@ import UserProfile from "./components/UserProfile/profile";
 import ReviewsPage from "./components/reviews/review";
 import Landing from "./components/Landing-page/landing";
 import RecommendPlace from "./components/Landing-page/RecommendPlace";
-import Resetpwd from "./components/UserProfile/Resetpwd";
 import RecommendActivity from "./components/Landing-page/RecommendActivity";
+import Resetpwd from "./components/UserProfile/Resetpwd";
 
 import ThingsToCarry from "./components/ThingsToCarry/thingsToCarry";
 import City from "./components/StartTrip/City";
 import OTP from "./components/authentication/otp";
-import ResetForgotPassword from "./components/authentication/resetForgotPassword"; 
+import ResetForgotPassword from "./components/authentication/resetForgotPassword";
 import Place from "./components/StartTrip/Place";
 import State from "./components/StartTrip/State";
 import Activity from "./components/StartTrip/Activity";
@@ -52,18 +52,104 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route path = "/itinerary" element ={<Auth><Itinerary/></Auth>}/>
-        <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
-        <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
-        <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
-        <Route path = "/recommendplace/:placeID" element = {<Auth><RecommendPlace/></Auth>}/>
-        <Route path = "/recommendactivity/:activityid" element = {<Auth><RecommendActivity/></Auth>}/>
-        <Route path ='/resetpassword' element = {<Auth><Resetpwd/></Auth>}/>
-        <Route path = "/thingsToCarry" element = {<Auth><ThingsToCarry/></Auth>}/>
-        <Route path = "/city/:cityID" element = {<Auth><City/></Auth>}/>
-        <Route path = "/Place/:placeID" element = {<Auth><Place/></Auth>}/>
-        <Route path = "/state/:stateName" element = {<Auth><State/></Auth>}/>
-        <Route path = "/Activity/:activityid" element = {<Auth><Activity/></Auth>}/>
+        <Route
+          path="/itinerary"
+          element={
+            <Auth>
+              <Itinerary />
+            </Auth>
+          }
+        />
+        <Route
+          path="/wish/:data"
+          element={
+            <Auth>
+              <Wish />
+            </Auth>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Auth>
+              <UserProfile />
+            </Auth>
+          }
+        />
+        <Route
+          path="/landing"
+          element={
+            <Auth>
+              <Landing />
+            </Auth>
+          }
+        />
+        <Route
+          path="/recommendplace/:placeID"
+          element={
+            <Auth>
+              <RecommendPlace />
+            </Auth>
+          }
+        />
+        <Route
+          path="/recommendactivity/:activityid"
+          element={
+            <Auth>
+              <RecommendActivity />
+            </Auth>
+          }
+        />
+        <Route
+          path="/resetpassword"
+          element={
+            <Auth>
+              <Resetpwd />
+            </Auth>
+          }
+        />
+        <Route
+          path="/thingsToCarry"
+          element={
+            <Auth>
+              <ThingsToCarry />
+            </Auth>
+          }
+        />
+        <Route
+          path="/city/:cityID"
+          element={
+            <Auth>
+              <City />
+            </Auth>
+          }
+        />
+        <Route
+          path="/Place/:placeID"
+          element={
+            <Auth>
+              <Place />
+            </Auth>
+          }
+        />
+        <Route
+          path="/state/:stateName"
+          element={
+            <Auth>
+              <State />
+            </Auth>
+          }
+        />
+        <Route
+          path="/Activity/:activityid"
+          element={
+            <Auth>
+              <Activity />
+            </Auth>
+          }
+        />
+        <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
+        <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
         <Route path ="/Notification" element = {<Auth><Notification/></Auth>}/>
       </Routes>
     </BrowserRouter>

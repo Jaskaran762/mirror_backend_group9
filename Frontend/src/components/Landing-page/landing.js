@@ -42,7 +42,7 @@ const Landing = () => {
     const headers = {
     Authorization: `Bearer ${token}`,
     };
-    axios.post('http://localhost:8091/recommendation', { }, { headers })
+    axios.post('http://localhost:8090/recommendation', { }, { headers })
     .then((response) => {
       console.log(response.data.activityResponseDTO.activityObjectsResponseList);
       setActivityList(response.data.activityResponseDTO.activityObjectsResponseList);
