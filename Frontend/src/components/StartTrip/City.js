@@ -133,7 +133,7 @@ const City = () => {
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
-              <Button variant="link" onClick={() => handleAddToWishlist(item.place)}>
+              <Button variant="link" onClick={() => handleAddToWishlist(item.placeName)}>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
              </Card.Footer>
