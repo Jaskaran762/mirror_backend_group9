@@ -41,15 +41,31 @@ const City = () => {
 
 
 
-  const handleSaveItinerary = (title) => {
-    const item = {
-      date: selectedDate,
-      endDate: selectedEndDate,
-      title: title,
-      time: selectedTime,
-      endTime: selectedEndTime,
+
+  const handleSaveItinerary = (placeId, placeName) => {
+
+    const startDate = new Date(selectedDate + 'T' + selectedTime);
+    const endDate = new Date(selectedEndDate + 'T' + selectedEndTime);
+
+    const token = sessionStorage.getItem('token');
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+    const data = {
+      startdate: startDate.toISOString(), 
+      enddate: endDate.toISOString(),
+      placeid: placeId,
+      title: placeName
     };
-    setItinerary([...itinerary, item]);
+    console.log(data);
+    axios.post('http://localhost:8090/home/addtoitinerary', data, { headers }).then((response)=>{
+      console.log('Itinerary created:', response.data);
+    }).catch((error)=>{
+      console.error('Error adding item to itinerary:', error);
+    })
+
+    setItinerary([...itinerary, data]);
    // setItemCounter((prevCounter) => prevCounter + 1);
     setShowDialog(false);
     setSelectedDate('');
@@ -108,7 +124,7 @@ const City = () => {
         <Col xs={12} md={6} lg={4} key={uniqueIndex}>
         
             <Card>
-            <Link to={`/place/${item.placeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={`/Place/${item.placeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Card.Img variant="top" src={item.placeImageLink} alt={item.placeName} />
                 <Card.Body>
                   <Card.Title>{item.placeName}</Card.Title>
@@ -152,7 +168,9 @@ const City = () => {
               <Button variant="secondary" onClick={handleCloseDialog}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={() => handleSaveItinerary(item.title)}>
+              <Button variant="primary"
+              onClick ={ () => handleSaveItinerary(item.placeId, item.placeName)}>
+              {/* //  onClick={() => handleSaveItinerary(item.title)}> */}
                 Save
               </Button>
             </Modal.Footer>

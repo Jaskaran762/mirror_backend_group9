@@ -41,8 +41,8 @@ public class ItineraryRespositoryImp implements ItineraryRepository {
     public int addtoItinerary(ItineraryRequestDTO itineraryRequestDTO) {
         try{
             logger.info("Info Message: in itinerary repository, addtoitinerary method  ");
-            String addtoItineraryQuery = "Insert INTO Itinerary  (user_id,`start_date`,`end_date`,`placeid`,`activityid`) VALUES(?,?,?,?,?);";
-            return jdbcTemplate.update(addtoItineraryQuery, itineraryRequestDTO.getUserid(), itineraryRequestDTO.getStartdate(),itineraryRequestDTO.getEnddate(),itineraryRequestDTO.getPlaceid(),itineraryRequestDTO.getActivityid());
+            String addtoItineraryQuery = "Insert INTO Itinerary  (user_id,`start_date`,`end_date`,`placeid`,`activityid`,`title`) VALUES(?,?,?,?,?,?);";
+            return jdbcTemplate.update(addtoItineraryQuery, itineraryRequestDTO.getUserid(), itineraryRequestDTO.getStartdate(),itineraryRequestDTO.getEnddate(),itineraryRequestDTO.getPlaceid(),itineraryRequestDTO.getActivityid(),itineraryRequestDTO.getTitle());
         }catch (Exception e){
             logger.error("Error Message: error adding to itinerary list ");
             throw new RuntimeException(e.getMessage());

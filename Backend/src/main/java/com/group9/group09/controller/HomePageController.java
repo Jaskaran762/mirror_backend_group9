@@ -317,6 +317,29 @@ public class HomePageController {
         }
     }
 
+    @PostMapping(path = "/addreviewplace")
+    public ResponseEntity<?> addReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {
+        try {
+            logger.info("Info Message: in homepage controller addreviewplace ");
+            reviewsPlaceRequestDTO.setToken(request.getHeader("Authorization").replace("Bearer ", ""));
+            String username = jwtService.extractUsername(reviewsPlaceRequestDTO.getToken());
+            Optional<User> user = userRepository.findByUsermail(username);
+            reviewsPlaceRequestDTO.setUserid(Integer.parseInt(user.get().getUserId()));
+
+            ReviewsPlaceResponseDTO reviewsPlaceResponseDTO  = homeService.addReviewplaceDetails(reviewsPlaceRequestDTO);
+            return new ResponseEntity<>(reviewsPlaceResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error Message: ");
+            System.out.println(e);
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage("add review place api failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+    }
+
+
+
     @PostMapping(path = "/reviewactivity")
     public ResponseEntity<?> getReviewActiviyy(@RequestBody ReviewsActivityRequestDTO reviewsActivityRequestDTO, HttpServletRequest request) {
         try {
