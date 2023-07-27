@@ -28,6 +28,7 @@ import Place from "./components/StartTrip/Place";
 import State from "./components/StartTrip/State";
 import Activity from "./components/StartTrip/Activity";
 import AddReviewsPage from "./components/reviews/Addreview";
+import Notification from "./components/StartTrip/Notification";
 
 export function isLoggedIn() {
   const token = sessionStorage.getItem("token");
@@ -148,6 +149,8 @@ function App() {
           }
         />
         <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
+        <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
+        <Route path ="/Notification" element = {<Auth><Notification/></Auth>}/>
       </Routes>
     </BrowserRouter>
   );

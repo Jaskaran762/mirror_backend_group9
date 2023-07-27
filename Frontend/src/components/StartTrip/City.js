@@ -56,7 +56,7 @@ const City = () => {
       itinerarytitle: placeName
     };
 
-    axios.post('http://localhost:8091/home/addtoitinerary', data, { headers }).then((response)=>{
+    axios.post('http://localhost:809/home/addtoitinerary', data, { headers }).then((response)=>{
       console.log('Itinerary created:', response.data);
     }).catch((error)=>{
       console.error('Error adding item to itinerary:', error);
