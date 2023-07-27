@@ -128,7 +128,7 @@ const AddReviewsPage = () => {
                   borderColor: "#001C30",
                 }}
               >
-                Send Message
+                Send Review
               </Button>
             </Col>
           </Row>
@@ -139,7 +139,7 @@ const AddReviewsPage = () => {
           onClose={handleCloseSnackbar}
           dismissible
         >
-          Message sent!
+          Review Added successfully!
         </Alert>
       </Container>
       <Footer />
