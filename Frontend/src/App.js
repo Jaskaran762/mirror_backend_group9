@@ -50,7 +50,7 @@ function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path = "/itinerary/:data" element ={<Auth><Itinerary/></Auth>}/>
-        <Route path = "/wish/:data" element ={<Auth><Wish /></Auth>}/>
+        <Route path = "/wish" element ={<Auth><Wish /></Auth>}/>
         <Route path = "/profile" element = {<Auth><UserProfile/></Auth>}/>
         <Route path = "/landing" element = {<Auth><Landing/></Auth>}/>
         <Route path = "/place/:placeID" element = {<Auth><PlacePage/></Auth>}/>

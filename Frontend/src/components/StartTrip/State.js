@@ -26,6 +26,7 @@ const State = () => {
     axios
       .post('http://localhost:8090/home/location', { location: stateName }, { headers })
       .then((response) => {
+        console.log(response.data);
         setStateData(response.data);
       })
       .catch((error) => {
@@ -43,7 +44,7 @@ const State = () => {
 
   const handleCloseDialog = () => {
     setShowDialog(false);
-  };
+  };  
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
