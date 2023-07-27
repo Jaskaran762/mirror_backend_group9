@@ -14,7 +14,7 @@ import {
   Form,
 } from "react-bootstrap";
 
-const PlacePage = () => {
+const RecommendPlace = () => {
   const { placeID } = useParams();
   const changePage = useNavigate();
   const [placeDetail, setplaceDetail] = useState();
@@ -116,7 +116,7 @@ const PlacePage = () => {
         {reviewDetail.map((review) => (
           <div key={review.reviewPlaceID}>
             <p>Rating: {renderStars(review.rating)}</p>
-            <p>Comment: {review.reviewplaceComment}</p>
+            <p>Comment: {review.review_message}</p>
             <p> DateofReview : {review.dateofreview} </p>
             {/* Render other review details as needed */}
           </div>
@@ -128,4 +128,4 @@ const PlacePage = () => {
   );
 };
 
-export default PlacePage;
+export default RecommendPlace;

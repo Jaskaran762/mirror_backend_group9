@@ -18,7 +18,7 @@ const logoHoverStyle = {
 };
 
 const navBarGroup = {
-  marginLeft: "65%",
+  marginLeft: "60%",
   fontSize: '50',
 };
 
@@ -56,6 +56,10 @@ const HomeNavbar = () => {
   const handleServices = () => {
     changePage('/services');
   };
+
+  const handleNotifications = () => {
+    changePage('/Notification');
+  }
 
   const handleLogo = () => {
     if(isLoggedIn()){
@@ -109,6 +113,9 @@ const HomeNavbar = () => {
         Tripify
       </Navbar.Brand>
       <Nav className="justify-content-end" style={navBarGroup}>
+      <Nav.Link to="/Notification" onClick={handleNotifications} style={optionStyle} onMouseEnter={handleOptionHover} onMouseLeave={handleOptionHover}>
+          Notification
+        </Nav.Link>
         <Nav.Link to="/contact" onClick={handleContact} style={optionStyle} onMouseEnter={handleOptionHover} onMouseLeave={handleOptionHover}>
           Contact
         </Nav.Link>

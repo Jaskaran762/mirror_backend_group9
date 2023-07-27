@@ -86,7 +86,6 @@ const Activity = () => {
                        <p>Rating: {renderStars(review.rating)}</p>
                        <p>Comment: {review.reviewactivityComment}</p>
                        <p> DateofReview : { review.dateofreview } </p>
-                       <p> UserId { review.user_id } </p>
                        {/* Render other review details as needed */}
                      </div>
                       ))}

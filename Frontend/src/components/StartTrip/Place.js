@@ -39,6 +39,10 @@ const Place = () => {
   }, []);
 
   useEffect(()=>{
+    const token = sessionStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     axios.post('http://localhost:8090/home/reviewplace', { placeid: placeIDAsNumber }, { headers })
     .then((response) => {
         console.log(response.data.reviewsPlaces);
@@ -229,7 +233,7 @@ const Place = () => {
         <Row> <h2> Place Reviews </h2>{reviewDetail.map((review) => (
                        <div key={review.reviewPlaceID}>
                        <p>Rating: {renderStars(review.rating)}</p>
-                       <p>Comment: {review.reviewplaceComment}</p>
+                       <p>Comment: {review.review_message}</p>
                        <p> DateofReview : { review.dateofreview } </p>
                        {/* Render other review details as needed */}
                      </div>

@@ -15,13 +15,12 @@ import {
   Form,
 } from "react-bootstrap";
 
-const RecommendActivityPage = () => {
+const RecommendActivity = () => {
   const { activityid } = useParams();
   const [activityDetail, setactivityDetail] = useState();
   const changePage = useNavigate();
   const [reviewDetail, setreviewDetail] = useState([]);
   const token = sessionStorage.getItem("token");
-
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -48,8 +47,7 @@ const RecommendActivityPage = () => {
   };
 
   const activityidnum = parseInt(activityid, 10);
-
-  /*   useEffect(() => {
+  useEffect(() => {
     axios
       .post(
         "http://localhost:8090/home/activities",
@@ -90,9 +88,39 @@ const RecommendActivityPage = () => {
     console.log(reviewDetail); // Log placeDetail when it gets updated
   }, [reviewDetail]);
 
-  if (!activityDetail) {
-    return <div>Loading...</div>;
-  }
+
+    useEffect(()=>{
+        axios.post('http://localhost:8090/home/activities', { activityID:activityidnum }, { headers })
+        .then((response) => {
+            console.log(response.data);
+            setactivityDetail(response.data);
+            console.log(activityDetail);
+          })
+          .catch((error) => {
+            console.error('Error fetching place regions:', error);
+          });
+
+        },[])
+          useEffect(()=>{
+            axios.post('http://localhost:809/home/reviewactivity', { activityid:activityidnum }, { headers })
+            .then((response) => {
+                console.log(response.data.reviewsActivities);
+                setreviewDetail(response.data.reviewsActivities);
+              })
+              .catch((error) => {
+                console.error('Error fetching places list:', error);
+              });
+        
+            },[])
+        
+            useEffect(() => {
+                console.log(activityDetail); // Log placeDetail when it gets updated
+              }, [activityDetail]);
+            useEffect(() => {
+                console.log(reviewDetail); // Log placeDetail when it gets updated
+              }, [reviewDetail]);
+       
+   // Now you can use the fetched placeList and activityList data here
 
   useEffect(() => {
     axios
@@ -126,15 +154,6 @@ const RecommendActivityPage = () => {
         console.error("Error fetching places list:", error);
       });
   }, []);
-
-  if (!activityDetail) {
-    return <div>Loading...</div>;
-  }
-
-  if (!reviewDetail) {
-    return <div>Loading..reviews</div>;
-  } */
-
   // Now you can use the fetched placeList and activityList data here
   return (
     <div>
@@ -174,4 +193,4 @@ const RecommendActivityPage = () => {
   );
 };
 
-export default RecommendActivityPage;
+export default RecommendActivity;
