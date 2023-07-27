@@ -3,7 +3,6 @@ package com.group9.group09.repositoryTest;
 import com.group9.group09.model.wishList;
 import com.group9.group09.repository.WishListRepositoryImp;
 import com.group9.group09.repository.rowmapper.WishListRowMapper;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,7 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

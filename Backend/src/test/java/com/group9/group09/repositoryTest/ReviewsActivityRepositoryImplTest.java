@@ -33,7 +33,6 @@ public class ReviewsActivityRepositoryImplTest {
         int activityId = 1;
         List<ReviewsActivity> expectedReviews = List.of(new ReviewsActivity(), new ReviewsActivity());
 
-        // Mocking the behavior of the jdbcTemplate.query method
         when(jdbcTemplate.query(anyString(), any(ReviewsActivityRowMapper.class), eq(activityId)))
                 .thenReturn(expectedReviews);
 
@@ -46,11 +45,9 @@ public class ReviewsActivityRepositoryImplTest {
     public void testGetReviewsActivitybyActivityIdError() {
         int activityId = 1;
 
-        // Mocking the behavior of the jdbcTemplate.query method to throw an exception
         when(jdbcTemplate.query(anyString(), any(ReviewsActivityRowMapper.class), eq(activityId)))
                 .thenThrow(new RuntimeException("Test Exception"));
 
-        // Ensure that the method under test handles the exception and rethrows it as a RuntimeException
         assertThrows(RuntimeException.class, () -> reviewsActivityRepository.getReviewsActivitybyActivityId(activityId));
     }
 }

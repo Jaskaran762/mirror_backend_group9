@@ -34,7 +34,6 @@ public class StateRepositoryImplTest {
         int stateId = 1;
         State expectedState = new State();
 
-        // Mocking the behavior of the jdbcTemplate.queryForObject method
         when(jdbcTemplate.queryForObject(anyString(), any(StateRowMapper.class), eq(stateId)))
                 .thenReturn(expectedState);
 
@@ -48,7 +47,6 @@ public class StateRepositoryImplTest {
     public void testFindByStateIdNotFound() {
         int stateId = 1;
 
-        // Mocking the behavior of the jdbcTemplate.queryForObject method to return null
         when(jdbcTemplate.queryForObject(anyString(), any(StateRowMapper.class), eq(stateId)))
                 .thenReturn(null);
 
@@ -62,7 +60,6 @@ public class StateRepositoryImplTest {
         int countryId = 1;
         List<State> expectedStates = List.of(new State(), new State());
 
-        // Mocking the behavior of the jdbcTemplate.query method
         when(jdbcTemplate.query(anyString(), any(StateRowMapper.class), eq(countryId)))
                 .thenReturn(expectedStates);
 
@@ -77,9 +74,9 @@ public class StateRepositoryImplTest {
         String description = "Description";
         int countryId = 1;
 
-        // Mocking the behavior of the jdbcTemplate.update method
+
         when(jdbcTemplate.update(anyString(), eq(stateName), eq(description), eq(countryId)))
-                .thenReturn(1); // Assuming 1 row is affected/inserted
+                .thenReturn(1);
 
         int result = stateRepository.addState(stateName, description, countryId);
 
