@@ -15,12 +15,15 @@ import {
   Form,
 } from "react-bootstrap";
 
-const ActivityPage = () => {
+const RecommendActivity = () => {
   const { activityid } = useParams();
   const [activityDetail, setactivityDetail] = useState();
   const changePage = useNavigate();
   const handletrip = () => {
     changePage("/mainpage");
+  };
+  const handleAddReview = () => {
+    changePage("reviews/Addreview");
   };
   const [reviewDetail, setreviewDetail] = useState([]);
   const token = sessionStorage.getItem("token");
@@ -68,16 +71,7 @@ const ActivityPage = () => {
     console.log(reviewDetail); // Log placeDetail when it gets updated
   }, [reviewDetail]);
 
-  if (!activityDetail) {
-    return <div>Loading...</div>;
-  }
-   const [reviewDetail, setreviewDetail ] = useState([]);
-   const token = sessionStorage.getItem('token');
-   const headers = {
-   Authorization: `Bearer ${token}`,
-   };
-   const activityidnum = parseInt(activityid, 10);
-    console.log(activityidnum);
+
     useEffect(()=>{
         axios.post('http://localhost:8090/home/activities', { activityID:activityidnum }, { headers })
         .then((response) => {
@@ -91,7 +85,7 @@ const ActivityPage = () => {
     
         },[])
           useEffect(()=>{
-            axios.post('http://localhost:8091/home/reviewactivity', { activityid:activityidnum }, { headers })
+            axios.post('http://localhost:809/home/reviewactivity', { activityid:activityidnum }, { headers })
             .then((response) => {
                 console.log(response.data.reviewsActivities);
                 setreviewDetail(response.data.reviewsActivities);
@@ -150,7 +144,7 @@ const ActivityPage = () => {
         {reviewDetail.map((review) => (
           <div key={review.reviewActivityID}>
             <p>Rating: {renderStars(review.rating)}</p>
-            <p>Comment: {review.reviewactivityComment}</p>
+            <p>Comment: {review.review_message}</p>
             <p> DateofReview : {review.dateofreview} </p>
             {/* Render other review details as needed */}
           </div>
@@ -165,4 +159,4 @@ const ActivityPage = () => {
   );
 };
 
-export default ActivityPage;
+export default RecommendActivity;
