@@ -8,13 +8,13 @@ import Footer from '../footer';
 
 const State = () => {
   const [stateData, setStateData] = useState();
-  const [showDialog, setShowDialog] = useState(false);
+  /* const [showDialog, setShowDialog] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedEndDate, setSelectedEndDate] = useState('');
   const [selectedEndTime, setSelectedEndTime] = useState('');
   const [itinerary, setItinerary] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState([]); */
 
   const { stateName } = useParams();
   const token = sessionStorage.getItem('token');
@@ -37,7 +37,7 @@ const State = () => {
   if (!stateData) {
     return <div>Loading...</div>;
   }
-
+  /*
   const handleOpenDialog = (index) => {
     setShowDialog(index);
   };
@@ -77,8 +77,9 @@ const State = () => {
     setSelectedTime('');
     setSelectedEndTime('');
   };
-
-  const handleAddToWishlist = (title) => {
+*/
+ /*   commented out wishlsit
+ const handleAddToWishlist = (title) => {
     const itemIndex = wishlist.findIndex((item) => item.activityName === title);
 
     if (itemIndex !== -1) {
@@ -96,7 +97,7 @@ const State = () => {
   const isItemInWishlist = (title) => {
     console.log(title);
     return wishlist.some((item) => item.activityName === title);
-  };
+  }; */
 
   const renderCities = () => {
     if (!stateData.cities) {
@@ -105,10 +106,10 @@ const State = () => {
 
     return stateData.cities.map((city, index) => {
       const uniqueIndex = index;
-      const cityInWishlist = isItemInWishlist(city.cityName);
-      console.log(cityInWishlist);
+    //  const cityInWishlist = isItemInWishlist(city.cityName);
+    // console.log(cityInWishlist);
       return (
-        <Col xs={12} md={6} lg={4} key={uniqueIndex}>
+        <Col xs={12} md={6} lg={4} key={uniqueIndex} className ="g-4">
             <Card>
             <Link to={`/city/${city.cityId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             {city.cityImageLink && <Card.Img variant="top" src={city.cityImageLink} />}
@@ -118,16 +119,17 @@ const State = () => {
               <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{city.description}</Card.Text>
             </Card.Body>
             </Link>
-            <Card.Footer>
+           {/*  <Card.Footer>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
               <Button variant="link" onClick={() => handleAddToWishlist(city.cityName)}>
                 {cityInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
-            </Card.Footer>
+            </Card.Footer> */}
           </Card>
-          <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
+          
+          {/* <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
             <Modal.Header closeButton>
               <Modal.Title>Select Date and Time</Modal.Title>
             </Modal.Header>
@@ -157,7 +159,7 @@ const State = () => {
                 Save
               </Button>
             </Modal.Footer>
-          </Modal>
+          </Modal>  */}
         </Col>
       );
     });
