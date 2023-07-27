@@ -39,10 +39,6 @@ const Place = () => {
   }, []);
 
   useEffect(()=>{
-    const token = sessionStorage.getItem('token');
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
     axios.post('http://localhost:8090/home/reviewplace', { place_id: placeIDAsNumber }, { headers })
     .then((response) => {
         console.log(response.data.reviewsPlaces);
@@ -52,6 +48,10 @@ const Place = () => {
         console.error('Error fetching places list:', error);
       });
     },[])
+  
+  const handleAddReview = () => {
+      changePage(`/addReview/${placeID}`);
+  };
 
   const handleOpenDialog = (index) => {
     setShowDialog(index);
@@ -82,11 +82,6 @@ const Place = () => {
     const startDate = new Date(selectedDate + 'T' + selectedTime);
     const endDate = new Date(selectedEndDate + 'T' + selectedEndTime);
 
-    const token = sessionStorage.getItem('token');
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-
     const data = {
       startdate: startDate.toISOString(), 
       enddate: endDate.toISOString(),
@@ -108,6 +103,7 @@ const Place = () => {
     setSelectedTime('');
     setSelectedEndTime('');
   };
+
   const handleAddToWishlist = (title) => {
     const itemIndex = wishlist.findIndex((item) => item.activityName === title);
 
@@ -138,9 +134,11 @@ const Place = () => {
     }
     return stars;
   };
+
   const getactivityList = (activityid) => {
     changePage('/Activity/' + activityid);
   }
+
   const renderActivityCards = () => {
     if (!placeDetail || !placeDetail.activityObjectsResponseList) {
       return <div>Loading...</div>;
@@ -213,34 +211,47 @@ const Place = () => {
   return (
     <>
       <HomeNavbar />
-      <Container>
+      <Container style={{ marginTop: '2%'}}>
         <Row>
           <Col>
             {placeDetail && (
               <>
                <h1> {placeDetail.placeName}</h1>
-                <p>{placeDetail.description}</p>
+               <img src={placeDetail.placeImageLink} alt={placeDetail.placeName} style={{ width:'65%'}}></img>
+                <br/>
+                <p style={{ marginTop: '2%'}}> {placeDetail.description} </p>
               </>
             )}
           </Col>
         </Row>
-       
         <Row>
           <h2>Activities to Enjoy</h2>
         </Row>
         <Row>{renderActivityCards()}</Row>
-
-        <Row> <h2> Place Reviews </h2>{reviewDetail.map((review) => (
-                       <div key={review.reviewPlaceID}>
-                       <p>Rating: {renderStars(review.rating)}</p>
-                       <p>Comment: {review.reviewplaceComment}</p>
-                       <p> DateofReview : { review.dateofreview } </p>
-                       {/* Render other review details as needed */}
-                     </div>
-                      ))}
-                      </Row>
+        <br/>
+        <div style={{borderTop:'1px solid #ccc'}}></div>
+        <br/>
+        { reviewDetail.length > 0 && (
+        <Row>
+          <h2> Place Reviews</h2>
+        </Row>
+        )}
+        <br/>
+          {reviewDetail.map((review) => (
+            <div key={review.reviewPlaceID}>
+              <p>Rating: {renderStars(review.rating)}</p>
+              <p>Review: {review.reviewplaceComment}</p>
+              {/*  <p> DateofReview : { review.dateofreview } </p> */}
+              <div style={{borderTop:'1px solid #ccc', width:'30%'}}></div>         
+            <br/>
+              </div>
+            ))}
+        <br/>
+        <Button onClick={handleAddReview}>Add review</Button>
+        <div style={{ marginTop: "10rem" }}>
+          <Footer />
+        </div>
       </Container>
-      <Footer />
     </>
   );
 };
