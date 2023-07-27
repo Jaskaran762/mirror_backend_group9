@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import HomeNavbar from '../HomeNav';
 import Footer from '../footer';
 import { Button } from 'react-bootstrap';
+import jsPDF from 'jspdf';
 
 const localizer = momentLocalizer(moment);
 
@@ -16,7 +17,7 @@ const Itinerary = () => {
  // console.log("*********"+decodeURIComponent(data) );
 //  const itinerary = JSON.parse(decodeURIComponent(data));
   //console.log(itinerary);
-debugger;
+
   const [userItinerary, setUserItinerary] = useState([]);
 
   useEffect(() => {
@@ -33,6 +34,8 @@ debugger;
         console.log('User itinerary:', response.data.itineraryObjectList);
         // Save the fetched itinerary data to the state
         setUserItinerary(response.data.itineraryObjectList);
+        const startDateTime = moment(response.data.itineraryObjectList[0].date).format('YYYY-MM-DD HH:mm');
+        console.log(startDateTime);
       })
       .catch((error) => {
         console.error('Error fetching user itinerary:', error);
@@ -40,52 +43,67 @@ debugger;
       });
   }, []);
 
-  const formattedEvents = userItinerary.map((item) => {
+  const generatePDF = () => {
+    const doc = new jsPDF();
+  
+    // Add title to the PDF
+    doc.setFontSize(20);
+    doc.text('Itinerary', 10, 20);
+  
+    // Add itinerary details
+    const yOffset = 30;
+    userItinerary.forEach((item, index) => {
+      const startDateTime = moment(item.startdate).format('YYYY-MM-DD HH:mm');
+      const endDateTime = moment(item.endDate).format('YYYY-MM-DD HH:mm');
+      const text = `${index + 1}. ${item.title}: ${startDateTime} to ${endDateTime}`;
+      doc.text(text, 10, yOffset + index * 10);
+    });
+  
+    // Save the PDF as a file
+    doc.save('itinerary.pdf');
+  };
+  
+  const formattedEvents = userItinerary.map((item, index) => {
+    const startDateTime = moment(`${item.startdate}`, 'YYYY-MM-DD HH:mm').toDate();
+    const endDateTime = moment(`${item.endDate}`, 'YYYY-MM-DD HH:mm').toDate();
+    
     return {
-      id: item.itineraryid,
-      title: `Itinerary ${item.itineraryid}`, // You can customize the title if needed
-      start: new Date(item.startdate),
-      end: new Date(item.endDate),
-      allDay: true, // Set to true if the event lasts for the whole day
-    };
-  });
-
-  /*const formattedEvents = itinerary.map((item, index) => {
-    const startDateTime = moment(`${item.date} ${item.time}`, 'YYYY-MM-DD HH:mm').toDate();
-    const endDateTime = moment(`${item.endDate} ${item.endTime}`, 'YYYY-MM-DD HH:mm').toDate(); */
-
-   /* return {
       id: index,
       title: item.title,
       start: startDateTime,
       end: endDateTime,
       allDay: false,
     };
-  }); */
-
+  });
+  
+  const handleSavePDF = () => {
+    generatePDF();
+  };
 
   return (
     <>
       <HomeNavbar />
-      <div style={{ height: '500px', padding: '20px' }}>
+      <div style={{ height: '650px', padding: '20px' }}>
         <h2>Itinerary</h2>
-        {<Calendar
-          localizer={localizer}
-          events={formattedEvents}
-          startAccessor="start"
-          endAccessor="end"
-          defaultView="month"
-          views={[ 'month']}
-          step={60}
-          showMultiDayTimes
-          defaultDate={new Date()}
-          
-          min={new Date(null, null, null, 0)} 
-          max={new Date(null, null, null, 22)}
-        /> }
+        
+        <div style={{ height: '600px', overflow: 'auto' }}>
+          <Calendar
+            localizer={localizer}
+            events={formattedEvents}
+            startAccessor="start"
+            endAccessor="end"
+            defaultView="month"
+            views={['month', 'day']}
+            step={60}
+            showMultiDayTimes
+            defaultDate={new Date()}
+            min={new Date(null, null, null, 0, 0)} // Set the time to 00:00 (midnight)
+            max={new Date(null, null, null, 23, 59)} // Set the time to 23:59 (11:59 PM)
+          />
+        </div>
       </div>
-      <Button style={{marginLeft:'85rem', marginTop:'2rem', height:'1cm', width:'3cm'}}>
-        Save
+      <Button style={{marginLeft:'85rem', marginTop:'2rem', height:'1cm', width:'3cm'}} onClick={handleSavePDF}>
+        Save as PDF
       </Button>
       <div style={{ marginTop: '5rem' }}>
         <Footer />

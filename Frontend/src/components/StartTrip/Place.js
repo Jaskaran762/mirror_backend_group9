@@ -73,22 +73,37 @@ const Place = () => {
     setSelectedEndTime(event.target.value);
   };
 
-  const handleSaveItinerary = (title) => {
-    const item = {
-      date: selectedDate,
-      endDate: selectedEndDate,
-      title: title,
-      time: selectedTime,
-      endTime: selectedEndTime,
+  const handleSaveItinerary = (activityId, activityName) => {
+
+    const startDate = new Date(selectedDate + 'T' + selectedTime);
+    const endDate = new Date(selectedEndDate + 'T' + selectedEndTime);
+
+    const token = sessionStorage.getItem('token');
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+    const data = {
+      startdate: startDate.toISOString(), 
+      enddate: endDate.toISOString(),
+      activityid: activityId,
+      title: activityName
     };
-    setItinerary([...itinerary, item]);
+    console.log(data);
+    axios.post('http://localhost:8090/home/addtoitinerary', data, { headers }).then((response)=>{
+      console.log('Itinerary created:', response.data);
+    }).catch((error)=>{
+      console.error('Error adding item to itinerary:', error);
+    })
+
+    setItinerary([...itinerary, data]);
+   // setItemCounter((prevCounter) => prevCounter + 1);
     setShowDialog(false);
     setSelectedDate('');
     setSelectedEndDate('');
     setSelectedTime('');
     setSelectedEndTime('');
   };
-
   const handleAddToWishlist = (title) => {
     const itemIndex = wishlist.findIndex((item) => item.activityName === title);
 
@@ -180,7 +195,7 @@ const Place = () => {
               <Button variant="secondary" onClick={handleCloseDialog}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={() => handleSaveItinerary(activity.title)}>
+              <Button variant="primary" onClick={() => handleSaveItinerary(activity.activityId,activity.activityName)}>
                 Save
               </Button>
             </Modal.Footer>

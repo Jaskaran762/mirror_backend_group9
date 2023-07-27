@@ -53,12 +53,12 @@ const City = () => {
   };
 
     const data = {
-      startDate: startDate.toISOString(), 
-      endDate: endDate.toISOString(),
+      startdate: startDate.toISOString(), 
+      enddate: endDate.toISOString(),
       placeid: placeId,
-      itinerarytitle: placeName
+      title: placeName
     };
-
+    console.log(data);
     axios.post('http://localhost:8090/home/addtoitinerary', data, { headers }).then((response)=>{
       console.log('Itinerary created:', response.data);
     }).catch((error)=>{
