@@ -110,24 +110,30 @@ const RecommendActivity = () => {
         <Row>
           <h1> {activityDetail.activityName}</h1>
         </Row>
-        <p> {activityDetail.activitydesc} </p>
-        <img src={activityDetail.activityLink}></img>
+        <img src={activityDetail.activityLink} alt={activityDetail.activityName} style={{ width:'65%'}}></img>
+        <br/>
+        <p style={{ marginTop: '2%'}}> {activityDetail.activitydesc} </p>
+        <div style={{borderTop:'1px solid #ccc'}}></div>
+        <br/>
+        { reviewDetail.length > 0 && (
         <Row>
           <h2>Reviews</h2>
         </Row>
+        )}
         {reviewDetail.map((review) => (
           <div key={review.reviewActivityID}>
             <p>Rating: {renderStars(review.rating)}</p>
-            <p>Comment: {review.reviewactivityComment}</p>
-            <p> DateofReview : {review.dateofreview} </p>
-            {/* Render other review details as needed */}
+            <p>Review: {review.reviewactivityComment}</p>
+            { /*<p> DateofReview : {review.dateofreview} </p> */}
+            <div style={{borderTop:'1px solid #ccc', width:'30%'}}></div>
+            <br/>
           </div>
         ))}
+         <br/>
+        <Button onClick={handleAddReview}>Add review</Button>
         <div style={{ marginTop: "10rem" }}>
           <Footer />
         </div>
-        {/* 'Add review' button */}
-        <Button onClick={handleAddReview}>Add review</Button>
       </Container>
     </div>
   );
