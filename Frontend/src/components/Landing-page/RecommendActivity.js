@@ -15,21 +15,41 @@ import {
   Form,
 } from "react-bootstrap";
 
-const ActivityPage = () => {
+const RecommendActivityPage = () => {
   const { activityid } = useParams();
   const [activityDetail, setactivityDetail] = useState();
   const changePage = useNavigate();
-  const handletrip = () => {
-    changePage("/mainpage");
-  };
   const [reviewDetail, setreviewDetail] = useState([]);
   const token = sessionStorage.getItem("token");
+
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+
+  const handletrip = () => {
+    changePage("/mainpage");
+  };
+
+  const handleAddReview = () => {
+    // Assuming the route to the review submission page is '/addReview', you can change it to the correct route.
+    changePage(`/addReview/${activityid}`);
+  };
+
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span key={i} style={{ color: i <= rating ? "gold" : "gray" }}>
+          ★
+        </span>
+      );
+    }
+    return stars;
+  };
+
   const activityidnum = parseInt(activityid, 10);
-  console.log(activityidnum);
-  useEffect(() => {
+
+  /*   useEffect(() => {
     axios
       .post(
         "http://localhost:8090/home/activities",
@@ -45,6 +65,7 @@ const ActivityPage = () => {
         console.error("Error fetching activity regions:", error);
       });
   }, []);
+
   useEffect(() => {
     axios
       .post(
@@ -64,6 +85,7 @@ const ActivityPage = () => {
   useEffect(() => {
     console.log(activityDetail); // Log placeDetail when it gets updated
   }, [activityDetail]);
+
   useEffect(() => {
     console.log(reviewDetail); // Log placeDetail when it gets updated
   }, [reviewDetail]);
@@ -71,65 +93,52 @@ const ActivityPage = () => {
   if (!activityDetail) {
     return <div>Loading...</div>;
   }
-   const [reviewDetail, setreviewDetail ] = useState([]);
-   const token = sessionStorage.getItem('token');
-   const headers = {
-   Authorization: `Bearer ${token}`,
-   };
-   const activityidnum = parseInt(activityid, 10);
-    console.log(activityidnum);
-    useEffect(()=>{
-        axios.post('http://localhost:8090/home/activities', { activityID:activityidnum }, { headers })
-        .then((response) => {
-            console.log(response.data);
-            setactivityDetail(response.data);
-            console.log(activityDetail);
-          })
-          .catch((error) => {
-            console.error('Error fetching place regions:', error);
-          });
-    
-        },[])
-          useEffect(()=>{
-            axios.post('http://localhost:8091/home/reviewactivity', { activityid:activityidnum }, { headers })
-            .then((response) => {
-                console.log(response.data.reviewsActivities);
-                setreviewDetail(response.data.reviewsActivities);
-              })
-              .catch((error) => {
-                console.error('Error fetching places list:', error);
-              });
-        
-            },[])
-        
-            useEffect(() => {
-                console.log(activityDetail); // Log placeDetail when it gets updated
-              }, [activityDetail]);
-            useEffect(() => {
-                console.log(reviewDetail); // Log placeDetail when it gets updated
-              }, [reviewDetail]);
-       
-              if (!activityDetail) {
-                return <div>Loading...</div>;
-              }
-              if (!reviewDetail) {
-                return <div>Loading..reviews</div>;
-              }
-              const renderStars = (rating) => {
-                const stars = [];
-                for (let i = 1; i <= 5; i++) {
-                  stars.push(
-                    <span key={i} style={{ color: i <= rating ? 'gold' : 'gray' }}>
-                      ★
-                    </span>
-                  );
-                }
-                return stars;
-              };
-   // Now you can use the fetched placeList and activityList data here
-    return (
-      <div>
-      <div style={{ marginTop: '0px' }}>
+
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:8090/home/activities",
+        { activityID: activityidnum },
+        { headers }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setactivityDetail(response.data);
+        console.log(activityDetail);
+      })
+      .catch((error) => {
+        console.error("Error fetching place regions:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:8091/home/reviewactivity",
+        { activityid: activityidnum },
+        { headers }
+      )
+      .then((response) => {
+        console.log(response.data.reviewsActivities);
+        setreviewDetail(response.data.reviewsActivities);
+      })
+      .catch((error) => {
+        console.error("Error fetching places list:", error);
+      });
+  }, []);
+
+  if (!activityDetail) {
+    return <div>Loading...</div>;
+  }
+
+  if (!reviewDetail) {
+    return <div>Loading..reviews</div>;
+  } */
+
+  // Now you can use the fetched placeList and activityList data here
+  return (
+    <div>
+      <div style={{ marginTop: "0px" }}>
         <HomeNavbar />
       </div>
       <Button
@@ -165,4 +174,4 @@ const ActivityPage = () => {
   );
 };
 
-export default ActivityPage;
+export default RecommendActivityPage;
