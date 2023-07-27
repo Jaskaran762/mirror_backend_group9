@@ -92,4 +92,6 @@ public interface HomePageService {
     WishListResponseDTO deleteWishListService(WishListRequestDTO wishListRequestDTO);
 
     ItineraryResponseDTO deleteItineraryService(ItineraryRequestDTO itineraryRequestDTO);
+
+    ReviewsPlaceResponseDTO addReviewplaceDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO);
 }
