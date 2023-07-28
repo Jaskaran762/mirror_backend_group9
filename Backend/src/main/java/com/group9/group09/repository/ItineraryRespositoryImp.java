@@ -2,6 +2,7 @@ package com.group9.group09.repository;
 
 import com.group9.group09.DTO.RequestDTO.ItineraryRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ItineraryResponseDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.model.ItemstoCarry;
 import com.group9.group09.model.Itinerary;
 import com.group9.group09.repository.interfaces.ItineraryRepository;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ItineraryRespositoryImp implements ItineraryRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(ItemsRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     public ItineraryRespositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

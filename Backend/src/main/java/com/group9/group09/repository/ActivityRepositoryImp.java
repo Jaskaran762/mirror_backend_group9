@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.ActivityNotFoundException;
 import com.group9.group09.model.Activity;
 import com.group9.group09.model.Place;
@@ -20,7 +21,7 @@ public class ActivityRepositoryImp implements ActivityRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(ActivityRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     public ActivityRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

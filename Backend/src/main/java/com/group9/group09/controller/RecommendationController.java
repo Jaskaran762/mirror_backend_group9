@@ -2,6 +2,7 @@ package com.group9.group09.controller;
 
 import com.group9.group09.DTO.ResponseDTO.*;
 import com.group9.group09.DTO.RequestDTO.*;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.service.interfaces.RecommendationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class RecommendationController {
     @Autowired
     private RecommendationService recommendationService;
 
-    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     @PostMapping(path = "/recommendation")
     public ResponseEntity<?> getRecommendations(@RequestBody RequestDTO requestDTO, HttpServletRequest request){

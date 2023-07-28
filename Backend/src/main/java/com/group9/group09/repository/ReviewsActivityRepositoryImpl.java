@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.ReviewNotFoundException;
 import com.group9.group09.model.ReviewsActivity;
 import com.group9.group09.repository.interfaces.ReviewsActivityRepository;
@@ -13,7 +14,7 @@ import java.util.List;
 @Repository
 public class ReviewsActivityRepositoryImpl implements ReviewsActivityRepository {
         private final JdbcTemplate jdbcTemplate;
-        private static Logger logger = LoggerFactory.getLogger(ReviewsPlaceRepositoryImp.class);
+        private static Logger logger = LoggerFactoryImpl.getLogger();
         public ReviewsActivityRepositoryImpl(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
         }

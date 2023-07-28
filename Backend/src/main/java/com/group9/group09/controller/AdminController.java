@@ -2,6 +2,7 @@ package com.group9.group09.controller;
 
 import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.DTO.ResponseDTO.*;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.NotAdminAccessException;
 import com.group9.group09.model.User;
@@ -33,7 +34,7 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
-    private static Logger logger = LoggerFactory.getLogger(HomePageController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     @PostMapping(path = "/addCountry")
     public ResponseEntity<?> addCountry(@RequestBody CountryRequestDTO countryRequestDTO, HttpServletRequest request) {

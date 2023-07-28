@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.StateNotFoundException;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.State;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class StateRepositoryImp implements StateRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(StateRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     public StateRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

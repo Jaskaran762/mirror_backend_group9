@@ -1,6 +1,7 @@
 package com.group9.group09.repository;
 
 import com.group9.group09.DTO.RequestDTO.WishListRequestDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.WishlistNotFoundException;
 import com.group9.group09.model.wishList;
 import com.group9.group09.repository.interfaces.WishlistRepository;
@@ -18,7 +19,7 @@ public class WishListRepositoryImp implements WishlistRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(WishListRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     public WishListRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
