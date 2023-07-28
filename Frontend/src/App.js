@@ -52,13 +52,62 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route path="/itinerary" element={<Auth><Itinerary /></Auth>}/>
-        <Route path="/wish/:data" element={<Auth><Wish /></Auth>}/>
-        <Route path="/profile" element={<Auth><UserProfile /></Auth>} />
-        <Route path="/landing" element={<Auth><Landing /></Auth>}/>
-        <Route path="/recommendplace/:placeID" element={<Auth><RecommendPlace /></Auth>}/>
-        <Route path="/recommendactivity/:activityid" element={<Auth><RecommendActivity /></Auth>}/>
-        <Route path="/resetpassword" element={<Auth><Resetpwd /> </Auth>}/>
+        <Route
+          path="/itinerary"
+          element={
+            <Auth>
+              <Itinerary />
+            </Auth>
+          }
+        />
+        <Route
+          path="/wish/:data"
+          element={
+            <Auth>
+              <Wish />
+            </Auth>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Auth>
+              <UserProfile />
+            </Auth>
+          }
+        />
+        <Route
+          path="/landing"
+          element={
+            <Auth>
+              <Landing />
+            </Auth>
+          }
+        />
+        <Route
+          path="/recommendplace/:placeID"
+          element={
+            <Auth>
+              <RecommendPlace />
+            </Auth>
+          }
+        />
+        <Route
+          path="/recommendactivity/:activityid"
+          element={
+            <Auth>
+              <RecommendActivity />
+            </Auth>
+          }
+        />
+        <Route
+          path="/resetpassword"
+          element={
+            <Auth>
+              <Resetpwd />{" "}
+            </Auth>
+          }
+        />
         <Route
           path="/thingsToCarry"
           element={
@@ -101,8 +150,22 @@ function App() {
         />
         <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
         <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
-        <Route path ="/Notification" element = {<Auth><Notification/></Auth>}/>
-        <Route path="/wishlist/Wish" element={<Auth><Wish/></Auth>}/>
+        <Route
+          path="/Notification"
+          element={
+            <Auth>
+              <Notification />
+            </Auth>
+          }
+        />
+        <Route
+          path="/Wish"
+          element={
+            <Auth>
+              <Wish />
+            </Auth>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
