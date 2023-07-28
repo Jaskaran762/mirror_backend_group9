@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.exception.ActivityNotFoundException;
 import com.group9.group09.model.Activity;
 import com.group9.group09.model.Place;
 import com.group9.group09.repository.interfaces.ActivityRepository;
@@ -7,6 +8,7 @@ import com.group9.group09.repository.rowmapper.ActivityRowMapper;
 import com.group9.group09.repository.rowmapper.PlaceRowMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -31,9 +33,9 @@ public class ActivityRepositoryImp implements ActivityRepository {
             logger.info("Info Message: ");
             String findActivitybyIDQuery = "SELECT * FROM Activity where activity_id=?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(findActivitybyIDQuery, new ActivityRowMapper(), activityID));
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new ActivityNotFoundException(e.getMessage());
         }
     }
 
@@ -44,9 +46,9 @@ public class ActivityRepositoryImp implements ActivityRepository {
             logger.info("Info Message: ");
             String findActivitybyNameQuery = "SELECT * FROM Activity where activit_name = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(findActivitybyNameQuery, new ActivityRowMapper(), activityName));
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new ActivityNotFoundException(e.getMessage());
         }
 
     }
@@ -58,9 +60,9 @@ public class ActivityRepositoryImp implements ActivityRepository {
             logger.info("Info Message: ");
             String getActivitiesByCityID = "SELECT * FROM Activity where city_id = ?";
             return jdbcTemplate.query(getActivitiesByCityID, new ActivityRowMapper(), cityID);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new ActivityNotFoundException(e.getMessage());
         }
     }
 
@@ -71,9 +73,9 @@ public class ActivityRepositoryImp implements ActivityRepository {
             logger.info("Info Message: ");
             String getAllActivitiesQuery = "SELECT * FROM Activity";
             return jdbcTemplate.query(getAllActivitiesQuery, new ActivityRowMapper(), null);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new ActivityNotFoundException(e.getMessage());
         }
     }
 
@@ -84,9 +86,9 @@ public class ActivityRepositoryImp implements ActivityRepository {
             String getActivityByInterest = "SELECT * FROM Activity where interest like CONCAT('%', ?, '%')";
             return jdbcTemplate.query(getActivityByInterest, new ActivityRowMapper(), interest);
         }
-        catch (Exception e){
+        catch (DataAccessException e){
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new ActivityNotFoundException(e.getMessage());
         }
     }
 
@@ -100,11 +102,11 @@ public class ActivityRepositoryImp implements ActivityRepository {
         String findActivity = "SELECT * FROM Activity where activity_name = ? and city_id=?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(findActivity, new ActivityRowMapper(), activityName,cityId));
 
-    } catch (Exception e) {
+    } catch (DataAccessException e) {
 
         logger.error("Error Message: ");
         System.out.println(e.getMessage());
-        throw new RuntimeException();
+        throw new ActivityNotFoundException(e.getMessage());
     }
 
     }   
@@ -116,10 +118,10 @@ public class ActivityRepositoryImp implements ActivityRepository {
         logger.info("Info Message: in addactivity method of repo ");
         String addActivityQuery = "INSERT INTO Activity (`activity_name`,`description`,city_id,`interest`) VALUES (?,?,?,?);";
         return  jdbcTemplate.update(addActivityQuery,activityName,description,cityId,interest);
-    }catch (Exception e){
+    }catch (DataAccessException e){
         logger.error("Error Message: ");
         System.out.println(e.getMessage());
-        throw new RuntimeException();
+        throw new ActivityNotFoundException(e.getMessage());
     }
 
     }

@@ -35,7 +35,7 @@ public class NotificationController {
         catch (Exception e){
             logger.error("Error Message: ");
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Errors in fetching notifications");
+            response.setMessage("Errors in fetching notifications"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }

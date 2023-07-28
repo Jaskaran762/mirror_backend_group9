@@ -87,7 +87,7 @@ public class PlaceRepositoryImp implements PlaceRepository {
 
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class PlaceRepositoryImp implements PlaceRepository {
         }catch (Exception e){
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
 
     }

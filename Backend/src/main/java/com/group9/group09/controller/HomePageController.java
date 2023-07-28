@@ -30,7 +30,7 @@ public class HomePageController {
     @Autowired
     private UserRepository userRepository;
 
-    private static Logger logger = LoggerFactory.getLogger(HomePageController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HomePageController.class);
     /**
      * Handles the choice selection request.
      *
@@ -47,9 +47,8 @@ public class HomePageController {
             return new ResponseEntity<>(choiceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Choice selector api failed");
+            response.setMessage("Choice selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -64,9 +63,9 @@ public class HomePageController {
             return new ResponseEntity<>(countryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
+
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Choice selector api failed");
+            response.setMessage("Choice selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -88,9 +87,8 @@ public class HomePageController {
             return new ResponseEntity<>(locationResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("location selector api failed");
+            response.setMessage("location selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -112,9 +110,8 @@ public class HomePageController {
             return new ResponseEntity<>(cityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("city selector api failed");
+            response.setMessage("city selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -136,9 +133,8 @@ public class HomePageController {
             return new ResponseEntity<>(placeResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("place selector api failed");
+            response.setMessage("place selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -160,9 +156,8 @@ public class HomePageController {
             return new ResponseEntity<>(activityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("activity response selector api failed");
+            response.setMessage("activity response selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -184,9 +179,8 @@ public class HomePageController {
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("wishlist api failed");
+            response.setMessage("wishlist api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -204,9 +198,9 @@ public class HomePageController {
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
+
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("add wishlist api failed");
+            response.setMessage("add wishlist api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -224,9 +218,8 @@ public class HomePageController {
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("delete wishlist api failed");
+            response.setMessage("delete wishlist api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -249,9 +242,8 @@ public class HomePageController {
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("itinerary api failed");
+            response.setMessage("itinerary api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -270,9 +262,8 @@ public class HomePageController {
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("add to itinerary api failed");
+            response.setMessage("add to itinerary api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -290,9 +281,8 @@ public class HomePageController {
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("delete itinerary api failed");
+            response.setMessage("delete itinerary api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -309,9 +299,8 @@ public class HomePageController {
             return new ResponseEntity<>(reviewsPlaceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("review place api failed");
+            response.setMessage("review place api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -330,9 +319,8 @@ public class HomePageController {
             return new ResponseEntity<>(reviewsPlaceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("add review place api failed");
+            response.setMessage("add review place api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -349,9 +337,8 @@ public class HomePageController {
             return new ResponseEntity<>(reviewsActivityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("review activity api failed");
+            response.setMessage("review activity api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -366,9 +353,8 @@ public class HomePageController {
             ItemsToCarryResponseDTO itemsToCarryResponseDTO =  homeService.getItemstoCarry();
             return new ResponseEntity<>(itemsToCarryResponseDTO, HttpStatus.OK);
         }catch (Exception e){
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Items to carry  api failed");
+            response.setMessage("Items to carry  api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
