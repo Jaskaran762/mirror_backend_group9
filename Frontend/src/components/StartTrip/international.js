@@ -8,6 +8,7 @@ import Footer from '../footer';
 import axios from 'axios';
 
 const International = ({ selectedCountry }) => {
+  const changePage = useNavigate();
   const [searchButton, setSearchButton] = useState(false);
   const [selectedCountryName, setselectedCountryName] = useState();
   const [selectedCountryDesc, setselectedCountryDesc] = useState();
@@ -49,16 +50,16 @@ const International = ({ selectedCountry }) => {
     setSearchButton(true);
   };
 
-  const [showDialog, setShowDialog] = useState(false);
+  /* const [showDialog, setShowDialog] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedEndDate, setSelectedEndDate] = useState('');
   const [selectedEndTime, setSelectedEndTime] = useState('');
   const [itinerary, setItinerary] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState([]); */
   const [reviewsToShow, setReviewsToShow] = useState([]);
   const [placeToVisit, setPlaceToVisit] = useState([]);
-
+ /*
   const handleOpenDialog = (index) => {
     setShowDialog(index);
   };
@@ -175,13 +176,11 @@ const International = ({ selectedCountry }) => {
   };
 
 
-
-
-  const changePage = useNavigate();
-
+  */
 
 
 
+/*
   const handleItinerary = () => {
 
     console.log(itinerary);
@@ -203,7 +202,7 @@ const International = ({ selectedCountry }) => {
 
   };
 
-
+*/
 
 
   const ReviewsDisplay = ({ reviews }) => {
@@ -266,11 +265,11 @@ const International = ({ selectedCountry }) => {
   const renderCards = (data, type) => {
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
-      const isInWishlist = isItemInWishlist(item.stateName);
+     // const isInWishlist = isItemInWishlist(item.stateName);
       console.log(item.stateName);
       return (
 
-        <Col xs={12} md={6} lg={4} key={uniqueIndex}>
+        <Col xs={12} md={6} lg={4} key={uniqueIndex} className ="g-4">
 
           <Card>
 
@@ -295,7 +294,7 @@ const International = ({ selectedCountry }) => {
 
             </Card.Text>
 
-            <Card.Footer>
+           {/*  <Card.Footer>
 
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
 
@@ -307,13 +306,13 @@ const International = ({ selectedCountry }) => {
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
 
-              </Card.Footer>              
+              </Card.Footer>     */}          
 
             </Card.Body>
 
           </Card>
 
-          <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
+          {/* <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
 
             <Modal.Header closeButton>
 
@@ -371,9 +370,9 @@ const International = ({ selectedCountry }) => {
 
               </Button>
 
-            </Modal.Footer>
+            </Modal.Footer> */}
 
-          </Modal>
+          {/* </Modal> */}
 
         </Col>
 

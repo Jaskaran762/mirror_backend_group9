@@ -12,7 +12,6 @@ import MainPage from "./components/Landing-page/Main";
 
 import "bootstrap/dist/css/bootstrap.css";
 import Itinerary from "./components/itinerary/itinerary";
-import Wish from "./components/wishlist/Wish";
 import UserProfile from "./components/UserProfile/profile";
 import ReviewsPage from "./components/reviews/review";
 import Landing from "./components/Landing-page/landing";
@@ -29,6 +28,7 @@ import State from "./components/StartTrip/State";
 import Activity from "./components/StartTrip/Activity";
 import AddReviewsPage from "./components/reviews/Addreview";
 import Notification from "./components/StartTrip/Notification";
+import Wish from "./components/wishlist/Wish";
 
 export function isLoggedIn() {
   const token = sessionStorage.getItem("token");
@@ -52,62 +52,13 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route
-          path="/itinerary"
-          element={
-            <Auth>
-              <Itinerary />
-            </Auth>
-          }
-        />
-        <Route
-          path="/wish/:data"
-          element={
-            <Auth>
-              <Wish />
-            </Auth>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <Auth>
-              <UserProfile />
-            </Auth>
-          }
-        />
-        <Route
-          path="/landing"
-          element={
-            <Auth>
-              <Landing />
-            </Auth>
-          }
-        />
-        <Route
-          path="/recommendplace/:placeID"
-          element={
-            <Auth>
-              <RecommendPlace />
-            </Auth>
-          }
-        />
-        <Route
-          path="/recommendactivity/:activityid"
-          element={
-            <Auth>
-              <RecommendActivity />
-            </Auth>
-          }
-        />
-        <Route
-          path="/resetpassword"
-          element={
-            <Auth>
-              <Resetpwd />
-            </Auth>
-          }
-        />
+        <Route path="/itinerary" element={<Auth><Itinerary /></Auth>}/>
+        <Route path="/wish/:data" element={<Auth><Wish /></Auth>}/>
+        <Route path="/profile" element={<Auth><UserProfile /></Auth>} />
+        <Route path="/landing" element={<Auth><Landing /></Auth>}/>
+        <Route path="/recommendplace/:placeID" element={<Auth><RecommendPlace /></Auth>}/>
+        <Route path="/recommendactivity/:activityid" element={<Auth><RecommendActivity /></Auth>}/>
+        <Route path="/resetpassword" element={<Auth><Resetpwd /> </Auth>}/>
         <Route
           path="/thingsToCarry"
           element={
@@ -151,6 +102,7 @@ function App() {
         <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
         <Route path="/Addreview/:placeID" element={<AddReviewsPage />} />
         <Route path ="/Notification" element = {<Auth><Notification/></Auth>}/>
+        <Route path="/wishlist/Wish" element={<Auth><Wish/></Auth>}/>
       </Routes>
     </BrowserRouter>
   );

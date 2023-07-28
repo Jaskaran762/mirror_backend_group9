@@ -20,6 +20,7 @@ const useAuth = () => {
 
       try {
         const response = await axios.post(apiUrl, {}, { headers: headers });
+        console.log(response.data);
         setUserData(response.data); // Assuming the server returns the entire user data object
       } catch (error) {
         console.error('API error:', error);
@@ -41,7 +42,7 @@ const UserProfile = () => {
   const [regionList, setRegionList] = useState([]);
   const[selectCountry, setselectCountry] = useState('Default');
 
-  const fetchInternationalRegions = () => {
+  const fetchInternationalRegions = () => {   
     const token = sessionStorage.getItem('token');
     console.log(token);
     const headers = {
@@ -91,6 +92,8 @@ const UserProfile = () => {
     const { name, value } = event.target;
     // Note: Since the userData object is immutable, create a new object and update the specific field.
     const updatedUserData = { ...userData, [name]: value };
+console.log("#################");
+console.log(updatedUserData);    
     setUserData(updatedUserData);
   };
 
@@ -182,7 +185,7 @@ const UserProfile = () => {
                 <Form.Label>Interest</Form.Label>
                 <Form.Control
                   type="text"
-                  name="interests"
+                  name="interest"
                   value={userData.interests}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
@@ -190,7 +193,7 @@ const UserProfile = () => {
                 />
               </Form.Group>
 
-              {/* <Form.Group controlId="formCountry" style={{ marginTop: '1rem' }}>
+             {/* <Form.Group controlId="formCountry" style={{ marginTop: '1rem' }}>
                 <Form.Label>Country</Form.Label>
                 <Form.Control
                   type="text"

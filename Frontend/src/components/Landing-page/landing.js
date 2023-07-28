@@ -12,8 +12,6 @@ const Landing = () => {
     changePage('/mainpage');
   }
 
-  const [itinerary, setItinerary] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
   const[placeList,setPlaceList] = useState([]);
   const[activityList,setActivityList] = useState([]);
   //getplaces - based on user interest. This page will be different for user
@@ -35,7 +33,6 @@ const Landing = () => {
   },[]);
 
   //getactivities - based on user interest. This page will be different for user
-
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     console.log(token);
@@ -52,25 +49,6 @@ const Landing = () => {
     });
   },[]);
 
-  const handleAddToWishlist = (title) => {
-    const itemIndex = wishlist.findIndex((item) => item.title === title);
-
-    if (itemIndex !== -1) {
-      const updatedWishlist = [...wishlist];
-      updatedWishlist.splice(itemIndex, 1);
-      setWishlist(updatedWishlist);
-    } else {
-      const item = {
-        title: title,
-      };
-      setWishlist([...wishlist, item]);
-    }
-  };
-
-  const isItemInWishlist = (title) => {
-    return wishlist.some((item) => item.title === title);
-  };
-
   const getplaceList = (placeID) => {
         changePage('/recommendplace/' + placeID);
    // setSearchButton(true);
@@ -83,10 +61,9 @@ const Landing = () => {
   const renderCards = (placeList, type) => {
     const cards = placeList.map((item, index) => {
       const uniqueIndex = index + placeList.length * type;
-      const isInWishlist = isItemInWishlist(item.title);
       return (
 
-        <Col xs={12} md={6} lg={4} key={uniqueIndex}>
+        <Col xs={12} md={6} lg={4} key={uniqueIndex} className="g-4">
           <Card>
             <a href={item.link}>
               <Card.Img src={item.placeImageLink ? item.placeImageLink : item.activityImageLink} variant="top" />
@@ -98,13 +75,10 @@ const Landing = () => {
               </Button>
               </Card.Title>
               <Card.Text>{item.description}</Card.Text>
-              <Button variant="link" onClick={() => handleAddToWishlist(item.placeName ? item.placeName : item.activityName) }>
-                {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
-              </Button>
             </Card.Body>
           </Card>
         </Col>
-      );
+    );
     });
     
     return <Row>{cards}</Row>;

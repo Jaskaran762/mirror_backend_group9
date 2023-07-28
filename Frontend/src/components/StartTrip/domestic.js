@@ -7,6 +7,7 @@ import ReviewsPage from '../reviews/review.js';
 import axios from 'axios';
 
 const Domestic = ({ selectedState }) => {
+  const changePage = useNavigate();
   const [searchButton, setSearchButton] = useState(false);
   const [itemCounter, setItemCounter] = useState(0);
   const [selectedStateName, setselectedStateName] = useState();
@@ -44,17 +45,17 @@ const Domestic = ({ selectedState }) => {
     setSearchButton(true);
   };
 
-  const [showDialog, setShowDialog] = useState(false);
+  /* const [showDialog, setShowDialog] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedEndDate, setSelectedEndDate] = useState('');
   const [selectedEndTime, setSelectedEndTime] = useState('');
   const [itinerary, setItinerary] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState([]); */
   const [reviewsToShow, setReviewsToShow] = useState([]);
   const [placeToVisit, setPlaceToVisit] = useState([]);
 
-  const handleOpenDialog = (index) => {
+/*   const handleOpenDialog = (index) => {
     setShowDialog(index);
   };
 
@@ -118,10 +119,8 @@ const Domestic = ({ selectedState }) => {
     console.log(title);
     return wishlist.some((item) => item.title === title);
   };
-
-  const changePage = useNavigate();
-
-  const handleItinerary = () => {
+*/
+  /* const handleItinerary = () => {
     console.log(itinerary);
     const pass = encodeURIComponent(JSON.stringify(itinerary));
     changePage('/itinerary/' + pass);
@@ -131,7 +130,7 @@ const Domestic = ({ selectedState }) => {
     const pass = encodeURIComponent(JSON.stringify(wishlist));
     changePage('/wish/' + pass);
   };
-
+ */
   const ReviewsDisplay = ({ reviews }) => {
     return (
       <div>
@@ -160,12 +159,12 @@ const Domestic = ({ selectedState }) => {
   const renderCards = (data, type) => {
     const cards = data.map((item, index) => {
       const uniqueIndex = index + data.length * type;
-      const isInWishlist = isItemInWishlist(item.cityName);
-      console.log(isInWishlist);
+     /*  const isInWishlist = isItemInWishlist(item.cityName);
+      console.log(isInWishlist); */
       console.log(item.data);
 
       return (
-        <Col xs={12} md={6} lg={4} key={uniqueIndex}>
+        <Col xs={12} md={6} lg={4} key={uniqueIndex} className ="g-4">  
           <Card>
           {item.cityImageLink && <Card.Img variant="top" src={item.cityImageLink} />}
             <Card.Body>
@@ -175,17 +174,17 @@ const Domestic = ({ selectedState }) => {
                 </Button>
               </Card.Title>
               <Card.Text style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{item.description}</Card.Text>
-              <Card.Footer>
+              {/* <Card.Footer>
               <Button variant="primary" onClick={() => handleOpenDialog(uniqueIndex)}>
                 Add to Itinerary
               </Button>
               <Button variant="link" onClick={() => handleAddToWishlist(item.cityName)}>
                 {isInWishlist ? <RiHeartFill size={30} /> : <RiHeartAddLine size={30} />}
               </Button>
-              </Card.Footer>
+              </Card.Footer> */}
             </Card.Body>
           </Card>
-          <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
+      {/*     <Modal show={showDialog === uniqueIndex} onHide={handleCloseDialog}>
             <Modal.Header closeButton>
               <Modal.Title>Select Date and Time</Modal.Title>
             </Modal.Header>
@@ -215,7 +214,7 @@ const Domestic = ({ selectedState }) => {
                 Save
               </Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
         </Col>
       );
     });
