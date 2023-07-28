@@ -44,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
             return notificationResponseDTOList;
         }
         catch (Exception e){
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
 
     }

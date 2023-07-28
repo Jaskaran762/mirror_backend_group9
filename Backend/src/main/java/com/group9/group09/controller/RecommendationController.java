@@ -2,6 +2,7 @@ package com.group9.group09.controller;
 
 import com.group9.group09.DTO.ResponseDTO.*;
 import com.group9.group09.DTO.RequestDTO.*;
+import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.service.interfaces.RecommendationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -31,11 +32,17 @@ public class RecommendationController {
             RecommendationResponseDTO responseDTO =
                     recommendationService.getUserRecommendationsBasedOnInterests(requestDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        }catch (UserNotFoundException e) {
+            logger.error("Error Message: ");
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage(e.getMessage()+ e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
         }
         catch (Exception e){
             logger.error("Error Message: ");
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("some issue");
+            response.setMessage("some issue"+e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }

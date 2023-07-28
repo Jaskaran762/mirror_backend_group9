@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.exception.ReviewNotFoundException;
 import com.group9.group09.model.ReviewsActivity;
 import com.group9.group09.repository.interfaces.ReviewsActivityRepository;
 import com.group9.group09.repository.rowmapper.ReviewsActivityRowMapper;
@@ -24,7 +25,7 @@ public class ReviewsActivityRepositoryImpl implements ReviewsActivityRepository 
                 return jdbcTemplate.query(getReviewsPlaceByReviewId, new ReviewsActivityRowMapper(), activityId);
             } catch (Exception e) {
                 logger.error("Error Message: ");
-                throw new RuntimeException(e.getMessage());
+                throw new ReviewNotFoundException(e.getMessage());
             }
         }
 }

@@ -1,11 +1,13 @@
 package com.group9.group09.repository;
 
 import com.group9.group09.DTO.RequestDTO.WishListRequestDTO;
+import com.group9.group09.exception.WishlistNotFoundException;
 import com.group9.group09.model.wishList;
 import com.group9.group09.repository.interfaces.WishlistRepository;
 import com.group9.group09.repository.rowmapper.WishListRowMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -29,9 +31,9 @@ public class WishListRepositoryImp implements WishlistRepository {
             String getWishListbyUserIDQuery = "Select * from Wishlist where user_id=?";
             return jdbcTemplate.query(getWishListbyUserIDQuery,new WishListRowMapper(),userID);
 
-        }catch (Exception e){
+        }catch (DataAccessException e){
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new WishlistNotFoundException(e.getMessage());
         }
     }
 
@@ -42,9 +44,9 @@ public class WishListRepositoryImp implements WishlistRepository {
             String addtoWishlistQuery = "Insert INTO Wishlist (city_id,place_id,activity_id,user_id) VALUES(?,?,?,?);";
             return jdbcTemplate.update(addtoWishlistQuery, wishListRequestDTO.getCityid(), wishListRequestDTO.getActivityId(),wishListRequestDTO.getPlaceId(),wishListRequestDTO.getUserid());
 
-        }catch (Exception e){
+        }catch (DataAccessException e){
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new WishlistNotFoundException(e.getMessage());
         }
 
     }
@@ -57,9 +59,9 @@ public class WishListRepositoryImp implements WishlistRepository {
             String deleteWishlistQuery = "Delete from Wishlist where wishlist_id=?;";
             return jdbcTemplate.update(deleteWishlistQuery, wishlistid);
 
-        }catch (Exception e){
+        }catch (DataAccessException e){
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new WishlistNotFoundException(e.getMessage());
         }
     }
 }

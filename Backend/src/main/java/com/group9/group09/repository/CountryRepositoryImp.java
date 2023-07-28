@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.exception.CountryNotFoundException;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.Country;
 import com.group9.group09.repository.interfaces.CountryRepository;
@@ -32,7 +33,7 @@ public class CountryRepositoryImp implements CountryRepository {
             return Optional.ofNullable(jdbcTemplate.queryForObject(findCountrybyIDQuery, new CountryRowMapper(), countryID));
         } catch (Exception e) {
             logger.error("Error Message: ");
-            throw new UserNotFoundException("dafs");
+            throw new CountryNotFoundException(e.getMessage());
         }
 
     }
@@ -47,7 +48,7 @@ public class CountryRepositoryImp implements CountryRepository {
         } catch (Exception e) {
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new UserNotFoundException();
+            throw new CountryNotFoundException(e.getMessage());
         }
     }
 
@@ -61,7 +62,7 @@ public class CountryRepositoryImp implements CountryRepository {
         }catch (Exception e){
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new UserNotFoundException();
+            throw new CountryNotFoundException(e.getMessage());
         }
     }
 
@@ -75,7 +76,7 @@ public class CountryRepositoryImp implements CountryRepository {
         } catch (Exception e) {
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new RuntimeException();
+            throw new CountryNotFoundException(e.getMessage());
         }
     }
 

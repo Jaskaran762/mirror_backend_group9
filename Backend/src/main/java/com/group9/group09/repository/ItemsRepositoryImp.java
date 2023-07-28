@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.exception.ItemNotFoundException;
 import com.group9.group09.model.ItemstoCarry;
 import com.group9.group09.repository.interfaces.ItemsRepository;
 import com.group9.group09.repository.rowmapper.ActivityRowMapper;
@@ -31,7 +32,7 @@ public class ItemsRepositoryImp implements ItemsRepository{
             return jdbcTemplate.query(getAllItemstoCarryQuery, new ItemstoCarryRowMapper(), null);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new ItemNotFoundException(e.getMessage());
         }
     }
 }
