@@ -2,6 +2,7 @@ package com.group9.group09.controller;
 
 import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.DTO.ResponseDTO.*;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.model.User;
 import com.group9.group09.repository.interfaces.UserRepository;
@@ -30,7 +31,7 @@ public class HomePageController {
     @Autowired
     private UserRepository userRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(HomePageController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     /**
      * Handles the choice selection request.
      *

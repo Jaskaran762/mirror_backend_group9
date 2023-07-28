@@ -4,6 +4,7 @@ import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
 import com.group9.group09.DTO.RequestDTO.OTPRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.service.interfaces.OTPService;
@@ -29,7 +30,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     /**
      * Handles the user login request.

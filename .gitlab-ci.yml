@@ -14,14 +14,6 @@ stages:
   - deploy-frontend
 
 
-#test:
-#  stage: test
-#  tags:
-#    - group_nine_runner
-#  script:
-    # this will clean the target folder and then test the maven #project
-#    - mvn clean test
-
 test-backend:
   stage: test-backend
 #  tags:
@@ -33,15 +25,6 @@ test-backend:
   only:
     - main
 
-#build:
-#  stage: build
-#  tags:
-#    - group_nine_runner
-#  script:
-#    - mvn package
-#  artifacts:
-#    paths:
-#      - target/*.jar
 
 build-backend:
   stage: build-backend
@@ -56,17 +39,6 @@ build-backend:
   only:
     - main
 
-
-# deployed on render with base url https://group09-prod.onrender.com
-#deploy:
-#  stage: deploy
-#  tags:
-#    - group_nine_runner
-#  script:
-#    - echo "Deploy to prod server on render"
-#    - curl -s "$RENDER_TRIGGER_URL_PROD_ENV"
-#  only:
-#    - prod
 
 # deployed on render with base url https://group09-prod.onrender.
 deploy-backend:

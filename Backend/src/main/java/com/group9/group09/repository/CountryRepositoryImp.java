@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.CountryNotFoundException;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.Country;
@@ -18,7 +19,7 @@ public class CountryRepositoryImp implements CountryRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(CountryRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     public CountryRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

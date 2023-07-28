@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.model.Place;
 import com.group9.group09.repository.interfaces.PlaceRepository;
 import com.group9.group09.repository.rowmapper.PlaceRowMapper;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class PlaceRepositoryImp implements PlaceRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(PlaceRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     public PlaceRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

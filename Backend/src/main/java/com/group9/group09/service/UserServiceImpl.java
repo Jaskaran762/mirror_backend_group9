@@ -5,6 +5,7 @@ import com.group9.group09.DTO.RequestDTO.UserProfileRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.UserProfileResponseDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.Country;
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     @Autowired
     private NotificationRepository notificationRepository;

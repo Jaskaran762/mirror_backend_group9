@@ -2,6 +2,7 @@ package com.group9.group09.service;
 
 import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.DTO.ResponseDTO.*;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.model.*;
 import com.group9.group09.repository.interfaces.*;
@@ -58,7 +59,7 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private  NotificationRepository notificationRepository;
 
-    private static Logger logger = LoggerFactory.getLogger(HomePageServiceImpl.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     
     /**
      * Handles the choice selection service.

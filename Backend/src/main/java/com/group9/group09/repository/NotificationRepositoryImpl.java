@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.model.Notification;
 import com.group9.group09.repository.interfaces.NotificationRepository;
 import com.group9.group09.repository.rowmapper.NotificationRowMapper;
@@ -14,7 +15,7 @@ import java.util.List;
 @Repository
 public class NotificationRepositoryImpl implements NotificationRepository {
 
-    private static Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired

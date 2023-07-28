@@ -1,5 +1,6 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.ItemNotFoundException;
 import com.group9.group09.model.ItemstoCarry;
 import com.group9.group09.repository.interfaces.ItemsRepository;
@@ -17,7 +18,7 @@ public class ItemsRepositoryImp implements ItemsRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(ItemsRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     public ItemsRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

@@ -6,6 +6,7 @@ import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
 import com.group9.group09.DTO.ResponseDTO.RecommendationResponseDTO;
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.DTO.ResponseDTO.UserProfileResponseDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.service.interfaces.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class UserProfileController {
     @Autowired
     private UserService userService;
 
-    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     @PostMapping(path = "/getProfile")
     public ResponseEntity<?> getUserDetails(@RequestBody RequestDTO requestDTO, HttpServletRequest request) {

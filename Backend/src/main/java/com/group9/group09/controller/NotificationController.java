@@ -3,6 +3,7 @@ package com.group9.group09.controller;
 import com.group9.group09.DTO.RequestDTO.NotificationRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
 import com.group9.group09.DTO.ResponseDTO.NotificationResponseDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.service.interfaces.NotificationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     @PostMapping(path = "fetchNotifications")
     public ResponseEntity<?> fetchAllNotifications(NotificationRequestDTO requestDTO, HttpServletRequest request){
