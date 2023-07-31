@@ -11,6 +11,6 @@ public class Group09Application extends SpringBootServletInitializer {
     // Main method to run application
     public static void main(String[] args) {
         SpringApplication.run(Group09Application.class, args);
-        System.out.println("Test Script 33");
+        System.out.println("Application Started");
     }
 }
