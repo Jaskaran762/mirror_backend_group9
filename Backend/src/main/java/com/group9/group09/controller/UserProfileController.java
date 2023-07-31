@@ -26,6 +26,13 @@ public class UserProfileController {
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Endpoint to get user details based on the provided RequestDTO.
+     *
+     * @param requestDTO The RequestDTO containing user details.
+     * @param request    The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the UserProfileResponseDTO with user details.
+     */
     @PostMapping(path = "/getProfile")
     public ResponseEntity<?> getUserDetails(@RequestBody RequestDTO requestDTO, HttpServletRequest request) {
 
@@ -50,6 +57,13 @@ public class UserProfileController {
         }
     }
 
+    /**
+     * Endpoint to set user details based on the provided UserProfileRequestDTO.
+     *
+     * @param requestDTO The UserProfileRequestDTO containing user details.
+     * @param request    The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the ResponseDTO with the result of the operation.
+     */
     @PostMapping(path = "/setProfile")
     public ResponseEntity<?> setUserDetails(@RequestBody UserProfileRequestDTO requestDTO, HttpServletRequest request) {
 
