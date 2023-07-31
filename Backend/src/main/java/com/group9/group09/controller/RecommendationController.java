@@ -25,6 +25,13 @@ public class RecommendationController {
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Endpoint to get user recommendations based on the provided RequestDTO containing user interests.
+     *
+     * @param requestDTO The RequestDTO containing user interests.
+     * @param request    The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the RecommendationResponseDTO with user recommendations.
+     */
     @PostMapping(path = "/recommendation")
     public ResponseEntity<?> getRecommendations(@RequestBody RequestDTO requestDTO, HttpServletRequest request){
 
