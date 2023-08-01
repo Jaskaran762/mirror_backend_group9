@@ -20,10 +20,22 @@ public class ItemsRepositoryImp implements ItemsRepository{
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Constructor to create an instance of ItemsRepositoryImp with a JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate to use for database operations.
+     */
     public ItemsRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    /**
+     * Get all items to carry from the database.
+     *
+     * @return A list of all items to carry in the database.
+     * @throws ItemNotFoundException If no items to carry are found in the database.
+     */
     @Override
     public List<ItemstoCarry> getAllItems() {
 
