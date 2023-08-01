@@ -1,10 +1,18 @@
 package com.group9.group09.service;
 
-import com.group9.group09.DTO.ResponseDTO;
-import com.group9.group09.DTO.UserEditRequestDTO;
+import com.group9.group09.DTO.RequestDTO.RequestDTO;
+import com.group9.group09.DTO.RequestDTO.UserProfileRequestDTO;
+import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
+import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
+import com.group9.group09.DTO.ResponseDTO.UserProfileResponseDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.exception.UserNotFoundException;
+import com.group9.group09.model.Country;
+import com.group9.group09.model.Notification;
 import com.group9.group09.model.User;
+import com.group9.group09.repository.interfaces.CountryRepository;
+import com.group9.group09.repository.interfaces.NotificationRepository;
 import com.group9.group09.repository.interfaces.UserRepository;
 import com.group9.group09.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +36,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    @Autowired
+    private CountryRepository countryRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
@@ -96,6 +110,13 @@ public class UserServiceImpl implements UserService {
                 registerStatus.setEmail(user.getEmail());
                 registerStatus.setSuccess("ok");
 
+                Notification notification = new Notification();
+                user = userRepository.getUserbyemail(user.getEmail());
+                notification.setUserId(Integer.parseInt(user.getUserId()));
+                notification.setDescription("Welcome to the Tripify application.");
+                notification.setCategory("Registration");
+                notificationRepository.setNotificationsForUser(notification);
+
             } else {
                 throw new RuntimeException();
             }
@@ -109,41 +130,7 @@ public class UserServiceImpl implements UserService {
      * @param
      * @return the ResponseDTO object
      */
- /*   @Override
-    public ResponseDTO updateUserpasswordService(UserEditRequestDTO userEditRequestDTO) {
-        if (isNullOrEmpty(userEditRequestDTO.getUser().getEmail()) || isNullOrEmpty(userEditRequestDTO.getUser().getPassword())) {
-            throw new UserNotFoundException("Fill in user name and password for updating password");
-        }
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        userEditRequestDTO.getUser().getEmail(),
-                        userEditRequestDTO.getUser().getPassword()
-                )
-        );
-
-        ResponseDTO updatedUserResponsedDTO = new ResponseDTO();
-
-        Optional<User> userInfo = userRepository.findByUsermail(userEditRequestDTO.getUser().getEmail());
-
-        if (userInfo != null) {
-          //  var jwtToken = jwtService.generateToken(userInfo.get());
-
-            int success = userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
-
-            if(success == 1){
-                updatedUserResponsedDTO.setSuccess("Successfully Updated");
-                updatedUserResponsedDTO.setEmail(userEditRequestDTO.getUser().getEmail());
-               // updatedUserResponsedDTO.setToken(jwtToken);
-            }else {
-                updatedUserResponsedDTO.setSuccess("Error while updating the User password");
-                updatedUserResponsedDTO.setEmail(userEditRequestDTO.getUser().getEmail());
-             //   updatedUserResponsedDTO.setToken(jwtToken);
-            }
-        }
-
-        return updatedUserResponsedDTO;
-    }*/
     @Override
     public ResponseDTO updateUserpasswordService(UserEditRequestDTO userEditRequestDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
@@ -157,14 +144,17 @@ public class UserServiceImpl implements UserService {
 
         if (userPresent.isPresent()) {
             User user = userPresent.get();
-            // Set the new password after encoding it
-            //  user.setPassword(passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
-            // Save the updated user to the database
-            //   userRepository.updateUserPassword(userEditRequestDTO.getUser(), userEditRequestDTO.getNewpassword());
 
             userRepository.updateUserPassword(userEditRequestDTO.getUser(), passwordEncoder.encode(userEditRequestDTO.getNewpassword()));
 
             responseDTO.setSuccess("Password updated successfully");
+
+            Notification notification = new Notification();
+            user = userRepository.getUserbyemail(user.getEmail());
+            notification.setUserId(Integer.parseInt(user.getUserId()));
+            notification.setDescription("Your password has been reset.");
+            notification.setCategory("Reset Password");
+            notificationRepository.setNotificationsForUser(notification);
         } else {
             throw new UserNotFoundException("User not found");
         }
@@ -197,6 +187,73 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseDTO updateUserphoneNumberService(User user) {
         return null;
+    }
+
+    @Override
+    public UserProfileResponseDTO getUserDetails(RequestDTO requestDTO) {
+
+        try {
+            String token = requestDTO.getToken();
+            token = token.replace("Bearer ", "");
+            String username = jwtService.extractUsername(token);
+            Optional<User> user = userRepository.findByUsermail(username);
+
+            UserProfileResponseDTO responseDTO = new UserProfileResponseDTO();
+            responseDTO.setEmail(user.get().getEmail());
+            responseDTO.setInterests(user.get().getInterest());
+            responseDTO.setName(user.get().getName());
+            responseDTO.setPhoneNumber(user.get().getPhone());
+            
+
+            Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
+            responseDTO.setCountry(country.get().getCountryName());
+
+            return responseDTO;
+        }
+        catch (Exception e){
+            throw new RuntimeException("Error in fetching user details");
+        }
+    }
+
+    @Override
+    public ResponseDTO setUserDetails(UserProfileRequestDTO requestDTO) {
+        try {
+            String token = requestDTO.getToken();
+            token = token.replace("Bearer ", "");
+            String username = jwtService.extractUsername(token);
+            Optional<User> user = userRepository.findByUsermail(username);
+
+            ResponseDTO responseDTO = new ResponseDTO();
+            User updatedUser = new User();
+            updatedUser.setUserId(user.get().getUserId());
+
+            if (requestDTO.getCountry()!=null) {
+                Optional<Country> country = countryRepository.findByCountryName(requestDTO.getCountry());
+                Integer countryId = country.get().getCountryID();
+                updatedUser.setHomeCountry(countryId);
+                userRepository.updateUserCountry(updatedUser);
+            }
+            if (requestDTO.getInterests()!=null){
+                updatedUser.setInterest(requestDTO.getInterests());
+                userRepository.updateUserInterests(updatedUser);
+            }
+            if (requestDTO.getName()!=null){
+                updatedUser.setName(requestDTO.getName());
+                userRepository.updateUserName(updatedUser);
+            }
+            if (requestDTO.getPhoneNumber()!= null){
+                updatedUser.setPhone(requestDTO.getPhoneNumber());
+                userRepository.updateUserPhone(updatedUser);
+            }
+            if (requestDTO.getEmail()!=null){
+                updatedUser.setEmail(requestDTO.getEmail());
+                userRepository.updateUserEmail(updatedUser);
+            }
+            return responseDTO;
+        }
+        catch (Exception e){
+            throw new RuntimeException("Error in updating profile");
+        }
     }
 
     private boolean isNullOrEmpty(String value) {

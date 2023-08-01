@@ -1,13 +1,14 @@
 package com.group9.group09.model;
 
+import java.util.Date;
+
 public class ReviewsActivity {
     private Integer reviewActivityID;
     private Integer userID;
     private Integer activityId;
     private Double rating;
-
     private String reviewactivityComment;
-
+    private Date dateofreview;
     public Integer getReviewActivityID() {
         return reviewActivityID;
     }
@@ -46,5 +47,13 @@ public class ReviewsActivity {
 
     public void setReviewactivityComment(String reviewactivityComment) {
         this.reviewactivityComment = reviewactivityComment;
+    }
+
+    public Date getDateofreview() {
+        return dateofreview;
+    }
+
+    public void setDateofreview(Date dateofreview) {
+        this.dateofreview = dateofreview;
     }
 }

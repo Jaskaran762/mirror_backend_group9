@@ -10,6 +10,7 @@ public class City {
     private Integer stateId;
 
     private List<Place> places;
+    private String cityImageLink;
 
     /**
      * Get the name of the city.
@@ -99,5 +100,13 @@ public class City {
      */
     public void setPlaces(List<Place> places) {
         this.places = places;
+    }
+
+    public String getCityImageLink() {
+        return cityImageLink;
+    }
+
+    public void setCityImageLink(String cityImageLink) {
+        this.cityImageLink = cityImageLink;
     }
 }

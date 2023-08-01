@@ -1,12 +1,14 @@
 package com.group9.group09.model;
 
+import javax.xml.transform.sax.SAXResult;
 import java.util.Date;
 
 public class Itinerary {
     private Integer itineraryid;
     private Integer userid;
-    private Date startdate;
-    private Date endDate;
+    private String startdate;
+    private String endDate;
+    private String title;
 
     /**
      * Get the ID of the itinerary.
@@ -49,7 +51,7 @@ public class Itinerary {
      *
      * @return the startdate
      */
-    public Date getStartdate() {
+    public String getStartdate() {
         return startdate;
     }
 
@@ -58,7 +60,7 @@ public class Itinerary {
      *
      * @param startdate the startdate to set
      */
-    public void setStartdate(Date startdate) {
+    public void setStartdate(String startdate) {
         this.startdate = startdate;
     }
 
@@ -67,7 +69,7 @@ public class Itinerary {
      *
      * @return the endDate
      */
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -76,7 +78,16 @@ public class Itinerary {
      *
      * @param endDate the endDate to set
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 }

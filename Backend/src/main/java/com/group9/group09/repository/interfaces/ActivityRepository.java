@@ -14,4 +14,10 @@ public interface ActivityRepository {
 
 
     List<Activity> getAllActivities();
+    
+    List<Activity> getActivitiesByInterest(String interest);
+
+    Optional<Activity> isActivityPresent(String activityName, Integer cityId);
+
+    int addPlace(String activityName, String description, Integer cityId, String interest);
 }

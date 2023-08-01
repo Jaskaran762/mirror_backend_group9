@@ -1,6 +1,6 @@
 package com.group9.group09.service;
 
-import com.group9.group09.DTO.OTPRequestDTO;
+import com.group9.group09.DTO.RequestDTO.OTPRequestDTO;
 import com.group9.group09.config.interfaces.EmailConfig;
 import com.group9.group09.model.EmailDetails;
 import com.group9.group09.service.interfaces.OTPService;
@@ -33,34 +33,48 @@ public class OTPServiceImpl implements OTPService {
     @Override
     public boolean generateOTP(String email) {
 
-        Random random = new Random();
-        Integer otp = random.nextInt(1000, 9999);
-        OTPServiceImpl.otp = otp.toString();
+        try {
+            Random random = new Random();
+            int min = 1000;
+            int max = 9999;
+            Integer otp = random.nextInt(max - min)+ min;
+            OTPServiceImpl.otp = otp.toString();
 
-        startTime = System.currentTimeMillis();
+            startTime = System.currentTimeMillis();
 
-        EmailDetails details = new EmailDetails();
-        details.setSubject("Tripify OTP Verification");
-        details.setMsgBody("Your OTP for the tripify verification is " + otp.toString());
-        details.setRecipient(email);
+            EmailDetails details = new EmailDetails();
+            details.setSubject("Tripify OTP Verification");
+            details.setMsgBody("Your OTP for the tripify verification is " + otp.toString());
+            details.setRecipient(email);
 
-        emailConfig.sendMail(details);
+            emailConfig.sendMail(details);
 
-        return true;
+            return true;
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 
     @Override
     public boolean verifyUserUsingOTP(OTPRequestDTO requestDTO) {
 
-        long endTime = System.currentTimeMillis();
-        long timeDifference = startTime - endTime;
-        if (timeDifference <= allowedTimeDifference) {
-            if (requestDTO.getOtp().equalsIgnoreCase(getOtp()))
-                return true;
-            else
-                return false;
-        } else {
-            throw new RuntimeException("OTP Expired");
+        try {
+            long endTime = System.currentTimeMillis();
+            long timeDifference = startTime - endTime;
+            if (timeDifference <= allowedTimeDifference) {
+                if (requestDTO.getOtp().equalsIgnoreCase(getOtp()))
+                    return true;
+                else
+                    return false;
+            } else {
+                throw new RuntimeException("OTP Expired");
+            }
         }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 }

@@ -12,6 +12,14 @@ public interface UserRepository {
 	
 	int updateUserEmail(User user);
 
+    int updateUserName(User user);
+
+	int updateUserPhone(User user);
+
+	int updateUserInterests(User user);
+
+	int updateUserCountry(User user);
+
 	Optional<User> findByUserId(String userId);
 	
 	int deleteByUserId(String userId);

@@ -1,6 +1,8 @@
 package com.group9.group09.service;
 
-import com.group9.group09.DTO.*;
+import com.group9.group09.DTO.RequestDTO.*;
+import com.group9.group09.DTO.ResponseDTO.*;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.model.*;
 import com.group9.group09.repository.interfaces.*;
@@ -12,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static ch.qos.logback.core.util.OptionHelper.isNullOrEmpty;
 
 @Service
 public class HomePageServiceImpl implements HomePageService {
@@ -52,7 +56,10 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private ReviewsActivityRepository reviewsActivityRepository;
 
-    private static Logger logger = LoggerFactory.getLogger(HomePageServiceImpl.class);
+    @Autowired
+    private  NotificationRepository notificationRepository;
+
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     
     /**
      * Handles the choice selection service.
@@ -67,20 +74,24 @@ public class HomePageServiceImpl implements HomePageService {
 
         String username = jwtService.extractUsername(choice.getToken());
         Optional<User> user = userRepository.findByUsermail(username);
-        Optional<Country> country = countryRepository.findByCountryId(user.get().getHomeCountry());
-        List<State> stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
+        List<Country> countryList;
+        Optional<Country> country;
+        List<State> stateList;
 
-        List<String> states = new ArrayList<>();
-        for (State state : stateList) {
-            states.add(state.getStateName());
+        if(choice.getRegion().equalsIgnoreCase("International")){
+            countryList = countryRepository.getCountries();
+            choiceResponseDTO.setRegion(choice.getRegion());
+            choiceResponseDTO.setRegionList(countryList);
+
+        } else if (choice.getRegion().equalsIgnoreCase("domestic")) {
+            country = countryRepository.findByCountryId(user.get().getHomeCountry());
+            stateList = stateRepository.getStatesbyCountryID(country.get().getCountryID());
+            choiceResponseDTO.setRegion(choice.getRegion());
+            choiceResponseDTO.setRegionList(stateList);
         }
-
-        choiceResponseDTO.setRegion(choice.getRegion());
-        choiceResponseDTO.setRegionList(states);
 
         return choiceResponseDTO;
     }
-
     /**
      * Handles the location selection service.
      *
@@ -109,29 +120,6 @@ public class HomePageServiceImpl implements HomePageService {
     }
 
 
-   /* @Override
-    public CityResponseDTO citySelectorService(CityRequestDTO cityRequestDTO) {
-
-        CityResponseDTO cityResponseDTO = new CityResponseDTO();
-
-        String username = jwtService.extractUsername(cityRequestDTO.getToken());
-        Optional<User> user = userRepository.findByUsermail(username);
-        Optional<City> city = cityRepository.findByCityId(cityRequestDTO.getCityID());
-        List<Activity> activityList = activityRepository.getActivitiesbyCityID(city.get().getCityId());
-
-        List<String> activityStringList = new ArrayList<>();
-        for (Activity activity: activityList) {
-            activityStringList.add(activity.getActivityName());
-        }
-        cityResponseDTO.setCityID(city.get().getCityId());
-        cityResponseDTO.setCityName(city.get().getCityName());
-        cityResponseDTO.setDescription(city.get().getDescription());
-        cityResponseDTO.setPlaceResponseList(activityStringList);
-
-
-        return cityResponseDTO;
-    }*/
-
     /**
      * Handles the city selection service.
      *
@@ -146,6 +134,7 @@ public class HomePageServiceImpl implements HomePageService {
         Optional<User> user = userRepository.findByUsermail(username);
         Optional<City> city = cityRepository.findByCityId(cityRequestDTO.getCityID());
         List<Place> placeList = placeRepository.getPlacesbyCityID(city.get().getCityId());
+        List<Activity> activityList = activityRepository.getActivitiesbyCityID(city.get().getCityId());
 
         List<String> placeStringList = new ArrayList<>();
 
@@ -156,7 +145,8 @@ public class HomePageServiceImpl implements HomePageService {
         cityResponseDTO.setCityID(city.get().getCityId());
         cityResponseDTO.setCityName(city.get().getCityName());
         cityResponseDTO.setDescription(city.get().getDescription());
-        cityResponseDTO.setPlaceResponseList(placeStringList);
+        cityResponseDTO.setPlaceObjectResponseList(placeList);
+        cityResponseDTO.setActivityList(activityList);
 
         return cityResponseDTO;
     }
@@ -184,8 +174,8 @@ public class HomePageServiceImpl implements HomePageService {
         placeResponseDTO.setPlaceName(place.get().getPlaceName());
         placeResponseDTO.setPlaceID(place.get().getPlaceId());
         placeResponseDTO.setDescription(place.get().getDescription());
-        placeResponseDTO.setActivityStringResponseList(activityStringList);
         placeResponseDTO.setActivityObjectsResponseList(activityList);
+        placeResponseDTO.setPlaceImageLink(place.get().getPlaceImageLink());
         return placeResponseDTO;
     }
 
@@ -201,10 +191,15 @@ public class HomePageServiceImpl implements HomePageService {
 
         String username = jwtService.extractUsername(activityRequestDTO.getToken());
         Optional<User> user = userRepository.findByUsermail(username);
+        Optional<Activity> getbyactivityId = activityRepository.findByActivityId(activityRequestDTO.getActivityID());
         List<Activity> activityList = activityRepository.getAllActivities();
 
         activityResponseDTO.setActivityObjectsResponseList(activityList);
-
+        //set the response dto.
+        activityResponseDTO.setActivityId(getbyactivityId.get().getActivityId());
+        activityResponseDTO.setActivityName(getbyactivityId.get().getActivityName());
+        activityResponseDTO.setActivitydesc(getbyactivityId.get().getDescription());
+        activityResponseDTO.setActivityLink(getbyactivityId.get().getActivityImageLink());
 
         return activityResponseDTO;
     }
@@ -228,18 +223,24 @@ public class HomePageServiceImpl implements HomePageService {
     /**
      * Handles the wishlist service.
      *
-     * @param wishListRequestDTO the WishListRequestDTO object
+     * @param requestDTO the WishListRequestDTO object
      * @return the WishListResponseDTO object
      */
     @Override
-    public WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO) {
+    public WishListResponseDTO getWishListService(RequestDTO requestDTO) {
 
         WishListResponseDTO wishListResponseDTO = new WishListResponseDTO();
-        List<wishList> wishlistList = wishlistRepository.getWishListbyUserID(wishListRequestDTO.getUserid());
 
-        wishListResponseDTO.setUserId(wishListRequestDTO.getUserid());
-        wishListResponseDTO.setActivityid(wishListResponseDTO.getActivityid());
+        String token = requestDTO.getToken().replace("Bearer ","");
+        String username = jwtService.extractUsername(token);
+        Optional<User> user = userRepository.findByUsermail(username);
+
+        if(user.isPresent()){
+
+        List<wishList> wishlistList = wishlistRepository.getWishListbyUserID(Integer.parseInt(user.get().getUserId()));
         wishListResponseDTO.setWishLists(wishlistList);
+
+        }
 
         return wishListResponseDTO;
     }
@@ -247,17 +248,22 @@ public class HomePageServiceImpl implements HomePageService {
     /**
      * Handles the itinerary service.
      *
-     * @param itineraryRequestDTO the ItineraryRequestDTO object
+     * @param requestDTO the ItineraryRequestDTO object
      * @return the ItineraryResponseDTO object
      */
     @Override
-    public ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO) {
+    public ItineraryResponseDTO getItinerary(RequestDTO requestDTO) {
 
         ItineraryResponseDTO itineraryResponseDTO = new ItineraryResponseDTO();
+        String token = requestDTO.getToken().replace("Bearer ","");
+        String username = jwtService.extractUsername(token);
+        Optional<User> user = userRepository.findByUsermail(username);
 
-        List<Itinerary> itineraryList = itineraryRepository.getItineraryList(itineraryRequestDTO.getUserid());
-        itineraryResponseDTO.setUserid(itineraryRequestDTO.getUserid());
-        itineraryResponseDTO.setItineraryObjectList(itineraryList);
+        if(user.isPresent()){
+
+                List<Itinerary> itineraryList = itineraryRepository.getItineraryList(Integer.parseInt(user.get().getUserId()));
+                itineraryResponseDTO.setItineraryObjectList(itineraryList);
+        }
 
         return itineraryResponseDTO;
     }
@@ -266,7 +272,7 @@ public class HomePageServiceImpl implements HomePageService {
     public ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
 
         ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
-        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyUserId(reviewsPlaceRequestDTO.getPlaceid());
+        List<ReviewsPlace> reviewsPlaces = reviewsPlaceRepository.getReviewsPlacebyPlaceId(reviewsPlaceRequestDTO.getPlace_id());
         reviewsPlaceResponseDTO.setReviewsPlaces(reviewsPlaces);
 
         return reviewsPlaceResponseDTO;
@@ -281,5 +287,128 @@ public class HomePageServiceImpl implements HomePageService {
 
         return reviewsActivityResponseDTO;
     }
+
+    @Override
+    public CountryResponseDTO countrySelectorService(CountryRequestDTO countryRequestDTO) {
+
+        CountryResponseDTO countryResponseDTO = new CountryResponseDTO();
+
+        String username = jwtService.extractUsername(countryRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+        Optional<Country> country = countryRepository.findByCountryName(countryRequestDTO.getCountry_name());
+
+        List<State> states = stateRepository.getStatesbyCountryID(country.get().getCountryID());
+
+
+        for (State state : states) {
+         state.setCityList(cityRepository.getCitiesbyStateID(state.getStateID()));
+        }
+
+        for (State state : states) {
+            List<City> cityList = state.getCityList();
+            for (City city : cityList) {
+                city.setPlaces(placeRepository.getPlacesbyCityID(city.getCityId()));
+            }
+        }
+        countryResponseDTO.setCountryName(country.get().getCountryName());
+        countryResponseDTO.setDescription(country.get().getDescription());
+        countryResponseDTO.setStateList(states);
+
+        return countryResponseDTO;
+
+    }
+
+    @Override
+    public WishListResponseDTO addWishListService(WishListRequestDTO wishListRequestDTO) {
+
+        WishListResponseDTO wishListResponseDTO = new WishListResponseDTO();
+
+
+        /*if (isNullOrEmpty(wishListRequestDTO.getPlacename()) && isNullOrEmpty(wishListRequestDTO.getActivityname()) ) {
+            throw new RuntimeException();
+        }*/
+        String username = jwtService.extractUsername(wishListRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+
+        Notification notification = new Notification();
+        notification.setUserId(Integer.parseInt(user.get().getUserId()));
+        if (wishListRequestDTO.getActivityId()!=null) {
+            Optional<Activity> activity = activityRepository.findByActivityId(wishListRequestDTO.getActivityId());
+            notification.setDescription(activity.get().getActivityName() + " has been added to wishlist.");
+        }
+        else{
+            Optional<Place> place = placeRepository.findByPlaceId(wishListRequestDTO.getPlaceId());
+            notification.setDescription(place.get().getPlaceName() + " has been added to wishlist.");
+        }
+        notification.setCategory("Wishlist modification");
+        notificationRepository.setNotificationsForUser(notification);
+
+        wishlistRepository.addtoWishlist(wishListRequestDTO);
+        wishListResponseDTO.setMessage("added to wishlist");
+        return wishListResponseDTO;
+    }
+
+    @Override
+    public ItineraryResponseDTO addtoItinerary(ItineraryRequestDTO itineraryRequestDTO) {
+
+        ItineraryResponseDTO itineraryResponseDTO = new ItineraryResponseDTO();
+
+        /*if(isNullOrEmpty(itineraryRequestDTO.getStartdate())&& isNullOrEmpty(itineraryRequestDTO.getStartdate()) ){
+            throw new RuntimeException();
+        }*/
+        String username = jwtService.extractUsername(itineraryRequestDTO.getToken());
+        Optional<User> user = userRepository.findByUsermail(username);
+
+        Notification notification = new Notification();
+        notification.setUserId(Integer.parseInt(user.get().getUserId()));
+        if (itineraryRequestDTO.getActivityid()!=null) {
+            Optional<Activity> activity = activityRepository.findByActivityId(itineraryRequestDTO.getActivityid());
+            notification.setDescription(activity.get().getActivityName() + " has been added to wishlist.");
+        }
+        else{
+            Optional<Place> place = placeRepository.findByPlaceId(itineraryRequestDTO.getPlaceid());
+            notification.setDescription(place.get().getPlaceName() + " has been added to wishlist.");
+        }
+        notification.setCategory("Itinerary modification");
+        notificationRepository.setNotificationsForUser(notification);
+
+        itineraryRepository.addtoItinerary(itineraryRequestDTO);
+        itineraryResponseDTO.setMessage("Itinerary created");
+        return  itineraryResponseDTO;
+    }
+
+    @Override
+    public WishListResponseDTO deleteWishListService(WishListRequestDTO wishListRequestDTO) {
+
+        WishListResponseDTO wishListResponseDTO = new WishListResponseDTO();
+
+        int success = wishlistRepository.deletewishlistbyID(wishListRequestDTO.getWishlistid());
+        wishListResponseDTO.setMessage("deleted wishlist item");
+
+        return wishListResponseDTO;
+    }
+
+    @Override
+    public ItineraryResponseDTO deleteItineraryService(ItineraryRequestDTO itineraryRequestDTO) {
+
+        ItineraryResponseDTO itineraryResponseDTO = new ItineraryResponseDTO();
+
+        int success = itineraryRepository.deleteitinerarybyid(itineraryRequestDTO.getItineraryid());
+        itineraryResponseDTO.setMessage("delete itinerary ");
+
+        return itineraryResponseDTO;
+    }
+
+    @Override
+    public ReviewsPlaceResponseDTO addReviewplaceDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO) {
+
+        ReviewsPlaceResponseDTO reviewsPlaceResponseDTO = new ReviewsPlaceResponseDTO();
+
+        reviewsPlaceRepository.addReviewplace(reviewsPlaceRequestDTO);
+        reviewsPlaceResponseDTO.setMessage("review added successfully");
+        return  reviewsPlaceResponseDTO;
+
+    }
+
 
 }

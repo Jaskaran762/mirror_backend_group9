@@ -1,7 +1,7 @@
 package com.group9.group09.service.interfaces;
 
-import com.group9.group09.DTO.*;
-import com.group9.group09.model.ItemstoCarry;
+import com.group9.group09.DTO.RequestDTO.*;
+import com.group9.group09.DTO.ResponseDTO.*;
 
 public interface HomePageService {
 
@@ -56,19 +56,42 @@ public interface HomePageService {
     /**
      * Handles the wishlist service.
      *
-     * @param wishListRequestDTO the WishListRequestDTO object
+     * @param requestDTO the WishListRequestDTO object
      * @return the WishListResponseDTO object
      */
-    WishListResponseDTO getWishListService(WishListRequestDTO wishListRequestDTO);
+    WishListResponseDTO getWishListService(RequestDTO requestDTO);
 
     /**
      * Handles the itinerary service.
      *
-     * @param itineraryRequestDTO the ItineraryRequestDTO object
+     * @param requestDTO the ItineraryRequestDTO object
      * @return the ItineraryResponseDTO object
      */
-    ItineraryResponseDTO getItinerary(ItineraryRequestDTO itineraryRequestDTO);
+    ItineraryResponseDTO getItinerary(RequestDTO requestDTO);
+
+    /**
+     *
+     * @param reviewsPlaceRequestDTO
+     * @return
+     */
     ReviewsPlaceResponseDTO getReviewDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO);
+
+    /**
+     *
+     * @param reviewsActivityRequestDTO
+     * @return
+     */
     ReviewsActivityResponseDTO getReviewActivityDetails(ReviewsActivityRequestDTO reviewsActivityRequestDTO);
 
+    CountryResponseDTO countrySelectorService(CountryRequestDTO countryRequestDTO);
+
+    WishListResponseDTO addWishListService(WishListRequestDTO wishListRequestDTO);
+
+    ItineraryResponseDTO addtoItinerary(ItineraryRequestDTO itineraryRequestDTO);
+
+    WishListResponseDTO deleteWishListService(WishListRequestDTO wishListRequestDTO);
+
+    ItineraryResponseDTO deleteItineraryService(ItineraryRequestDTO itineraryRequestDTO);
+
+    ReviewsPlaceResponseDTO addReviewplaceDetails(ReviewsPlaceRequestDTO reviewsPlaceRequestDTO);
 }

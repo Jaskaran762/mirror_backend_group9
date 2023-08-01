@@ -1,5 +1,7 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
+import com.group9.group09.exception.ItemNotFoundException;
 import com.group9.group09.model.ItemstoCarry;
 import com.group9.group09.repository.interfaces.ItemsRepository;
 import com.group9.group09.repository.rowmapper.ActivityRowMapper;
@@ -16,12 +18,24 @@ public class ItemsRepositoryImp implements ItemsRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(ItemsRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Constructor to create an instance of ItemsRepositoryImp with a JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate to use for database operations.
+     */
     public ItemsRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    /**
+     * Get all items to carry from the database.
+     *
+     * @return A list of all items to carry in the database.
+     * @throws ItemNotFoundException If no items to carry are found in the database.
+     */
     @Override
     public List<ItemstoCarry> getAllItems() {
 
@@ -31,7 +45,7 @@ public class ItemsRepositoryImp implements ItemsRepository{
             return jdbcTemplate.query(getAllItemstoCarryQuery, new ItemstoCarryRowMapper(), null);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            throw new RuntimeException(e.getMessage());
+            throw new ItemNotFoundException(e.getMessage());
         }
     }
 }

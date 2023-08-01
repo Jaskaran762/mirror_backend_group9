@@ -8,6 +8,9 @@ public class Place {
     private Integer placeId;
     private String description;
     private Integer cityId;
+    private String cityName;
+    private String interest;
+    private String placeImageLink;
 
     private List<String> activitiesStringList;
 
@@ -119,5 +122,29 @@ public class Place {
      */
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getPlaceImageLink() {
+        return placeImageLink;
+    }
+
+    public void setPlaceImageLink(String placeImageLink) {
+        this.placeImageLink = placeImageLink;
     }
 }

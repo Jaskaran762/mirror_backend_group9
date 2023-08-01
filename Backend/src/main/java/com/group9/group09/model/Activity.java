@@ -11,6 +11,9 @@ public class Activity {
     private Integer cityId;
     private String reviews;
 
+    private String interest;
+    private String activityImageLink;
+
     /**
      * Get the reviews of the activity.
      *
@@ -117,5 +120,21 @@ public class Activity {
      */
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+
+    public String getActivityImageLink() {
+        return activityImageLink;
+    }
+
+    public void setActivityImageLink(String activityImageLink) {
+        this.activityImageLink = activityImageLink;
     }
 }
