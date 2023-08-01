@@ -1,5 +1,7 @@
 package com.group9.group09.repository;
 
+import com.group9.group09.Logger.LoggerFactoryImpl;
+import com.group9.group09.exception.CountryNotFoundException;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.Country;
 import com.group9.group09.repository.interfaces.CountryRepository;
@@ -12,18 +14,35 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
+
+/**
+ * Repository implementation for Country entities.
+ */
 @Repository
 public class CountryRepositoryImp implements CountryRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(CountryRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Constructor to create an instance of CountryRepositoryImp with a JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate to use for database operations.
+     */
     public CountryRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
+    /**
+     * Find a country by its ID.
+     *
+     * @param countryID The ID of the country to find.
+     * @return An Optional containing the country if found, or an empty Optional if not found.
+     * @throws CountryNotFoundException If the country is not found in the database.
+     */
     @Override
     public Optional<Country> findByCountryId(Integer countryID) {
         try {
@@ -32,11 +51,18 @@ public class CountryRepositoryImp implements CountryRepository {
             return Optional.ofNullable(jdbcTemplate.queryForObject(findCountrybyIDQuery, new CountryRowMapper(), countryID));
         } catch (Exception e) {
             logger.error("Error Message: ");
-            throw new UserNotFoundException("dafs");
+            throw new CountryNotFoundException(e.getMessage());
         }
 
     }
 
+    /**
+     * Find a country by its name.
+     *
+     * @param countryName The name of the country to find.
+     * @return An Optional containing the country if found, or an empty Optional if not found.
+     * @throws CountryNotFoundException If the country is not found in the database.
+     */
     @Override
     public Optional<Country> findByCountryName(String countryName) {
 
@@ -47,10 +73,19 @@ public class CountryRepositoryImp implements CountryRepository {
         } catch (Exception e) {
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new UserNotFoundException();
+            throw new CountryNotFoundException(e.getMessage());
         }
     }
 
+
+    /**
+     * Add a new country to the database.
+     *
+     * @param countryName The name of the country to add.
+     * @param description The description of the country.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws CountryNotFoundException If there was an issue adding the country to the database.
+     */
     @Override
     public int addCountry(String countryName,String description){
         try{
@@ -61,10 +96,16 @@ public class CountryRepositoryImp implements CountryRepository {
         }catch (Exception e){
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new UserNotFoundException();
+            throw new CountryNotFoundException(e.getMessage());
         }
     }
 
+    /**
+     * Get all countries from the database.
+     *
+     * @return A list of all countries in the database.
+     * @throws CountryNotFoundException If no countries are found in the database.
+     */
     @Override
     public List<Country> getCountries() {
 
@@ -75,7 +116,7 @@ public class CountryRepositoryImp implements CountryRepository {
         } catch (Exception e) {
             logger.error("Error Message: ");
             System.out.println(e.getMessage());
-            throw new RuntimeException();
+            throw new CountryNotFoundException(e.getMessage());
         }
     }
 

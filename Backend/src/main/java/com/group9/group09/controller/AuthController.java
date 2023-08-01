@@ -4,6 +4,7 @@ import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
 import com.group9.group09.DTO.RequestDTO.OTPRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ResponseDTO;
 import com.group9.group09.DTO.RequestDTO.UserEditRequestDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.User;
 import com.group9.group09.service.interfaces.OTPService;
@@ -29,7 +30,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
     /**
      * Handles the user login request.
@@ -43,10 +44,16 @@ public class AuthController {
             logger.info("Info Message: ");
             ResponseDTO serviceResponse = userService.loginUserService(user);
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+        }catch (UserNotFoundException e) {
+            logger.error("Error Message: ");
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage(e.getMessage()+ e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
         } catch (Exception e) {
             logger.error("Error Message: ");
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Login Issue");
+            response.setMessage("Login Issue"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -71,13 +78,13 @@ public class AuthController {
         } catch (UserNotFoundException e) {
             logger.error("Error Message: ");
             ErrorResponse response = new ErrorResponse();
-            response.setMessage(e.getMessage());
+            response.setMessage(e.getMessage()+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         } catch (Exception e) {
             logger.error("Error Message: ");
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Registration Issue");
+            response.setMessage("Registration Issue"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -102,9 +109,15 @@ public class AuthController {
 
             setUserName(null);
             return new ResponseEntity<>(updatedUserResponse, HttpStatus.OK);
+        }catch (UserNotFoundException e) {
+            logger.error("Error Message: ");
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage(e.getMessage()+ e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
         } catch (Exception e) {
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("User edit api failed");
+            response.setMessage("User edit api failed "+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -138,12 +151,12 @@ public class AuthController {
             }
         } catch (UserNotFoundException e) {
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("User Not Found");
+            response.setMessage("User Not Found"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         } catch (Exception e) {
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Something went wrong");
+            response.setMessage("Something went wrong"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                     .body(response);
         }
@@ -168,9 +181,15 @@ public class AuthController {
                 responseDTO.setMessage("Incorrect OTP");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
             }
+        }catch (UserNotFoundException e) {
+            logger.error("Error Message: ");
+            ErrorResponse response = new ErrorResponse();
+            response.setMessage(e.getMessage()+ e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(response);
         } catch (Exception e) {
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Something went wrong");
+            response.setMessage("Something went wrong"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                     .body(response);
         }

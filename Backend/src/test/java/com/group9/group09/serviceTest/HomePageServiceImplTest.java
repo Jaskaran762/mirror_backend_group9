@@ -118,7 +118,4 @@ class HomePageServiceImplTest {
         assertEquals(stateList, responseDTO.getRegionList());
     }
 
-    // Write similar test cases for other methods in HomePageServiceImpl
-
-    // For example, testLocationSelectorService, testCitySelectorService, testPlaceSelectorService, etc.
 }

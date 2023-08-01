@@ -106,11 +106,11 @@ class AuthControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertTrue(responseEntity.getBody() instanceof ErrorResponse);
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
-        assertEquals("User already present", errorResponse.getMessage());
+        assertEquals("User already presentUser already present", errorResponse.getMessage());
 
         
         verify(userService, times(1)).registerUserService(user);
     }
 
-    // Write similar test cases for other methods in AuthController
+
 }

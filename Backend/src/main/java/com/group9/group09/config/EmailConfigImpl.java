@@ -23,6 +23,13 @@ public class EmailConfigImpl implements EmailConfig {
     @Value("${spring.mail.username}")
     private String sender;
 
+    /**
+     * Sends a simple email without attachments.
+     *
+     * @param email The email details, including recipient and message body.
+     * @return true if the email was sent successfully, otherwise false.
+     */
+
     @Override
     public boolean sendMail(EmailDetails email) {
         try {
@@ -39,6 +46,14 @@ public class EmailConfigImpl implements EmailConfig {
             throw new RuntimeException("Error sending email");
         }
     }
+
+
+    /**
+     * Sends an email with attachments.
+     *
+     * @param email The email details, including recipient, message body, and file attachment.
+     * @return true if the email was sent successfully, otherwise false.
+     */
 
     @Override
     public boolean sendMailIncludingFiles(EmailDetails email) {

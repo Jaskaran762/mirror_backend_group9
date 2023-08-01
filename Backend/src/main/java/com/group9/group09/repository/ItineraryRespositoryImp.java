@@ -2,6 +2,7 @@ package com.group9.group09.repository;
 
 import com.group9.group09.DTO.RequestDTO.ItineraryRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ItineraryResponseDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.model.ItemstoCarry;
 import com.group9.group09.model.Itinerary;
 import com.group9.group09.repository.interfaces.ItineraryRepository;
@@ -18,11 +19,25 @@ import java.util.List;
 public class ItineraryRespositoryImp implements ItineraryRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    private static Logger logger = LoggerFactory.getLogger(ItemsRepositoryImp.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
+
+    /**
+     * Constructor to create an instance of ItineraryRespositoryImp with a JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate to use for database operations.
+     */
     public ItineraryRespositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    /**
+     * Get the list of itineraries associated with a specific user ID.
+     *
+     * @param userid The ID of the user for which to retrieve the itineraries.
+     * @return A list of itineraries associated with the specified user ID.
+     * @throws RuntimeException If there was an error while retrieving the itineraries from the database.
+     */
     @Override
     public List<Itinerary> getItineraryList(Integer userid) {
 
@@ -37,6 +52,14 @@ public class ItineraryRespositoryImp implements ItineraryRepository {
 
     }
 
+    /**
+     * Add an itinerary to the database.
+     *
+     * @param itineraryRequestDTO The ItineraryRequestDTO object containing the details of the itinerary to add.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws RuntimeException If there was an error while adding the itinerary to the database.
+     */
+
     @Override
     public int addtoItinerary(ItineraryRequestDTO itineraryRequestDTO) {
         try{
@@ -49,6 +72,13 @@ public class ItineraryRespositoryImp implements ItineraryRepository {
         }
     }
 
+    /**
+     * Delete an itinerary from the database by its ID.
+     *
+     * @param itineraryid The ID of the itinerary to delete.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws RuntimeException If there was an error while deleting the itinerary from the database.
+     */
     @Override
     public int deleteitinerarybyid(Integer itineraryid) {
 

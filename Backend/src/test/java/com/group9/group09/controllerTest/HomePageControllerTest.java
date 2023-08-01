@@ -92,23 +92,4 @@ class HomePageControllerTest {
         // Add assertions for the response body as needed.
     }
 
-    // Add more test cases for other controller methods...
-
-    // - testGetWishList_Exception
-    // - testAddWishList_Success
-    // - testAddWishList_Exception
-    // - testDeleteWishList_Success
-    // - testDeleteWishList_Exception
-    // - testGetItinerary_Success
-    // - testGetItinerary_Exception
-    // - testAddToItinerary_Success
-    // - testAddToItinerary_Exception
-    // - testDeleteItinerary_Success
-    // - testDeleteItinerary_Exception
-    // - testGetReviewPlace_Success
-    // - testGetReviewPlace_Exception
-    // - testGetReviewActivity_Success
-    // - testGetReviewActivity_Exception
-    // - testGetItemstoCarry_Success
-    // - testGetItemstoCarry_Exception
 }

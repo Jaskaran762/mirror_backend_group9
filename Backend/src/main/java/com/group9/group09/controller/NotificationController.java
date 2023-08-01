@@ -3,6 +3,7 @@ package com.group9.group09.controller;
 import com.group9.group09.DTO.RequestDTO.NotificationRequestDTO;
 import com.group9.group09.DTO.ResponseDTO.ErrorResponse;
 import com.group9.group09.DTO.ResponseDTO.NotificationResponseDTO;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.service.interfaces.NotificationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -23,8 +24,15 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Endpoint to fetch all notifications for a user based on the provided NotificationRequestDTO.
+     *
+     * @param requestDTO The NotificationRequestDTO containing notification details.
+     * @param request    The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the list of NotificationResponseDTOs.
+     */
     @PostMapping(path = "fetchNotifications")
     public ResponseEntity<?> fetchAllNotifications(NotificationRequestDTO requestDTO, HttpServletRequest request){
         try{
@@ -35,7 +43,7 @@ public class NotificationController {
         catch (Exception e){
             logger.error("Error Message: ");
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Errors in fetching notifications");
+            response.setMessage("Errors in fetching notifications"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }

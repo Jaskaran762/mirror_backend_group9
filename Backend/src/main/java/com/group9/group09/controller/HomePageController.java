@@ -2,6 +2,7 @@ package com.group9.group09.controller;
 
 import com.group9.group09.DTO.RequestDTO.*;
 import com.group9.group09.DTO.ResponseDTO.*;
+import com.group9.group09.Logger.LoggerFactoryImpl;
 import com.group9.group09.config.JwtService;
 import com.group9.group09.model.User;
 import com.group9.group09.repository.interfaces.UserRepository;
@@ -30,7 +31,7 @@ public class HomePageController {
     @Autowired
     private UserRepository userRepository;
 
-    private static Logger logger = LoggerFactory.getLogger(HomePageController.class);
+    private static Logger logger = LoggerFactoryImpl.getLogger();
     /**
      * Handles the choice selection request.
      *
@@ -47,14 +48,20 @@ public class HomePageController {
             return new ResponseEntity<>(choiceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Choice selector api failed");
+            response.setMessage("Choice selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
 
+    /**
+     * Endpoint to get country details based on the provided CountryRequestDTO.
+     *
+     * @param countryRequestDTO The CountryRequestDTO containing country selection details.
+     * @param request           The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/country")
     public ResponseEntity<?> getCountry(@RequestBody CountryRequestDTO countryRequestDTO, HttpServletRequest request) {
         try {
@@ -64,9 +71,9 @@ public class HomePageController {
             return new ResponseEntity<>(countryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
+
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Choice selector api failed");
+            response.setMessage("Choice selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -88,9 +95,8 @@ public class HomePageController {
             return new ResponseEntity<>(locationResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("location selector api failed");
+            response.setMessage("location selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -112,9 +118,8 @@ public class HomePageController {
             return new ResponseEntity<>(cityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("city selector api failed");
+            response.setMessage("city selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -136,9 +141,8 @@ public class HomePageController {
             return new ResponseEntity<>(placeResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("place selector api failed");
+            response.setMessage("place selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -160,9 +164,8 @@ public class HomePageController {
             return new ResponseEntity<>(activityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("activity response selector api failed");
+            response.setMessage("activity response selector api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -184,13 +187,20 @@ public class HomePageController {
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("wishlist api failed");
+            response.setMessage("wishlist api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
+
+    /**
+     * Endpoint to add a new item to the wishlist.
+     *
+     * @param wishListRequestDTO The WishListRequestDTO containing wishlist details.
+     * @param request            The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
 
     @PostMapping(path = "/addwishlist")
     public ResponseEntity<?> addWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
@@ -204,13 +214,21 @@ public class HomePageController {
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
+
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("add wishlist api failed");
+            response.setMessage("add wishlist api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
+
+    /**
+     * Endpoint to delete an item from the wishlist.
+     *
+     * @param wishListRequestDTO The WishListRequestDTO containing wishlist details.
+     * @param request            The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
 
     @PostMapping(path = "/deletewishlist")
     public ResponseEntity<?> deleteWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
@@ -224,9 +242,8 @@ public class HomePageController {
             return new ResponseEntity<>(wishListResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("delete wishlist api failed");
+            response.setMessage("delete wishlist api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -249,13 +266,21 @@ public class HomePageController {
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("itinerary api failed");
+            response.setMessage("itinerary api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
+
+
+    /**
+     * Endpoint to add a new item to the itinerary.
+     *
+     * @param itineraryRequestDTO The ItineraryRequestDTO containing itinerary details.
+     * @param request             The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addtoitinerary")
     public ResponseEntity<?> addtoItinerary(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
         try {
@@ -270,14 +295,20 @@ public class HomePageController {
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("add to itinerary api failed");
+            response.setMessage("add to itinerary api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
 
+    /**
+     * Endpoint to delete an item from the itinerary.
+     *
+     * @param itineraryRequestDTO The ItineraryRequestDTO containing itinerary details.
+     * @param request             The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/deleteitinerary")
     public ResponseEntity<?> deleteWishList(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
         try {
@@ -290,16 +321,21 @@ public class HomePageController {
             return new ResponseEntity<>(itineraryResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("delete itinerary api failed");
+            response.setMessage("delete itinerary api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
 
 
-
+    /**
+     * Endpoint to get reviews for a place.
+     *
+     * @param reviewsPlaceRequestDTO The ReviewsPlaceRequestDTO containing place review details.
+     * @param request                The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/reviewplace")
     public ResponseEntity<?> getReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {
         try {
@@ -309,14 +345,20 @@ public class HomePageController {
             return new ResponseEntity<>(reviewsPlaceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("review place api failed");
+            response.setMessage("review place api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
     }
 
+    /**
+     * Endpoint to add a review for a place.
+     *
+     * @param reviewsPlaceRequestDTO The ReviewsPlaceRequestDTO containing place review details.
+     * @param request                The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addreviewplace")
     public ResponseEntity<?> addReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {
         try {
@@ -330,9 +372,8 @@ public class HomePageController {
             return new ResponseEntity<>(reviewsPlaceResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("add review place api failed");
+            response.setMessage("add review place api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -349,9 +390,8 @@ public class HomePageController {
             return new ResponseEntity<>(reviewsActivityResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Message: ");
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("review activity api failed");
+            response.setMessage("review activity api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
@@ -366,9 +406,8 @@ public class HomePageController {
             ItemsToCarryResponseDTO itemsToCarryResponseDTO =  homeService.getItemstoCarry();
             return new ResponseEntity<>(itemsToCarryResponseDTO, HttpStatus.OK);
         }catch (Exception e){
-            System.out.println(e);
             ErrorResponse response = new ErrorResponse();
-            response.setMessage("Items to carry  api failed");
+            response.setMessage("Items to carry  api failed"+ e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }

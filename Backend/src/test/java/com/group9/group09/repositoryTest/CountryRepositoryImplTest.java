@@ -1,5 +1,6 @@
 package com.group9.group09.repositoryTest;
 
+import com.group9.group09.exception.CountryNotFoundException;
 import com.group9.group09.exception.UserNotFoundException;
 import com.group9.group09.model.Country;
 import com.group9.group09.repository.CountryRepositoryImp;
@@ -68,7 +69,7 @@ class CountryRepositoryImplTest {
         String description = "Description 1";
         when(jdbcTemplate.update(anyString(), eq(countryName), eq(description))).thenThrow(new RuntimeException("Database connection error"));
 
-        assertThrows(UserNotFoundException.class, () -> countryRepository.addCountry(countryName, description));
+        assertThrows(CountryNotFoundException.class, () -> countryRepository.addCountry(countryName, description));
     }
 
     @Test
