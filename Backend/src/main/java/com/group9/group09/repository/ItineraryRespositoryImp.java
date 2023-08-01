@@ -17,7 +17,7 @@ import java.util.List;
 
 @Repository
 public class ItineraryRespositoryImp implements ItineraryRepository {
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
     public ItineraryRespositoryImp(JdbcTemplate jdbcTemplate) {

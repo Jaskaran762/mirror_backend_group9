@@ -112,5 +112,5 @@ class AuthControllerTest {
         verify(userService, times(1)).registerUserService(user);
     }
 
-    // Write similar test cases for other methods in AuthController
+
 }
