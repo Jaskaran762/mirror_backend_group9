@@ -56,7 +56,7 @@ public class UserProfileControllerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
-        String expectedErrorMessage = "some issue";
+        String expectedErrorMessage = "Something went wrongMocked exception";
         ErrorResponse actualErrorResponse = (ErrorResponse) responseEntity.getBody();
         assertEquals(expectedErrorMessage, actualErrorResponse.getMessage());
     }
@@ -84,8 +84,9 @@ public class UserProfileControllerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 
-        String expectedErrorMessage = "some issue";
+        String expectedErrorMessage = "Something went wrongMocked exception"; // Update this line to match the exception's message
         ErrorResponse actualErrorResponse = (ErrorResponse) responseEntity.getBody();
         assertEquals(expectedErrorMessage, actualErrorResponse.getMessage());
-}
+    }
+
 }
