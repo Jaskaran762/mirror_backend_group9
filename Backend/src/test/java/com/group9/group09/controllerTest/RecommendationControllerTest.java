@@ -64,10 +64,4 @@ class RecommendationControllerTest {
         // Add assertions for the response body as needed.
     }
 
-    // Add more test cases for other scenarios...
-
-    // - getUserRecommendationsBasedOnInterests_Success
-    // - getUserRecommendationsBasedOnInterests_Exception
-    // - getUserRecommendationsBasedOnInterests_EmptyResponse
-    // - getUserRecommendationsBasedOnInterests_UserNotFoundException
 }

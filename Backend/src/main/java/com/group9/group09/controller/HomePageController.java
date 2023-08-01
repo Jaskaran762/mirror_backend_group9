@@ -55,6 +55,13 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Endpoint to get country details based on the provided CountryRequestDTO.
+     *
+     * @param countryRequestDTO The CountryRequestDTO containing country selection details.
+     * @param request           The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/country")
     public ResponseEntity<?> getCountry(@RequestBody CountryRequestDTO countryRequestDTO, HttpServletRequest request) {
         try {
@@ -187,6 +194,14 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Endpoint to add a new item to the wishlist.
+     *
+     * @param wishListRequestDTO The WishListRequestDTO containing wishlist details.
+     * @param request            The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
+
     @PostMapping(path = "/addwishlist")
     public ResponseEntity<?> addWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
         try {
@@ -206,6 +221,14 @@ public class HomePageController {
                     .body(response);
         }
     }
+
+    /**
+     * Endpoint to delete an item from the wishlist.
+     *
+     * @param wishListRequestDTO The WishListRequestDTO containing wishlist details.
+     * @param request            The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
 
     @PostMapping(path = "/deletewishlist")
     public ResponseEntity<?> deleteWishList(@RequestBody WishListRequestDTO wishListRequestDTO, HttpServletRequest request) {
@@ -249,6 +272,15 @@ public class HomePageController {
                     .body(response);
         }
     }
+
+
+    /**
+     * Endpoint to add a new item to the itinerary.
+     *
+     * @param itineraryRequestDTO The ItineraryRequestDTO containing itinerary details.
+     * @param request             The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addtoitinerary")
     public ResponseEntity<?> addtoItinerary(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
         try {
@@ -270,6 +302,13 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Endpoint to delete an item from the itinerary.
+     *
+     * @param itineraryRequestDTO The ItineraryRequestDTO containing itinerary details.
+     * @param request             The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/deleteitinerary")
     public ResponseEntity<?> deleteWishList(@RequestBody ItineraryRequestDTO itineraryRequestDTO, HttpServletRequest request) {
         try {
@@ -290,7 +329,13 @@ public class HomePageController {
     }
 
 
-
+    /**
+     * Endpoint to get reviews for a place.
+     *
+     * @param reviewsPlaceRequestDTO The ReviewsPlaceRequestDTO containing place review details.
+     * @param request                The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/reviewplace")
     public ResponseEntity<?> getReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {
         try {
@@ -307,6 +352,13 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Endpoint to add a review for a place.
+     *
+     * @param reviewsPlaceRequestDTO The ReviewsPlaceRequestDTO containing place review details.
+     * @param request                The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addreviewplace")
     public ResponseEntity<?> addReviewPlace(@RequestBody ReviewsPlaceRequestDTO reviewsPlaceRequestDTO, HttpServletRequest request) {
         try {

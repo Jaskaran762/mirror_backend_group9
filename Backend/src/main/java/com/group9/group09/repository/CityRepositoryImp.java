@@ -14,11 +14,21 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Repository implementation for City entities.
+ */
 @Repository
 public class CityRepositoryImp implements CityRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+
+    /**
+     * Constructor to create an instance of CityRepositoryImp with a JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate to use for database operations.
+     */
     @Autowired
     public CityRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -26,6 +36,14 @@ public class CityRepositoryImp implements CityRepository {
 
     private static Logger logger = LoggerFactory.getLogger(CityRepositoryImp.class);
 
+
+    /**
+     * Find a city by its ID.
+     *
+     * @param cityId The ID of the city to find.
+     * @return An Optional containing the city if found, or an empty Optional if not found.
+     * @throws CityNotFoundException If the city is not found in the database.
+     */
     public Optional<City> findByCityId(Integer cityId) {
         try {
             logger.info("Info Message: ");
@@ -37,6 +55,14 @@ public class CityRepositoryImp implements CityRepository {
         }
     }
 
+
+    /**
+     * Find a city by its name.
+     *
+     * @param cityName The name of the city to find.
+     * @return An Optional containing the city if found, or an empty Optional if not found.
+     * @throws CityNotFoundException If the city is not found in the database.
+     */
     @Override
     public Optional<City> findByCityName(String cityName) {
 
@@ -50,6 +76,13 @@ public class CityRepositoryImp implements CityRepository {
         }
     }
 
+    /**
+     * Get all cities in a state based on its ID.
+     *
+     * @param stateID The ID of the state to retrieve cities for.
+     * @return A list of cities in the specified state.
+     * @throws CityNotFoundException If no cities are found in the database for the given state ID.
+     */
     @Override
     public List<City> getCitiesbyStateID(Integer stateID) {
 
@@ -64,6 +97,14 @@ public class CityRepositoryImp implements CityRepository {
 
     }
 
+    /**
+     * Check if a city with the given name and state ID already exists in the database.
+     *
+     * @param city    The name of the city to check.
+     * @param stateID The ID of the state associated with the city.
+     * @return An Optional containing the city if it exists, or an empty Optional if not found.
+     * @throws CityNotFoundException If no city is found in the database with the given name and state ID.
+     */
     @Override
     public Optional<City> isCityPresent(String city, Integer stateID) {
 
@@ -82,6 +123,17 @@ public class CityRepositoryImp implements CityRepository {
         }
     }
 
+
+    /**
+     * Add a new city to the database.
+     *
+     * @param city       The name of the city to add.
+     * @param description The description of the city.
+     * @param stateID    The ID of the state associated with the city.
+     * @param weather    The weather information of the city.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws CityNotFoundException If there was an issue adding the city to the database.
+     */
     @Override
     public int addCity(String city, String description, Integer stateID, String weather) {
         try {

@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+
+/**
+ * Controller class to handle admin-related operations.
+ */
 @RestController
 @RequestMapping(path="/admin")
 public class AdminController {
@@ -36,6 +40,14 @@ public class AdminController {
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
 
+
+    /**
+     * Endpoint to add a new country.
+     *
+     * @param countryRequestDTO The CountryRequestDTO containing country details.
+     * @param request           The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addCountry")
     public ResponseEntity<?> addCountry(@RequestBody CountryRequestDTO countryRequestDTO, HttpServletRequest request) {
         try {
@@ -64,6 +76,14 @@ public class AdminController {
         }
     }
 
+    /**
+     * Endpoint to add a new state.
+     *
+     * @param stateRequestDTO The StateRequestDTO containing state details.
+     * @param request         The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
+
     @PostMapping(path = "/addState")
     public ResponseEntity<?> addState(@RequestBody StateRequestDTO stateRequestDTO, HttpServletRequest request) {
         try {
@@ -90,6 +110,13 @@ public class AdminController {
         }
     }
 
+    /**
+     * Endpoint to add a new city.
+     *
+     * @param cityRequestDTO The CityRequestDTO containing city details.
+     * @param request        The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addCity")
     public ResponseEntity<?> addState(@RequestBody CityRequestDTO cityRequestDTO, HttpServletRequest request) {
         try {
@@ -118,7 +145,13 @@ public class AdminController {
         }
     }
 
-
+    /**
+     * Endpoint to add a new place.
+     *
+     * @param placeRequestDTO The PlaceRequestDTO containing place details.
+     * @param request         The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addPlace")
     public ResponseEntity<?> addPlace(@RequestBody PlaceRequestDTO placeRequestDTO, HttpServletRequest request) {
         try {
@@ -147,6 +180,13 @@ public class AdminController {
 
     }
 
+    /**
+     * Endpoint to add a new activity.
+     *
+     * @param activityRequestDTO The ActivityRequestDTO containing activity details.
+     * @param request            The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the response message.
+     */
     @PostMapping(path = "/addActivity")
     public ResponseEntity<?> addActivity(@RequestBody ActivityRequestDTO activityRequestDTO, HttpServletRequest request) {
         try {

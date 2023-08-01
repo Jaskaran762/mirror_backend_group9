@@ -71,14 +71,4 @@ class AdminControllerTest {
         assertEquals(mockResponse, responseEntity.getBody());
     }
 
-    // Add more test cases for other controller methods...
-
-    // - testAddCountry_Success
-    // - testAddCountry_NotAdminAccessException
-    // - testAddState_Success
-    // - testAddState_NotAdminAccessException
-    // - testAddPlace_Success
-    // - testAddPlace_NotAdminAccessException
-    // - testAddActivity_Success
-    // - testAddActivity_NotAdminAccessException
 }

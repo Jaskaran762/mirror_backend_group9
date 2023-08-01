@@ -24,6 +24,14 @@ public class WishListRepositoryImp implements WishlistRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    /**
+     * Get the wishlist items by user ID.
+     *
+     * @param userID The unique ID of the user whose wishlist items are to be fetched.
+     * @return A List of wishList objects representing the user's wishlist items.
+     * @throws WishlistNotFoundException If there was an error while fetching wishlist data from the database or if the wishlist is not found for the specified user ID.
+     */
     @Override
     public List<wishList> getWishListbyUserID(Integer userID) {
 
@@ -38,6 +46,13 @@ public class WishListRepositoryImp implements WishlistRepository {
         }
     }
 
+    /**
+     * Add an item to the user's wishlist.
+     *
+     * @param wishListRequestDTO The WishListRequestDTO object containing the details of the item to be added to the wishlist.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws WishlistNotFoundException If there was an error while adding the item to the wishlist in the database.
+     */
     @Override
     public int addtoWishlist(WishListRequestDTO wishListRequestDTO) {
         try{
@@ -52,6 +67,14 @@ public class WishListRepositoryImp implements WishlistRepository {
 
     }
 
+
+    /**
+     * Delete a wishlist item by its unique ID.
+     *
+     * @param wishlistid The unique ID of the wishlist item to be deleted.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws WishlistNotFoundException If there was an error while deleting the wishlist item from the database.
+     */
     @Override
     public int deletewishlistbyID(Integer wishlistid) {
 
