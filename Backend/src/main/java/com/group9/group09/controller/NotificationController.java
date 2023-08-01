@@ -26,6 +26,13 @@ public class NotificationController {
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Endpoint to fetch all notifications for a user based on the provided NotificationRequestDTO.
+     *
+     * @param requestDTO The NotificationRequestDTO containing notification details.
+     * @param request    The HttpServletRequest containing the JWT token.
+     * @return A ResponseEntity containing the list of NotificationResponseDTOs.
+     */
     @PostMapping(path = "fetchNotifications")
     public ResponseEntity<?> fetchAllNotifications(NotificationRequestDTO requestDTO, HttpServletRequest request){
         try{

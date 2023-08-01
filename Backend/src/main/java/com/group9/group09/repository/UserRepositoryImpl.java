@@ -15,17 +15,35 @@ import org.springframework.stereotype.Repository;
 import java.sql.SQLException;
 import java.util.Optional;
 
+
+/**
+ * Repository implementation for handling user-related operations.
+ */
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
+
+    /**
+     * Constructor to create an instance of UserRepositoryImpl with a JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate to use for database operations.
+     */
     @Autowired
     public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    /**
+     * Save user information into the database.
+     *
+     * @param user The User object containing the user information to save.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while saving user information to the database.
+     */
     @Override
     public int saveUserInfo(User user) {
 
@@ -40,6 +58,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    /**
+     * Update the user's password in the database.
+     *
+     * @param user       The User object containing the updated user information.
+     * @param newpassword The new password to update.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while updating the user's password in the database.
+     */
     @Override
     public int updateUserPassword(User user,String newpassword) {
         try{
@@ -51,6 +77,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+
+    /**
+     * Update the user's email in the database.
+     *
+     * @param user The User object containing the updated user information.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while updating the user's email in the database.
+     */
     @Override
     public int updateUserEmail(User user) {
         try {
@@ -63,6 +97,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     }
 
+    /**
+     * Update the user's name in the database.
+     *
+     * @param user The User object containing the updated user information.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while updating the user's name in the database.
+     */
     @Override
     public int updateUserName(User user) {
         try {
@@ -75,6 +116,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     }
 
+    /**
+     * Update the user's phone number in the database.
+     *
+     * @param user The User object containing the updated user information.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while updating the user's phone number in the database.
+     */
     @Override
     public int updateUserPhone(User user) {
         try {
@@ -87,6 +135,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     }
 
+    /**
+     * Update the user's interests in the database.
+     *
+     * @param user The User object containing the updated user information.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while updating the user's interests in the database.
+     */
     @Override
     public int updateUserInterests(User user) {
         try {
@@ -99,6 +154,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     }
 
+
+    /**
+     * Update the user's home country in the database.
+     *
+     * @param user The User object containing the updated user information.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while updating the user's home country in the database.
+     */
     @Override
     public int updateUserCountry(User user) {
         try {
@@ -110,6 +173,13 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    /**
+     * Find a user by their unique ID.
+     *
+     * @param userId The unique ID of the user to find.
+     * @return An Optional containing the User object if found, or empty if not found.
+     * @throws UserNotFoundException If there was an error while fetching user data from the database.
+     */
     @Override
     public Optional<User> findByUserId(String userId) {
         try {
@@ -122,6 +192,13 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    /**
+     * Find a user by their email address.
+     *
+     * @param email The email address of the user to find.
+     * @return An Optional containing the User object if found, or empty if not found.
+     * @throws UserNotFoundException If there was an error while fetching user data from the database.
+     */
     @Override
     public Optional<User> findByUsermail(String email) {
         try {
@@ -134,6 +211,13 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    /**
+     * Delete a user by their unique ID.
+     *
+     * @param id The unique ID of the user to delete.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws UserNotFoundException If there was an error while deleting user data from the database.
+     */
     @Override
     public int deleteByUserId(String id) {
         try {
@@ -145,6 +229,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
     }
+
+    /**
+     * Get a user by their email address.
+     *
+     * @param email The email address of the user to get.
+     * @return The User object representing the user with the specified email address.
+     * @throws UserNotFoundException If there was an error while fetching user data from the database.
+     */
 
     @Override
     public User getUserbyemail(String email) {

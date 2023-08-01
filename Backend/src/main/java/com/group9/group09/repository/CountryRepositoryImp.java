@@ -14,6 +14,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
+
+/**
+ * Repository implementation for Country entities.
+ */
 @Repository
 public class CountryRepositoryImp implements CountryRepository {
 
@@ -21,11 +26,23 @@ public class CountryRepositoryImp implements CountryRepository {
 
     private static Logger logger = LoggerFactoryImpl.getLogger();
 
+    /**
+     * Constructor to create an instance of CountryRepositoryImp with a JdbcTemplate.
+     *
+     * @param jdbcTemplate The JdbcTemplate to use for database operations.
+     */
     public CountryRepositoryImp(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
+    /**
+     * Find a country by its ID.
+     *
+     * @param countryID The ID of the country to find.
+     * @return An Optional containing the country if found, or an empty Optional if not found.
+     * @throws CountryNotFoundException If the country is not found in the database.
+     */
     @Override
     public Optional<Country> findByCountryId(Integer countryID) {
         try {
@@ -39,6 +56,13 @@ public class CountryRepositoryImp implements CountryRepository {
 
     }
 
+    /**
+     * Find a country by its name.
+     *
+     * @param countryName The name of the country to find.
+     * @return An Optional containing the country if found, or an empty Optional if not found.
+     * @throws CountryNotFoundException If the country is not found in the database.
+     */
     @Override
     public Optional<Country> findByCountryName(String countryName) {
 
@@ -53,6 +77,15 @@ public class CountryRepositoryImp implements CountryRepository {
         }
     }
 
+
+    /**
+     * Add a new country to the database.
+     *
+     * @param countryName The name of the country to add.
+     * @param description The description of the country.
+     * @return The number of rows affected (1 if successful, 0 otherwise).
+     * @throws CountryNotFoundException If there was an issue adding the country to the database.
+     */
     @Override
     public int addCountry(String countryName,String description){
         try{
@@ -67,6 +100,12 @@ public class CountryRepositoryImp implements CountryRepository {
         }
     }
 
+    /**
+     * Get all countries from the database.
+     *
+     * @return A list of all countries in the database.
+     * @throws CountryNotFoundException If no countries are found in the database.
+     */
     @Override
     public List<Country> getCountries() {
 

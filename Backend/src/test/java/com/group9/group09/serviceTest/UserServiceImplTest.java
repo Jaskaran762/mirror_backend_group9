@@ -58,24 +58,4 @@ public class UserServiceImplTest {
         assertEquals("mockToken", response.getToken());
     }
 
-    /*@Test
-    public void testRegisterUserService() {
-
-        User user = new User();
-        user.setEmail("test@example.com");
-        user.setPassword("password");
-        user.setName("test");
-        user.setPhone("9876543210");
-        user.setHomeCountry(1);
-        user.setUserId("12");
-
-        when(userRepositoryMock.findByUsermail("test@example.com")).thenReturn(Optional.of(user));
-        when(userRepositoryMock.saveUserInfo(user)).thenReturn(1);
-        when(jwtService.generateToken(user)).thenReturn("mockToken");
-
-        ResponseDTO response = userService.registerUserService(user);
-
-        assertNotNull(response);
-        assertEquals("mockToken", response.getToken());
-    }*/
 }

@@ -64,5 +64,4 @@ class RecommendationControllerTest {
         // Add assertions for the response body as needed.
     }
 
-
 }

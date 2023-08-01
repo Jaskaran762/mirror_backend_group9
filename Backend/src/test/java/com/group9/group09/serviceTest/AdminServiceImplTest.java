@@ -69,7 +69,4 @@ class AdminServiceImplTest {
         verify(countryRepository, never()).addCountry(any(), any());
     }
 
-    // Write similar test cases for other methods in AdminServiceImp
-
-    // For example, testAddStateService, testAddCityService, testAddPlaceService, testAddActivityService
 }
